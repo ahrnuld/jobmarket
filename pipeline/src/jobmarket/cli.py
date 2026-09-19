@@ -127,6 +127,79 @@ def cmd_stats(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
+def _history_dir(settings, dataset: str):
+    # Sample (fixture) aggregates never mix with, or end up next to, the real history.
+    return (
+        settings.history_dir
+        if dataset == "real"
+        else settings.repo_root / "var" / "sample" / "aggregates"
+    )
+
+
+def cmd_aggregate(args: argparse.Namespace) -> int:
+    from jobmarket.aggregate import compute, merge_into_history
+
+    settings = load_settings()
+    with open_db(settings.db_path) as conn:
+        agg = compute(conn, sample=args.dataset == "sample")
+    written = merge_into_history(_history_dir(settings, args.dataset), agg)
+    print(
+        f"Aggregated months {agg.months[0] if agg.months else '-'} .. "
+        f"{agg.months[-1] if agg.months else '-'}; rows: {written}"
+    )
+    return 0
+
+
+def cmd_publish(args: argparse.Namespace) -> int:
+    from jobmarket.publish import prune_snapshots, publish
+
+    settings = load_settings()
+    ref = load_reference(settings.reference_dir)
+    with open_db(settings.db_path) as conn:
+        sync_sources(conn, ref)
+        result = publish(
+            conn,
+            ref,
+            settings,
+            dataset=args.dataset,
+            history_dir=_history_dir(settings, args.dataset),
+        )
+    prune_snapshots(settings.snapshots_dir)
+    for w in result.report.warnings:
+        print(f"warning: {w}")
+    for e in result.report.errors:
+        print(f"ERROR: {e}", file=sys.stderr)
+    if result.published:
+        print(f"Published snapshot {result.snapshot_id} to {settings.publish_dir}")
+        return 0
+    print(
+        f"Snapshot {result.snapshot_id} rejected; the previous snapshot stays online. "
+        f"Staged files: {result.staging_dir}",
+        file=sys.stderr,
+    )
+    return 1
+
+
+def cmd_run(args: argparse.Namespace) -> int:
+    """The scheduled job: ingest, statistics, process, aggregate, publish."""
+    steps = [
+        ["ingest", "--source", "adzuna" if args.dataset == "real" else "fixture"],
+        ["stats"],
+        ["process"],
+        ["aggregate", "--dataset", args.dataset],
+        ["publish", "--dataset", args.dataset],
+    ]
+    status = 0
+    for step in steps:
+        print(f"== jobmarket {' '.join(step)}")
+        code = main(step)
+        # A failed source is logged and the run continues on the last good data (NFR-07);
+        # only publish decides whether the site changes.
+        if code and step[0] == "publish":
+            status = code
+    return status
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="jobmarket", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -147,6 +220,20 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("stats", help="refresh CBS and manual (HBO-Monitor, ROA, UWV) statistics")
     p.add_argument("--source", choices=["all", "cbs", "manual"], default="all")
     p.set_defaults(func=cmd_stats)
+
+    for name, func, help_text in [
+        ("aggregate", cmd_aggregate, "update the monthly aggregate history (data/aggregates)"),
+        ("publish", cmd_publish, "build, validate and publish the site data"),
+        ("run", cmd_run, "full scheduled run: ingest, stats, process, aggregate, publish"),
+    ]:
+        p = sub.add_parser(name, help=help_text)
+        p.add_argument(
+            "--dataset",
+            choices=["real", "sample"],
+            default="real",
+            help="real = Adzuna vacancies; sample = synthetic fixture vacancies",
+        )
+        p.set_defaults(func=func)
 
     ref = sub.add_parser("reference", help="reference data tools").add_subparsers(
         dest="ref_command", required=True
