@@ -41,7 +41,7 @@ skills:
 
   # Data and AI
   - { id: machine-learning, label: Machine learning, category: data, patterns: ['\bmachine learning\b', '\bml\b', '\bdeep learning\b'], esco_query: "utilise machine learning" }
-  - { id: ai-llm, label: AI / LLMs, category: data, patterns: ['\b(generative ai|genai|llms?|large language models?|artificial intelligence|kunstmatige intelligentie)\b', '\bai\b'], esco_query: "principles of artificial intelligence" }
+  - { id: ai-llm, label: AI / LLMs, category: data, patterns: ['\b(generative ai|genai|llms?|large language models?|artificial intelligence|kunstmatige intelligentie|ai[- ]?(engineer|engineering|agents?|modellen|models|toepassingen|applications|solutions|oplossingen|tools|platform))\b', '\bai\b(?=[^.]{0,40}\b(developer|engineer|ontwikkel\w*|bouwen|build|implement\w*|integrat\w*)\b)'], esco_query: "principles of artificial intelligence", ict_signal: false }
   - { id: data-analysis, label: Data analysis, category: data, patterns: ['\bdata[- ]?(analyse|analysis|analytics)\b'], esco_query: "perform data analysis" }
   - { id: power-bi, label: Power BI, category: data, patterns: ['\bpower ?bi\b'], esco_query: "business intelligence" }
   - { id: excel, label: Excel, category: data, patterns: ['\b(ms |microsoft )?excel\b'], esco_query: "use spreadsheets software", ict_signal: false }
@@ -54,17 +54,17 @@ skills:
   - { id: azure, label: Microsoft Azure, category: cloud, patterns: ['\bazure\b'], esco_query: "cloud technologies" }
   - { id: aws, label: AWS, category: cloud, patterns: ['\baws\b', '\bamazon web services\b'], esco_query: "cloud technologies" }
   - { id: gcp, label: Google Cloud, category: cloud, patterns: ['\bgcp\b', '\bgoogle cloud\b'], esco_query: "cloud technologies" }
-  - { id: docker, label: Docker, category: cloud, patterns: ['\bdocker\b', '\bcontainers?\b'], esco_query: "DevOps" }
+  - { id: docker, label: Docker, category: cloud, patterns: ['\bdocker\b', '\b(containeri[sz]ation|containeri[sz]ed)\b'], esco_query: "DevOps" }
   - { id: kubernetes, label: Kubernetes, category: cloud, patterns: ['\bkubernetes\b', '\bk8s\b', '\baks\b', '\beks\b', '\bopenshift\b'], esco_query: "cloud technologies" }
   - { id: ci-cd, label: CI/CD, category: devops, patterns: ['\bci ?/ ?cd\b', '\bcontinuous (integration|delivery|deployment)\b', '\b(github actions|gitlab ci|azure devops|jenkins)\b'], esco_query: "DevOps" }
   - { id: git, label: Git, category: devops, patterns: ['\bgit\b', '\bgithub\b', '\bgitlab\b'], esco_query: "tools for software configuration management" }
   - { id: terraform, label: Infrastructure as code, category: devops, patterns: ['\bterraform\b', '\binfrastructure as code\b', '\biac\b', '\bbicep\b', '\bansible\b'], esco_query: "DevOps" }
   - { id: linux, label: Linux, category: infrastructure, patterns: ['\blinux\b', '\bunix\b'], esco_query: "operating systems" }
-  - { id: networking, label: Networking, category: infrastructure, patterns: ['\bnetwerk(en|beheer|techniek)?\b', '\bnetwork(ing)?\b', '\btcp/ip\b', '\bcisco\b', '\bccna\b'], esco_query: "ICT communications protocols" }
+  - { id: networking, label: Networking, category: infrastructure, patterns: ['\bnetwerk(beheer|techniek|engineer\w*|infrastructuur|protocollen|segmentatie|componenten)\b', '\bnetwork(ing)? (engineer\w*|infrastructure|security|administration|protocols|design|architecture)\b', '\b(lan|wan|sd-wan|vlan|vpn|tcp/ip|bgp|ospf)\b', '\b(cisco|ccna|ccnp|juniper|fortinet|palo alto)\b', '\bfirewalls?\b'], esco_query: "ICT communications protocols" }
   - { id: windows-server, label: Windows Server / M365, category: infrastructure, patterns: ['\bwindows server\b', '\bactive directory\b', '\b(microsoft|office) 365\b', '\bm365\b', '\bintune\b'], esco_query: "operating systems" }
 
   # Security
-  - { id: cybersecurity, label: Cyber security, category: security, patterns: ['\bcyber ?security\b', '\binformatiebeveiliging\b', '\binformation security\b', '\bsecurity\b'], esco_query: "cyber security" }
+  - { id: cybersecurity, label: Cyber security, category: security, patterns: ['\bcyber ?security\b', '\bcyber\b', '\binformatiebeveiliging\b', '\binformation security\b', '\b(it|ict|cloud|network|netwerk|application|applicatie|software|endpoint|data) ?security\b', '\bsecurity (engineer\w*|specialist|analyst|analist|officer|architect\w*|operations|awareness|monitoring|incidents?)\b', '\b(soc|siem|pentest\w*|penetratietest\w*|vulnerabilit\w+|kwetsbaarhe\w+)\b'], esco_query: "cyber security" }
   - { id: iso27001, label: ISO 27001 / BIO, category: security, patterns: ['\biso ?27001\b', '\bbio\b', '\bnis2\b'], esco_query: "ICT security standards" }
 
   # Embedded, IoT and automation
@@ -78,7 +78,7 @@ skills:
   - { id: agile-scrum, label: Agile / Scrum, category: method, patterns: ['\bagile\b', '\bscrum\b', '\bkanban\b', '\bscaled agile\b'], esco_query: "Agile development", ict_signal: false }
   - { id: testing, label: Software testing, category: method, patterns: ['\b(unit|integratie|integration|end-to-end|e2e|geautomatiseerd|automated)\s*(test|tests|testen|testing)\b', '\btest ?automation\b', '\btdd\b', '\bselenium\b', '\bcypress\b'], esco_query: "ICT test execution software" }
   - { id: oop, label: Object-oriented programming, category: method, patterns: ['\bobject[- ]?(ge)?ori[eë]nte?e?d\b', '\boop\b'], esco_query: "object-oriented modelling" }
-  - { id: requirements, label: Requirements analysis, category: business, patterns: ['\brequirements?\b', '\buser stories\b', '\beisen ?(en wensen|analyse)\b'], esco_query: "ICT system user requirements", ict_signal: false }
+  - { id: requirements, label: Requirements analysis, category: business, patterns: ['\brequirements? (analy\w+|engineering|management|gathering|elicitation)\b', '\b(functional|non-functional|business) requirements\b', '\buser stories\b', '\beisen ?(en wensen|analyse)\b', '\bfunctioneel ontwerp\b', '\bfunctionele specificaties\b'], esco_query: "ICT system user requirements", ict_signal: false }
   - { id: process-modelling, label: Process modelling (BPMN), category: business, patterns: ['\bbpmn\b', '\bproces(modellering|analyse|verbetering)\b', '\bprocess (modelling|modeling|improvement|mining)\b', '\blean\b'], esco_query: "business process modelling", ict_signal: false }
   - { id: erp, label: ERP systems, category: business, patterns: ['\berp\b', '\bsap\b', '\bexact online\b', '\bafas\b', '\bdynamics 365\b'], esco_query: "enterprise resource planning" }
   - { id: crm, label: CRM systems, category: business, patterns: ['\bcrm\b', '\bsalesforce\b', '\bhubspot\b'], esco_query: "customer relationship management", ict_signal: false }

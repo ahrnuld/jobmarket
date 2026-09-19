@@ -7,6 +7,17 @@ from dataclasses import dataclass
 from jobmarket.reference import Reference
 
 
+def _strip_prefix(name: str) -> str:
+    """Adzuna writes "Provincie Utrecht" to tell the province from the city of the same name."""
+    name = name.strip().lower()
+    return name.removeprefix("provincie ").strip()
+
+
+def _clean_name(name: str) -> str:
+    name = name.strip()
+    return name[len("Provincie ") :] if name.lower().startswith("provincie ") else name
+
+
 @dataclass(frozen=True)
 class Place:
     municipality: str | None
@@ -23,11 +34,12 @@ def resolve(area: list[str], location_raw: str | None, ref: Reference) -> Place:
     """
     province = None
     if len(area) > 1:
-        province = ref.province_index.get(area[1].lower())
+        province = ref.province_index.get(_strip_prefix(area[1]))
 
-    candidates = [a for a in area[2:]]
+    # Adzuna sometimes prefixes municipalities too ("Provincie Utrechtse Heuvelrug").
+    candidates = [_clean_name(a) for a in area[2:]]
     if location_raw:
-        candidates += [p.strip() for p in location_raw.split(",")]
+        candidates += [_clean_name(p) for p in location_raw.split(",")]
     for name in candidates:
         region_id = ref.municipality_index.get(name.lower())
         if region_id:
@@ -36,8 +48,8 @@ def resolve(area: list[str], location_raw: str | None, ref: Reference) -> Place:
                 continue  # same place name in another province
             return Place(name, region_id, region.province)
 
-    municipality = area[2] if len(area) > 2 else None
+    municipality = _clean_name(area[2]) if len(area) > 2 else None
     if province is None and location_raw:
         for part in location_raw.split(","):
-            province = ref.province_index.get(part.strip().lower()) or province
+            province = ref.province_index.get(_strip_prefix(part)) or province
     return Place(municipality, None, province)

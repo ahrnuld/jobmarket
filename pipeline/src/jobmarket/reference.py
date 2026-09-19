@@ -88,6 +88,7 @@ class Reference:
     sources: dict[str, Source]
     programmes: dict[str, Programme]
     role_families: list[RoleFamily]
+    exclude_title_patterns: list[re.Pattern[str]]
     skills: dict[str, Skill]
     seniority_levels: list[SeniorityLevel]
     junior_max_years: int
@@ -219,6 +220,9 @@ def load_reference(reference_dir: Path) -> Reference:
         sources=sources,
         programmes=programmes,
         role_families=role_families,
+        exclude_title_patterns=_compile(
+            prog.get("exclude_title_patterns"), "programmes.yaml:exclude_title_patterns"
+        ),
         skills=skills,
         seniority_levels=levels,
         junior_max_years=int(years.get("junior_max", 2)),

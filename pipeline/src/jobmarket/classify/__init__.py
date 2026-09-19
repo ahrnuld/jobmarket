@@ -57,12 +57,16 @@ def classify_seniority(title_norm: str, description: str | None, ref: Reference)
     return "unknown"
 
 
+def matching_families(title_norm: str, ref: Reference) -> list[str]:
+    return [f.id for f in ref.role_families if any(p.search(title_norm) for p in f.title_patterns)]
+
+
 def classify_programmes(title_norm: str, ref: Reference) -> dict[str, str]:
+    families = {f.id: f for f in ref.role_families}
     result: dict[str, str] = {}
-    for family in ref.role_families:
-        if any(p.search(title_norm) for p in family.title_patterns):
-            for programme in family.programmes:
-                result.setdefault(programme, family.id)
+    for family_id in matching_families(title_norm, ref):
+        for programme in families[family_id].programmes:
+            result.setdefault(programme, family_id)
     return result
 
 
@@ -78,12 +82,15 @@ def classify(
     source_category: str | None,
     ref: Reference,
 ) -> Classification:
+    families = matching_families(title_norm, ref)
     programmes = classify_programmes(title_norm, ref)
     skills = extract_skills(title, description, ref)
-    # ICT if the title matches a role family, or the source filed it under IT and the text
-    # mentions at least one technical skill (the IT category also holds e.g. electricians).
+    # ICT if the title matches a role family, or the source filed it under IT, the text mentions
+    # at least one technical skill, and the title is not an excluded non-ICT role (the IT
+    # category also holds e.g. electricians and sales jobs at software companies).
     has_signal = any(ref.skills[s].ict_signal for s in skills)
-    is_ict = bool(programmes) or (source_category == "it-jobs" and has_signal)
+    excluded = any(p.search(title_norm) for p in ref.exclude_title_patterns)
+    is_ict = bool(families) or (source_category == "it-jobs" and has_signal and not excluded)
     return Classification(
         is_ict=is_ict,
         seniority=classify_seniority(title_norm, description, ref),

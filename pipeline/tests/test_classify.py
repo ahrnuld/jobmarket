@@ -51,6 +51,24 @@ def test_seniority(ref, title, description, expected):
         ("Netwerkbeheerder", {"technische-informatica"}),  # compound word, no space
         ("Business Developer", set()),  # sales, not ICT
         ("Werkvoorbereider", set()),
+        # Titles seen in the first real Adzuna ingestion (2026-09-19)
+        ("AI/GenAI Engineer", {"informatica"}),
+        ("Senior Full Stack AI-first Saas Engineer", {"informatica"}),
+        ("DG | Business & IT Analist (Finance & Applicaties)", {"business-it-management"}),
+        ("Projectleider ict", {"business-it-management"}),
+        ("Network and Integration Engineer", {"technische-informatica"}),
+        ("Oracle Database Administrator", {"technische-informatica"}),
+        ("Software Architect", {"informatica"}),
+        ("ServiceNow Technical Developer", {"informatica"}),
+        ("Technisch beheerder", {"business-it-management", "informatica"}),
+        ("Microsoft 365 Consultant", {"business-it-management"}),
+        ("Critical Environment Industrial Controls Systems Engineer", {"technische-informatica"}),
+        ("Kubernetes Engineer", {"informatica", "technische-informatica"}),
+        ("Mechanical Engineer", set()),
+        ("Commissioning Engineer", set()),
+        ("CNC Programmeur", set()),
+        ("Senior Product Engineer", set()),
+        ("IT Support Professional", set()),  # ICT, but no programme (it-support family)
     ],
 )
 def test_programmes(ref, title, expected):
@@ -82,3 +100,14 @@ def test_ict_requires_role_family_or_it_category_with_tech_skill(ref):
     assert is_ict("IT Support Professional", "Beheer van Windows Server en Intune.", "it-jobs")
     assert not is_ict("Werkvoorbereider", "Planning en montage. Excel.", "it-jobs")
     assert not is_ict("Accountmanager", "Kennis van Python.", "sales-jobs")
+    assert is_ict("IT Support Professional", None, "unknown")  # role family without programme
+    # Sales and marketing jobs at software companies sit in the IT category and name tools
+    assert not is_ict("EMEA Account Executive", "Sell our Azure platform.", "it-jobs")
+    assert not is_ict("TikTok Creator", "Werken met AI tools en Python.", "it-jobs")
+
+
+def test_generic_words_are_not_skills(ref):
+    text = (
+        "Je bouwt je netwerk uit. Requirements: HBO. Social security is covered. AI-first bedrijf."
+    )
+    assert extract_skills("Medewerker", text, ref) == []
