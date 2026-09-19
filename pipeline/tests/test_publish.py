@@ -113,7 +113,8 @@ def test_publish_writes_snapshot(loaded, ref, settings):
     assert any("synthetic" in w for w in meta["validation"]["warnings"])
     assert (settings.publish_dir / "geo" / "nl" / "vacancies.json").is_file()
     assert (settings.publish_dir / "csv" / "skills.csv").is_file()
-    assert (settings.publish_dir / "csv" / "statistics.csv").read_text("utf-8").startswith("series,")
+    stats_csv = settings.publish_dir / "csv" / "statistics.csv"
+    assert stats_csv.read_text("utf-8").startswith("series,")
 
 
 def test_production_refuses_sample_data_and_keeps_old_snapshot(loaded, ref, settings, monkeypatch):

@@ -311,8 +311,22 @@ def _write_csv_downloads(target: Path, history_dir: Path) -> None:
             writer.writerows(rows)
 
 
-STATS_CSV_COLUMNS = ["series", "source", "period", "start", "region", "breakdown", "value", "label",
-                     "n", "published", "retrieved", "url", "sample", "note"]
+STATS_CSV_COLUMNS = [
+    "series",
+    "source",
+    "period",
+    "start",
+    "region",
+    "breakdown",
+    "value",
+    "label",
+    "n",
+    "published",
+    "retrieved",
+    "url",
+    "sample",
+    "note",
+]
 
 
 def _write_stats_csv(path: Path, stats: dict) -> None:
