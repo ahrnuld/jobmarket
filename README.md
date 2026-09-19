@@ -17,12 +17,30 @@ python -m venv .venv
 
 On macOS or Linux, use `.venv/bin/...` instead.
 
+## Running the vacancy pipeline
+
+Put your Adzuna credentials in `.env` (copy `.env.example`; never commit it). Then:
+
+```powershell
+.\.venv\Scripts\jobmarket.exe ingest --source adzuna            # last 8 days (weekly run)
+.\.venv\Scripts\jobmarket.exe ingest --source adzuna --days 30  # backfill
+.\.venv\Scripts\jobmarket.exe process                           # clean, deduplicate, classify
+```
+
+Without credentials, use synthetic data in a separate database:
+
+```powershell
+$env:JOBMARKET_DB = "var/demo.sqlite"
+.\.venv\Scripts\jobmarket.exe ingest --source fixture
+.\.venv\Scripts\jobmarket.exe process
+```
+
 ## Status
 
 Built step by step:
 
 1. [x] Repository skeleton, data model, reference data (programmes, seniority, skills + ESCO, regions)
-2. [ ] Vacancy pipeline: Adzuna client and fixtures, PII scrubbing, deduplication, classification
+2. [x] Vacancy pipeline: Adzuna client and fixtures, PII scrubbing, deduplication, classification
 3. [ ] Statistics: CBS API, HBO-Monitor / ROA / UWV manual tables
 4. [ ] Aggregation, validation, publishing, and the static site (FR-01 to FR-07)
 5. [ ] Trends, programme comparison, NL/EN, CSV downloads (FR-08 to FR-11)
