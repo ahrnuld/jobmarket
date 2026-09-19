@@ -26,10 +26,11 @@ class IngestResult:
     error: str | None = None
 
 
-def start_run(conn: sqlite3.Connection, source_id: str) -> int:
+def start_run(conn: sqlite3.Connection, source_id: str, covers_from: str | None = None) -> int:
     cur = conn.execute(
-        "INSERT INTO ingestion_runs (source_id, started_at, status) VALUES (?, ?, 'running')",
-        (source_id, utc_now()),
+        "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from) "
+        "VALUES (?, ?, 'running', ?)",
+        (source_id, utc_now(), covers_from),
     )
     conn.commit()
     return cur.lastrowid
@@ -82,11 +83,19 @@ def _insert(
 
 
 def ingest(
-    conn: sqlite3.Connection, source_id: str, records: Iterable[VacancyRecord], ref: Reference
+    conn: sqlite3.Connection,
+    source_id: str,
+    records: Iterable[VacancyRecord],
+    ref: Reference,
+    covers_from: str | None = None,
 ) -> IngestResult:
-    """Consume `records` into the database. Exceptions from the source are caught and logged."""
+    """Consume `records` into the database. Exceptions from the source are caught and logged.
+
+    covers_from: the earliest posting date this run requested (today minus max_days_old). The
+    aggregation uses it to know which months the database holds completely.
+    """
     source = ref.sources[source_id]
-    run_id = start_run(conn, source_id)
+    run_id = start_run(conn, source_id, covers_from)
     fetched = new = 0
     try:
         retrieved_at = utc_now()

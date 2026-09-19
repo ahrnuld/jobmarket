@@ -9,6 +9,7 @@ description = "Data pipeline for the HBO-ICT job market insights website"
 requires-python = ">=3.11"
 dependencies = [
     "PyYAML>=6.0",
+    "tzdata>=2024.1",  # time zones for the scheduler in slim containers without system tzdata
 ]
 
 [project.optional-dependencies]

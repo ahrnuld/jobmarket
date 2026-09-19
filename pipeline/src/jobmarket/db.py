@@ -9,12 +9,15 @@ from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 # Upgrades from version N to N+1. schema.sql always describes the latest version, and a fresh
 # database is created from it directly; these only run on older databases.
-MIGRATIONS: dict[int, str] = {
-    1: "ALTER TABLE stat_observations ADD COLUMN value_label TEXT;",
+# Each step is (table, column, type): the column is added if the table exists; a missing table
+# is created by schema.sql afterwards, already with the column.
+MIGRATIONS: dict[int, tuple[str, str, str]] = {
+    1: ("stat_observations", "value_label", "TEXT"),
+    2: ("ingestion_runs", "covers_from", "TEXT"),
 }
 
 
@@ -41,7 +44,10 @@ def init_schema(conn: sqlite3.Connection) -> None:
         version = row["version"] if row else None
     if version is not None and version < SCHEMA_VERSION:
         for v in range(version, SCHEMA_VERSION):
-            conn.executescript(MIGRATIONS[v])
+            table, column, col_type = MIGRATIONS[v]
+            columns = {r[1] for r in conn.execute(f"PRAGMA table_info({table})")}
+            if columns and column not in columns:
+                conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
         conn.execute("UPDATE schema_version SET version = ?", (SCHEMA_VERSION,))
     elif version is not None and version > SCHEMA_VERSION:
         raise RuntimeError(

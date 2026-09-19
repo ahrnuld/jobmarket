@@ -74,4 +74,9 @@ Built step by step:
 3. [x] Statistics: CBS API, HBO-Monitor / ROA / UWV manual tables
 4. [x] Aggregation, validation, publishing, and the static site (FR-01 to FR-07)
 5. [x] Trends, programme comparison, NL/EN, CSV downloads, internship view (FR-08 to FR-12)
-6. [ ] Admin tooling, accuracy measurement, scheduling, handover guide
+6. [ ] Admin tooling, accuracy measurement (scheduling and hosting setup: done)
+
+## Hosting
+
+Docker Compose stack (nginx + a weekly worker) for a VPS, e.g. with Coolify:
+[docs/DEPLOY-COOLIFY.md](docs/DEPLOY-COOLIFY.md).

@@ -1,0 +1,59 @@
+# Production stack, e.g. for Coolify ("Docker Compose" build pack). See docs/DEPLOY-COOLIFY.md.
+#
+#   worker  weekly pipeline run + static site build into the shared `www` volume
+#   web     nginx serving that site (put your domain on this service)
+#
+# Variables in ${...} are set in Coolify's Environment Variables screen (or a local .env file).
+
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+    restart: unless-stopped
+    # Idle: ~15 MB (a sleeping Python scheduler). Weekly peak: ~400 MB for the site build.
+    # The limit keeps that peak from squeezing other apps on the VPS.
+    mem_limit: 1g
+    environment:
+      ADZUNA_APP_ID: ${ADZUNA_APP_ID}
+      ADZUNA_APP_KEY: ${ADZUNA_APP_KEY}
+      # Leave empty until licences are checked and the example statistics are replaced;
+      # 'production' refuses to publish sample data or sources with unchecked terms.
+      JOBMARKET_ENV: ${JOBMARKET_ENV:-}
+      # Public URL of the site, for canonical and hreflang links (e.g. https://ict-arbeidsmarkt.nl)
+      SITE_URL: ${SITE_URL:-}
+      SCHEDULE: ${SCHEDULE:-mon 05:00}
+      SCHEDULE_TZ: ${SCHEDULE_TZ:-Europe/Amsterdam}
+      # 'off' when using Coolify's Scheduled Tasks instead (command: /app/docker/weekly.sh)
+      SCHEDULER: ${SCHEDULER:-on}
+      # 'yes' runs the weekly job once at start-up (useful for the very first deploy)
+      RUN_ON_START: ${RUN_ON_START:-no}
+      # Days of vacancies to fetch per run; set e.g. 30 for the first run(s) on a new server
+      # to close the gap since the last run elsewhere. Empty = the weekly default (8).
+      JOBMARKET_INGEST_DAYS: ${JOBMARKET_INGEST_DAYS:-}
+      TZ: Europe/Amsterdam
+    volumes:
+      - jobmarket-var:/app/var                    # working database (raw vacancy texts) + snapshots
+      - jobmarket-history:/app/data/aggregates    # durable monthly history: BACK THIS UP
+      - jobmarket-published:/app/site/public/data # last validated snapshot
+      - jobmarket-www:/srv/www                    # built site releases
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    restart: unless-stopped
+    mem_limit: 128m
+    expose:
+      - "80"
+    volumes:
+      - jobmarket-www:/srv/www:ro
+    depends_on:
+      worker:
+        condition: service_healthy
+
+volumes:
+  jobmarket-var:
+  jobmarket-history:
+  jobmarket-published:
+  jobmarket-www:

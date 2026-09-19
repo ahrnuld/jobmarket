@@ -6,8 +6,9 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-# pipeline/src/jobmarket/config.py -> repository root is three levels up from the package dir
-REPO_ROOT = Path(__file__).resolve().parents[3]
+# pipeline/src/jobmarket/config.py -> repository root is three levels up from the package dir.
+# JOBMARKET_ROOT overrides it (the container sets it explicitly).
+REPO_ROOT = Path(os.environ.get("JOBMARKET_ROOT") or Path(__file__).resolve().parents[3])
 
 
 def _load_dotenv(path: Path) -> None:

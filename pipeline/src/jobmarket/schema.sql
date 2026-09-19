@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
     status          TEXT NOT NULL CHECK (status IN ('running', 'success', 'failed')),
     records_fetched INTEGER NOT NULL DEFAULT 0,
     records_new     INTEGER NOT NULL DEFAULT 0,
-    error           TEXT
+    error           TEXT,
+    covers_from     TEXT                 -- earliest posting date this run asked the source for
 );
 
 -- One row per vacancy as received from a source, after PII scrubbing (LR-03).

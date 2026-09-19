@@ -16,6 +16,7 @@ from jobmarket.aggregate import (
 )
 from jobmarket.config import load_settings
 from jobmarket.ingest import ingest
+from jobmarket.models import VacancyRecord
 from jobmarket.process import process
 from jobmarket.publish import publish
 from jobmarket.sources import fixtures
@@ -135,6 +136,63 @@ def test_history_keeps_months_no_longer_in_database(loaded, tmp_path):
     merge_into_history(history, compute(loaded, sample=True, today=TODAY))
     after = {r["month"] for r in read_history(history, "vacancies")}
     assert before == after
+
+
+def test_fresh_database_does_not_overwrite_complete_history(conn, ref, tmp_path):
+    """New server: the history has all of September, the new database only its last week."""
+    history = tmp_path / "agg"
+
+    def rec(i, posted):
+        return VacancyRecord(
+            source_id="adzuna",
+            external_id=str(i),
+            title="Java Developer",
+            posted_at=posted,
+            employer=f"E{i}",
+            area=["Nederland"],
+            description="Java",
+            source_category="it-jobs",
+        )
+
+    # Old setup: a full month, fetched with coverage from 1 September
+    ingest(
+        conn,
+        "adzuna",
+        [rec(i, f"2026-09-{d:02d}") for i, d in enumerate(range(1, 31))],
+        ref,
+        covers_from="2026-09-01",
+    )
+    process(conn, ref, [])
+    merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 5)))
+    full = [
+        r
+        for r in read_history(history, "vacancies")
+        if r["geo"] == "nl" and r["programme"] == "all" and r["seniority"] == "all"
+    ]
+    assert [(r["month"], r["n"]) for r in full] == [("2026-09", "30")]
+
+    # New server: empty database, first run covers 22 September onwards
+    conn.execute("DELETE FROM vacancy_programmes")
+    conn.execute("DELETE FROM vacancy_skills")
+    conn.execute("DELETE FROM vacancies")
+    conn.execute("DELETE FROM ingestion_runs")
+    ingest(
+        conn,
+        "adzuna",
+        [rec(100 + d, f"2026-09-{d:02d}") for d in range(22, 31)]
+        + [rec(200 + d, f"2026-10-0{d}") for d in range(1, 5)],
+        ref,
+        covers_from="2026-09-22",
+    )
+    process(conn, ref, [])
+    result = merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 5)))
+    assert result.protected == ["2026-09"]
+    after = {
+        r["month"]: r["n"]
+        for r in read_history(history, "vacancies")
+        if r["geo"] == "nl" and r["programme"] == "all" and r["seniority"] == "all"
+    }
+    assert after == {"2026-09": "30", "2026-10": "4"}  # September kept, October added
 
 
 def test_publish_writes_snapshot(loaded, ref, settings):

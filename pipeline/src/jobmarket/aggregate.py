@@ -117,6 +117,28 @@ def display_title(title_norm: str) -> str:
 class Aggregates:
     rows: dict[str, list[dict]]
     months: list[str]
+    # First day from which the database holds the source completely. A month that starts
+    # earlier is only partly in the database (e.g. a fresh database on a new server).
+    coverage_start: str | None = None
+
+
+def coverage_start(conn: sqlite3.Connection, sample: bool) -> str | None:
+    """Earliest date the database covers without gaps at the start.
+
+    For real data: the earliest `covers_from` of a successful Adzuna run. Runs from before this
+    was recorded, and fixture data, fall back to the earliest posting date in the database.
+    """
+    if not sample:
+        row = conn.execute(
+            "SELECT MIN(covers_from) FROM ingestion_runs "
+            "WHERE source_id = 'adzuna' AND status = 'success' AND covers_from IS NOT NULL"
+        ).fetchone()
+        if row and row[0]:
+            return row[0]
+    row = conn.execute(
+        "SELECT MIN(posted_at) FROM vacancies WHERE is_sample = ?", (int(sample),)
+    ).fetchone()
+    return row[0] if row else None
 
 
 def _geos(province: str | None, region: str | None) -> list[str]:
@@ -206,7 +228,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                 "classifier_version": CLASSIFIER_VERSION,
             }
         )
-    return Aggregates(rows=rows, months=sorted(posted))
+    return Aggregates(rows=rows, months=sorted(posted), coverage_start=coverage_start(conn, sample))
 
 
 def read_history(history_dir: Path, name: str) -> list[dict]:
@@ -217,14 +239,36 @@ def read_history(history_dir: Path, name: str) -> list[dict]:
         return list(csv.DictReader(fh))
 
 
-def merge_into_history(history_dir: Path, agg: Aggregates) -> dict[str, int]:
-    """Replace the recomputed months in the history CSVs; keep all other months."""
+@dataclass
+class MergeResult:
+    written: dict[str, int]
+    # Months the database holds only partly while the history already has them: the history
+    # version is kept rather than overwritten with fewer vacancies.
+    protected: list[str]
+
+
+def merge_into_history(history_dir: Path, agg: Aggregates) -> MergeResult:
+    """Replace recomputed months in the history CSVs; keep all other months.
+
+    A month is not replaced when the history has postings from before the database's coverage
+    start. Otherwise a fresh or restored database (e.g. on a new server) would overwrite a
+    complete month of history with the few days it has fetched so far.
+    """
     history_dir.mkdir(parents=True, exist_ok=True)
-    recomputed = set(agg.months)
+    # Protect a month when the history holds postings from before the database's coverage
+    # start: those postings are not in the database, so recomputing would lose them.
+    history_first = {r["month"]: r["first_posted"] for r in read_history(history_dir, "months")}
+    protected = sorted(
+        m
+        for m in agg.months
+        if m in history_first and agg.coverage_start and history_first[m] < agg.coverage_start
+    )
+    recomputed = set(agg.months) - set(protected)
     written = {}
     for name, cols in TABLES.items():
         kept = [r for r in read_history(history_dir, name) if r["month"] not in recomputed]
-        merged = kept + [{k: str(v) for k, v in r.items()} for r in agg.rows[name]]
+        new = [r for r in agg.rows[name] if r["month"] in recomputed]
+        merged = kept + [{k: str(v) for k, v in r.items()} for r in new]
         merged.sort(key=lambda r: tuple(r[c] for c in cols[:-1]))
         path = history_dir / f"{name}.csv"
         tmp = path.with_suffix(".csv.tmp")
@@ -234,4 +278,4 @@ def merge_into_history(history_dir: Path, agg: Aggregates) -> dict[str, int]:
             writer.writerows(merged)
         tmp.replace(path)
         written[name] = len(merged)
-    return written
+    return MergeResult(written, protected)

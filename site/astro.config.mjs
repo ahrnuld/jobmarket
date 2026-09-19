@@ -8,4 +8,7 @@ export default defineConfig({
   site: process.env.SITE_URL || "https://example.invalid",
   trailingSlash: "always",
   build: { format: "directory" },
+  // Never inline scripts into HTML, so the Content-Security-Policy can be script-src 'self'
+  // (see docker/nginx.conf).
+  vite: { build: { assetsInlineLimit: 0 } },
 });

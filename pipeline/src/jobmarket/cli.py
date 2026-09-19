@@ -78,7 +78,18 @@ def cmd_ingest(args: argparse.Namespace) -> int:
     with open_db(settings.db_path) as conn:
         sync_sources(conn, ref)
         records, client = _records_for(args.source, args, settings)
-        result = ingest(conn, args.source, records, ref)
+        covers_from = None
+        if client is not None:
+            from datetime import date, timedelta
+
+            days = args.days or client.config.default_days
+            covers_from = (date.today() - timedelta(days=days)).isoformat()
+        result = ingest(conn, args.source, records, ref, covers_from=covers_from)
+        if client is not None and client.stats.budget_exhausted:
+            # Results come newest first: the oldest days are missing, so claim no coverage.
+            conn.execute(
+                "UPDATE ingestion_runs SET covers_from = NULL WHERE id = ?", (result.run_id,)
+            )
     print(f"Run {result.run_id} [{result.status}]: fetched {result.fetched}, new {result.new}")
     if client is not None:
         s = client.stats
@@ -142,11 +153,18 @@ def cmd_aggregate(args: argparse.Namespace) -> int:
     settings = load_settings()
     with open_db(settings.db_path) as conn:
         agg = compute(conn, sample=args.dataset == "sample")
-    written = merge_into_history(_history_dir(settings, args.dataset), agg)
+    result = merge_into_history(_history_dir(settings, args.dataset), agg)
     print(
         f"Aggregated months {agg.months[0] if agg.months else '-'} .. "
-        f"{agg.months[-1] if agg.months else '-'}; rows: {written}"
+        f"{agg.months[-1] if agg.months else '-'}; rows: {result.written}"
     )
+    if result.protected:
+        print(
+            f"warning: kept the existing history for {', '.join(result.protected)}: the database "
+            f"only covers the source from {agg.coverage_start}, and the history has earlier "
+            "postings for these months. Set JOBMARKET_INGEST_DAYS for one run, or restore the "
+            "database, to close the gap."
+        )
     return 0
 
 
@@ -182,8 +200,14 @@ def cmd_publish(args: argparse.Namespace) -> int:
 
 def cmd_run(args: argparse.Namespace) -> int:
     """The scheduled job: ingest, statistics, process, aggregate, publish."""
+    import os
+
+    ingest_step = ["ingest", "--source", "adzuna" if args.dataset == "real" else "fixture"]
+    if args.dataset == "real" and os.environ.get("JOBMARKET_INGEST_DAYS"):
+        # e.g. 30 for the first run on a new server, to close the gap since the last run
+        ingest_step += ["--days", os.environ["JOBMARKET_INGEST_DAYS"]]
     steps = [
-        ["ingest", "--source", "adzuna" if args.dataset == "real" else "fixture"],
+        ingest_step,
         ["stats"],
         ["process"],
         ["aggregate", "--dataset", args.dataset],
