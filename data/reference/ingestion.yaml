@@ -1,0 +1,28 @@
+# What the pipeline fetches from vacancy sources.
+#
+# Adzuna findings (probe of 2026-09-19):
+# - The IT category alone misses most ICT vacancies: many sit in category "unknown" or
+#   "engineering-jobs". So we also run keyword searches across all categories; the classifier
+#   decides afterwards what counts as ICT.
+# - Descriptions are truncated to ~500 characters by the API.
+# - Per 8 days: ~630 ads in it-jobs, ~1,900 via the keyword search (about 55 API calls a week).
+
+adzuna:
+  country: nl
+  results_per_page: 50
+  # Throttling. Set these to your plan's limits (see your Adzuna dashboard).
+  min_seconds_between_calls: 3
+  max_calls_per_run: 250
+  # Days of history fetched in a normal (weekly) run. A first run can pass --days to backfill.
+  default_days: 8
+  queries:
+    - id: it-category
+      params: { category: it-jobs }
+    - id: ict-keywords
+      # what_or: any of these words, anywhere in the ad, in any category (single words only)
+      params:
+        what_or: >-
+          developer ontwikkelaar programmeur software softwareontwikkelaar devops fullstack
+          backend frontend embedded firmware iot plc scada netwerkbeheerder systeembeheerder
+          informatieanalist applicatiebeheerder cybersecurity tester scrum python java
+          javascript kubernetes

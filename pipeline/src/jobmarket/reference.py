@@ -58,6 +58,7 @@ class Skill:
     esco_query: str | None
     esco_uri: str | None
     esco_label: str | None
+    ict_signal: bool = True  # False for generic skills that don't make a vacancy ICT on their own
 
 
 @dataclass(frozen=True)
@@ -181,6 +182,7 @@ def load_reference(reference_dir: Path) -> Reference:
             esco_query=s.get("esco_query"),
             esco_uri=link.get("uri"),
             esco_label=link.get("label"),
+            ict_signal=bool(s.get("ict_signal", True)),
         )
 
     sen = _read_yaml(reference_dir / "seniority.yaml")

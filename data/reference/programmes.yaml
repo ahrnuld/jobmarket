@@ -2,8 +2,9 @@
 #
 # A vacancy maps to every programme whose role family matches its title. A role family can serve
 # several programmes. Title patterns are case-insensitive regular expressions, matched against
-# the normalised title (lowercase, gender markers such as "(m/v/x)" removed). Dutch and English
-# titles are both covered (DR-06).
+# the normalised title: lowercase, gender markers such as "(m/v/x)" removed, and hyphens and
+# slashes turned into spaces ("PLC-programmeur" -> "plc programmeur", "Junior/Medior" ->
+# "junior medior"). Dutch and English titles are both covered (DR-06).
 #
 # OWNER REVIEW NEEDED (roadmap phase 0: "role families per programme defined"). This is a first
 # draft; check it against the programme descriptions and the labelled sample. Changes are
@@ -35,10 +36,13 @@ role_families:
     name: { nl: Softwareontwikkelaar, en: Software developer }
     programmes: [informatica]
     title_patterns:
-      - '\b(software|applicatie|application)\s*(developer|ontwikkelaar|engineer|programmeur)\b'
+      - '(?<!embedded )\b(software|applicatie|application)\s*(developer|ontwikkelaar|engineer|programmeur)\b'
       - '\b(\.net|c#|java|python|php|golang|go|ruby|kotlin|scala|typescript|node(\.js)?)\s*(developer|ontwikkelaar|engineer|programmeur)\b'
       - '\b(back[- ]?end|full[- ]?stack)\s*(developer|ontwikkelaar|engineer)\b'
       - '^(developer|ontwikkelaar|programmeur)$'
+      - '\bsysteem\s*ontwikkelaar\b'
+      - '\bsoftwareontwikkelaar\b'
+      - '\b(low code|no code|servicenow|outsystems|mendix|power platform|salesforce|abap)\s*(developer|ontwikkelaar|engineer)\b'
       - '\b(junior|medior|senior|lead|stagiair[e]?|trainee|graduate)\s+(developer|ontwikkelaar|programmeur)\b'
   - id: web-mobile-developer
     name: { nl: Web- en mobile developer, en: Web and mobile developer }

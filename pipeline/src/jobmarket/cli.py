@@ -54,12 +54,76 @@ def cmd_resolve_esco(args: argparse.Namespace) -> int:
     return 0
 
 
+def _records_for(source: str, args: argparse.Namespace, settings):
+    if source == "fixture":
+        from jobmarket.sources import fixtures
+
+        return fixtures.generate(n=args.count, months=args.months), None
+    if source == "adzuna":
+        import yaml
+
+        from jobmarket.sources.adzuna import AdzunaClient, AdzunaConfig
+
+        cfg = yaml.safe_load((settings.reference_dir / "ingestion.yaml").read_text("utf-8"))
+        client = AdzunaClient(AdzunaConfig.from_settings(settings, cfg))
+        return client.fetch(days=args.days), client
+    raise SystemExit(f"Unknown source {source!r}")
+
+
+def cmd_ingest(args: argparse.Namespace) -> int:
+    from jobmarket.ingest import ingest
+
+    settings = load_settings()
+    ref = load_reference(settings.reference_dir)
+    with open_db(settings.db_path) as conn:
+        sync_sources(conn, ref)
+        records, client = _records_for(args.source, args, settings)
+        result = ingest(conn, args.source, records, ref)
+    print(f"Run {result.run_id} [{result.status}]: fetched {result.fetched}, new {result.new}")
+    if client is not None:
+        s = client.stats
+        print(f"API calls: {s.calls}; per query: {s.per_query}")
+        if s.budget_exhausted:
+            print("Call budget (max_calls_per_run) reached: some results were not fetched.")
+    if result.error:
+        print(f"Error: {result.error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+def cmd_process(args: argparse.Namespace) -> int:
+    from jobmarket.corrections import load_corrections
+    from jobmarket.process import process
+
+    settings = load_settings()
+    ref = load_reference(settings.reference_dir)
+    corrections = load_corrections(settings.corrections_file, ref)
+    with open_db(settings.db_path) as conn:
+        sync_sources(conn, ref)
+        r = process(conn, ref, corrections)
+    print(
+        f"Processed {r.vacancies} vacancies: {r.duplicates} duplicates, "
+        f"{r.ict} unique ICT vacancies, {r.purged} texts purged (retention)"
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="jobmarket", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("init-db", help="create or upgrade the working database")
     p.set_defaults(func=cmd_init_db)
+
+    p = sub.add_parser("ingest", help="fetch vacancies from a source into the database")
+    p.add_argument("--source", choices=["adzuna", "fixture"], required=True)
+    p.add_argument("--days", type=int, help="adzuna: days of history (default from ingestion.yaml)")
+    p.add_argument("--count", type=int, default=6000, help="fixture: number of vacancies")
+    p.add_argument("--months", type=int, default=24, help="fixture: months of history")
+    p.set_defaults(func=cmd_ingest)
+
+    p = sub.add_parser("process", help="normalise, deduplicate and classify stored vacancies")
+    p.set_defaults(func=cmd_process)
 
     ref = sub.add_parser("reference", help="reference data tools").add_subparsers(
         dest="ref_command", required=True

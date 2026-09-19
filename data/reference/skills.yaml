@@ -6,6 +6,8 @@
 # esco_query: search text used by `jobmarket reference resolve-esco` to find the ESCO concept.
 #           The result is stored in esco_links.yaml, where each match is checked by hand.
 #           A skill without a fitting ESCO concept is still counted and shown, just without a link.
+# ict_signal: false for generic skills (Excel, languages, project management) that do not make a
+#           vacancy in the source's IT category count as ICT on their own. Default true.
 
 skills:
   # Programming languages
@@ -42,7 +44,7 @@ skills:
   - { id: ai-llm, label: AI / LLMs, category: data, patterns: ['\b(generative ai|genai|llms?|large language models?|artificial intelligence|kunstmatige intelligentie)\b', '\bai\b'], esco_query: "principles of artificial intelligence" }
   - { id: data-analysis, label: Data analysis, category: data, patterns: ['\bdata[- ]?(analyse|analysis|analytics)\b'], esco_query: "perform data analysis" }
   - { id: power-bi, label: Power BI, category: data, patterns: ['\bpower ?bi\b'], esco_query: "business intelligence" }
-  - { id: excel, label: Excel, category: data, patterns: ['\b(ms |microsoft )?excel\b'], esco_query: "use spreadsheets software" }
+  - { id: excel, label: Excel, category: data, patterns: ['\b(ms |microsoft )?excel\b'], esco_query: "use spreadsheets software", ict_signal: false }
   - { id: data-modelling, label: Data modelling, category: data, patterns: ['\bdata ?(modellering|modelling|modeling)\b', '\bdatamodel(len)?\b'], esco_query: "create data models" }
   - { id: etl, label: ETL / data pipelines, category: data, patterns: ['\betl\b', '\bdata ?pipelines?\b', '\bdbt\b'], esco_query: "ETL" }
   - { id: spark, label: Spark, category: data, patterns: ['\b(apache )?spark\b', '\bdatabricks\b'], esco_query: null }
@@ -69,21 +71,21 @@ skills:
   - { id: embedded, label: Embedded systems, category: embedded, patterns: ['\bembedded\b', '\bfirmware\b', '\bmicrocontroller', '\brtos\b'], esco_query: "embedded systems" }
   - { id: iot, label: IoT, category: embedded, patterns: ['\biot\b', '\binternet of things\b'], esco_query: "Internet of Things" }
   - { id: plc, label: PLC / SCADA, category: embedded, patterns: ['\bplc\b', '\bscada\b', '\bsiemens tia\b', '\bcodesys\b'], esco_query: "programmable logic controller" }
-  - { id: electronics, label: Electronics, category: embedded, patterns: ['\belektronica\b', '\belectronics\b', '\bpcb\b'], esco_query: "electronics" }
+  - { id: electronics, label: Electronics, category: embedded, patterns: ['\belektronica\b', '\belectronics\b', '\bpcb\b'], esco_query: "electronics", ict_signal: false }
   - { id: robotics, label: Robotics, category: embedded, patterns: ['\brobotica\b', '\brobotics\b', '\bros2?\b'], esco_query: "robotics" }
 
   # Methods and business
-  - { id: agile-scrum, label: Agile / Scrum, category: method, patterns: ['\bagile\b', '\bscrum\b', '\bkanban\b', '\bscaled agile\b'], esco_query: "Agile development" }
+  - { id: agile-scrum, label: Agile / Scrum, category: method, patterns: ['\bagile\b', '\bscrum\b', '\bkanban\b', '\bscaled agile\b'], esco_query: "Agile development", ict_signal: false }
   - { id: testing, label: Software testing, category: method, patterns: ['\b(unit|integratie|integration|end-to-end|e2e|geautomatiseerd|automated)\s*(test|tests|testen|testing)\b', '\btest ?automation\b', '\btdd\b', '\bselenium\b', '\bcypress\b'], esco_query: "ICT test execution software" }
   - { id: oop, label: Object-oriented programming, category: method, patterns: ['\bobject[- ]?(ge)?ori[eë]nte?e?d\b', '\boop\b'], esco_query: "object-oriented modelling" }
-  - { id: requirements, label: Requirements analysis, category: business, patterns: ['\brequirements?\b', '\buser stories\b', '\beisen ?(en wensen|analyse)\b'], esco_query: "ICT system user requirements" }
-  - { id: process-modelling, label: Process modelling (BPMN), category: business, patterns: ['\bbpmn\b', '\bproces(modellering|analyse|verbetering)\b', '\bprocess (modelling|modeling|improvement|mining)\b', '\blean\b'], esco_query: "business process modelling" }
+  - { id: requirements, label: Requirements analysis, category: business, patterns: ['\brequirements?\b', '\buser stories\b', '\beisen ?(en wensen|analyse)\b'], esco_query: "ICT system user requirements", ict_signal: false }
+  - { id: process-modelling, label: Process modelling (BPMN), category: business, patterns: ['\bbpmn\b', '\bproces(modellering|analyse|verbetering)\b', '\bprocess (modelling|modeling|improvement|mining)\b', '\blean\b'], esco_query: "business process modelling", ict_signal: false }
   - { id: erp, label: ERP systems, category: business, patterns: ['\berp\b', '\bsap\b', '\bexact online\b', '\bafas\b', '\bdynamics 365\b'], esco_query: "enterprise resource planning" }
-  - { id: crm, label: CRM systems, category: business, patterns: ['\bcrm\b', '\bsalesforce\b', '\bhubspot\b'], esco_query: "customer relationship management" }
-  - { id: project-management, label: Project management, category: business, patterns: ['\bprojectmanagement\b', '\bproject management\b', '\bprince ?2\b', '\bprojectleiding\b'], esco_query: "project management" }
-  - { id: stakeholder-management, label: Stakeholder management, category: business, patterns: ['\bstakeholder(s| management|management)\b'], esco_query: "build business relationships" }
+  - { id: crm, label: CRM systems, category: business, patterns: ['\bcrm\b', '\bsalesforce\b', '\bhubspot\b'], esco_query: "customer relationship management", ict_signal: false }
+  - { id: project-management, label: Project management, category: business, patterns: ['\bprojectmanagement\b', '\bproject management\b', '\bprince ?2\b', '\bprojectleiding\b'], esco_query: "project management", ict_signal: false }
+  - { id: stakeholder-management, label: Stakeholder management, category: business, patterns: ['\bstakeholder(s| management|management)\b'], esco_query: "build business relationships", ict_signal: false }
   - { id: ux-design, label: UX / UI design, category: web, patterns: ['\bux\b', '\bui\b', '\buser experience\b', '\bfigma\b'], esco_query: "software interaction design" }
 
   # Languages (relevant for LR-07: check whether Dutch is required)
-  - { id: dutch-language, label: Dutch language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) nederlands', '\bnederlandse taal\b', '\bfluent (in )?dutch\b', '\bdutch (is|speaking|language)\b'], esco_query: "Dutch" }
-  - { id: english-language, label: English language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) engels', '\bengelse taal\b', '\bfluent (in )?english\b', '\bexcellent english\b'], esco_query: "English" }
+  - { id: dutch-language, label: Dutch language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) nederlands', '\bnederlandse taal\b', '\bfluent (in )?dutch\b', '\bdutch (is|speaking|language)\b'], esco_query: "Dutch", ict_signal: false }
+  - { id: english-language, label: English language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) engels', '\bengelse taal\b', '\bfluent (in )?english\b', '\bexcellent english\b'], esco_query: "English", ict_signal: false }
