@@ -75,15 +75,26 @@ export function rolesCard(ctx: Ctx, data: GeoData, win: Window, programme: strin
 /** Monthly gross salary: annual amounts from postings divided by 12, rounded to 50 euro. */
 export const monthlyFromAnnual = (annual: number) => roundTo(annual / 12, 50);
 
+/** Level names for salary charts: "all" excludes internship allowances, so say so. */
+export const salaryLevelName = (ctx: Ctx, lvl: string) =>
+  lvl === "all" ? (ctx.lang === "nl" ? "Alle niveaus, zonder stages" : "All levels, excl. internships")
+    : lvl === "internship" ? (ctx.lang === "nl" ? "Stagevergoeding" : "Internship allowance")
+      : seniorityName(ctx, lvl);
+
 export function salaryCard(ctx: Ctx, data: GeoData, win: Window, geoId: string, programme: string,
-                           levels = ["entry", "junior", "medior", "senior", "all"]): string {
+                           levels = ["internship", "junior", "medior", "senior", "all"]): string {
   const { lang, tr, meta } = ctx;
   const min = meta.min_sample_size;
   const stats = levels.map((lvl) => ({ lvl, s: salaryStats(data.salaries, win.months, programme, lvl) }));
+  const noAllowance = levels.includes("internship") && !stats.find((x) => x.lvl === "internship")?.s.n
+    ? `<p class="muted">${lang === "nl"
+      ? "Geen enkele stagevacature in deze selectie noemt een stagevergoeding."
+      : "No internship posting in this selection states an allowance."}</p>`
+    : "";
   const rows = stats.filter((x) => x.s.n > 0).map(({ lvl, s }) => ({
-    label: `${seniorityName(ctx, lvl)} (n=${fmtInt(lang, s.n)})`,
+    label: `${salaryLevelName(ctx, lvl)} (n=${fmtInt(lang, s.n)})`,
     p25: monthlyFromAnnual(s.p25!), median: monthlyFromAnnual(s.median!), p75: monthlyFromAnnual(s.p75!),
-    tip: `${seniorityName(ctx, lvl)}: ${lang === "nl" ? "mediaan" : "median"} ${fmtEuro(lang, monthlyFromAnnual(s.median!))}, `
+    tip: `${salaryLevelName(ctx, lvl)}: ${lang === "nl" ? "mediaan" : "median"} ${fmtEuro(lang, monthlyFromAnnual(s.median!))}, `
       + `${lang === "nl" ? "middelste helft" : "middle half"} ${fmtEuro(lang, monthlyFromAnnual(s.p25!))} – ${fmtEuro(lang, monthlyFromAnnual(s.p75!))} (n=${s.n})`,
     muted: isIndicative(s.n, min),
   }));
@@ -92,15 +103,15 @@ export function salaryCard(ctx: Ctx, data: GeoData, win: Window, geoId: string, 
   return card(ctx, {
     title: lang === "nl" ? "Salaris in vacatures (bruto per maand)" : "Salary in vacancies (gross per month)",
     subtitle: lang === "nl"
-      ? `${geoName(ctx, geoId)}, ${lcFirst(programmeName(ctx, programme))}. Balk: de middelste helft van de genoemde salarissen; streep: de mediaan. Alleen vacatures die zelf een salaris noemen; jaarbedragen gedeeld door 12.`
-      : `${geoName(ctx, geoId)}, ${lcFirst(programmeName(ctx, programme))}. Bar: the middle half of the stated salaries; mark: the median. Only postings that state a salary; annual amounts divided by 12.`,
+      ? `${geoName(ctx, geoId)}, ${lcFirst(programmeName(ctx, programme))}. Balk: de middelste helft van de genoemde salarissen; streep: de mediaan. Alleen vacatures die zelf een salaris noemen; jaarbedragen gedeeld door 12. Stagevergoedingen staan apart en tellen niet mee bij de andere niveaus.`
+      : `${geoName(ctx, geoId)}, ${lcFirst(programmeName(ctx, programme))}. Bar: the middle half of the stated salaries; mark: the median. Only postings that state a salary; annual amounts divided by 12. Internship allowances are shown separately and not counted in the other levels.`,
     body: ranges(rows, lang === "nl" ? "Salarisbereik per niveau" : "Salary range by level", tr.chart.noData,
-                 (n) => fmtEuro(lang, n)),
+                 (n) => fmtEuro(lang, n)) + noAllowance,
     provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n: total,
                                   unit: lang === "nl" ? "vacatures met salaris" : "vacancies with a salary" }),
     table: table(lang === "nl" ? "Salaris" : "Salary",
       [tr.filters.seniority, "n", "25%", lang === "nl" ? "Mediaan" : "Median", "75%"],
-      stats.map(({ lvl, s }) => [seniorityName(ctx, lvl), fmtInt(lang, s.n),
+      stats.map(({ lvl, s }) => [salaryLevelName(ctx, lvl), fmtInt(lang, s.n),
         s.p25 === null ? "–" : fmtEuro(lang, monthlyFromAnnual(s.p25)),
         s.median === null ? "–" : fmtEuro(lang, monthlyFromAnnual(s.median)),
         s.p75 === null ? "–" : fmtEuro(lang, monthlyFromAnnual(s.p75))])),

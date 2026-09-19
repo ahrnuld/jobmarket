@@ -11,7 +11,7 @@
 levels:
   - id: internship
     title_patterns:
-      - '\bstage\b'
+      - '\b(meewerk|afstudeer|snuffel|werkervarings|onderzoeks|minor)?stage\b'
       - '\bstagiair[e]?\b'
       - '\bafstudeer(opdracht|stage|der)?\b'
       - '\bintern(ship)?\b'

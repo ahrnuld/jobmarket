@@ -12,6 +12,7 @@ from jobmarket.aggregate import (
     display_title,
     merge_into_history,
     read_history,
+    salary_bucket,
 )
 from jobmarket.config import load_settings
 from jobmarket.ingest import ingest
@@ -36,6 +37,29 @@ TODAY = date(2026, 9, 19)
 )
 def test_annual_salary(lo, hi, predicted, expected):
     assert annual_salary(lo, hi, predicted) == expected
+
+
+@pytest.mark.parametrize(
+    "lo, hi, expected",
+    [
+        (500, 500, 6000),  # monthly allowance (stored as annual, like every salary)
+        (300, 600, 5400),
+        (1800, 2000, 22800),
+        (15, 15, None),  # hourly rate
+        (3000, 3500, None),  # a junior salary on a posting classified as internship
+        (6000, 6000, None),  # no annual allowances: internships last months
+        (40000, 45000, None),
+    ],
+)
+def test_internship_allowance(lo, hi, expected):
+    assert annual_salary(lo, hi, 0, seniority="internship") == expected
+
+
+def test_salary_buckets():
+    assert salary_bucket(6000) == 6000  # 600-wide below 30,000
+    assert salary_bucket(6250) == 6000
+    assert salary_bucket(41000) == 40000  # 2,500-wide above
+    assert salary_bucket(30100) == 30000
 
 
 def test_display_title_drops_levels():
@@ -87,6 +111,17 @@ def test_aggregate_counts_are_consistent(loaded):
     months = {r["month"]: r["partial"] for r in agg.rows["months"]}
     assert months["2026-09"] == 1  # current month is partial
     assert compute(loaded, sample=False, today=TODAY).months == []  # real and sample never mix
+
+
+def test_internship_allowances_stay_out_of_salary_totals(loaded):
+    rows = compute(loaded, sample=True, today=TODAY).rows["salaries"]
+    nl = [r for r in rows if r["geo"] == "nl" and r["programme"] == "all"]
+    intern = [r for r in nl if r["seniority"] == "internship"]
+    assert intern, "fixture internships state an allowance"
+    assert all(r["bucket"] < 12_000 for r in intern)  # 300-750 a month
+    # 'all' and 'entry' contain real salaries only
+    assert all(r["bucket"] >= 12_000 for r in nl if r["seniority"] in ("all", "junior"))
+    assert not [r for r in nl if r["seniority"] == "entry"]
 
 
 def test_history_keeps_months_no_longer_in_database(loaded, tmp_path):

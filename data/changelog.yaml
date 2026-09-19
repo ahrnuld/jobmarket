@@ -15,11 +15,12 @@ entries:
         Eerste opzet van ontdubbeling, seniorityclassificatie, koppeling aan opleidingen en
         skill-extractie, bijgesteld op basis van de eerste 30 dagen Adzuna-data. Adzuna levert
         alleen de eerste ~500 tekens van een vacaturetekst; skills en ervaringseisen die later in
-        de tekst staan worden dus niet gezien. Nog niet getoetst op een handmatig gelabelde
-        steekproef.
+        de tekst staan worden dus niet gezien. Stagevergoedingen worden apart geteld en niet
+        gemengd met salarissen. Nog niet getoetst op een handmatig gelabelde steekproef.
       en: >-
         First version of deduplication, seniority classification, programme mapping and skill
         extraction, revised against the first 30 days of Adzuna data. Adzuna provides only the
         first ~500 characters of a posting, so skills and experience requirements further down
-        the text are not seen. Not yet measured against a manually labelled sample.
+        the text are not seen. Internship allowances are counted separately and never mixed
+        with salaries. Not yet measured against a manually labelled sample.
     series_break: []

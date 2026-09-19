@@ -5,10 +5,10 @@ import { barList, lineChart, ranges, table } from "../lib/charts";
 import { escapeHtml as esc, fmtEuro, fmtInt, fmtPct } from "../lib/format";
 import { countVacancies, isIndicative, monthly, salaryStats, share, topFamilies, topSkills, window } from "../lib/model";
 import type { GeoData, Stats } from "../lib/types";
-import { monthlyFromAnnual } from "./blocks";
+import { monthlyFromAnnual, salaryLevelName } from "./blocks";
 import {
   card, type Ctx, familyName, type FilterState, geoName, indicativeBadge, monthLabel, PROGRAMME_COLOR,
-  programmeName, provenance, seniorityName, skillLabel, tile, vacancyUpdated, windowLabel,
+  programmeName, provenance, skillLabel, tile, vacancyUpdated, windowLabel,
 } from "./common";
 import { graduateCard } from "./stats";
 import { completeMonths } from "./trends";
@@ -90,7 +90,7 @@ export function renderCompare(ctx: Ctx, state: FilterState, data: Record<string,
   }));
 
   // Salaries: one shared scale so the two programmes compare directly
-  const rows = progs.flatMap((p) => (["entry", "all"] as const).map((lvl) => {
+  const rows = progs.flatMap((p) => (["junior", "all"] as const).map((lvl) => {
     const s = salaryStats(d.salaries, win.months, p, lvl);
     return { p, lvl, s };
   })).filter((r) => r.s.n > 0);
@@ -98,16 +98,16 @@ export function renderCompare(ctx: Ctx, state: FilterState, data: Record<string,
     title: lang === "nl" ? "Salaris in vacatures (bruto per maand)" : "Salary in vacancies (gross per month)",
     subtitle: lang === "nl" ? "Balk: middelste helft; streep: mediaan." : "Bar: middle half; mark: median.",
     body: ranges(rows.map(({ p, lvl, s }) => ({
-      label: `${programmeName(ctx, p)} · ${seniorityName(ctx, lvl)} (n=${s.n})`,
+      label: `${programmeName(ctx, p)} · ${salaryLevelName(ctx, lvl)} (n=${s.n})`,
       p25: monthlyFromAnnual(s.p25!), median: monthlyFromAnnual(s.median!), p75: monthlyFromAnnual(s.p75!),
-      tip: `${programmeName(ctx, p)}, ${seniorityName(ctx, lvl)}: ${fmtEuro(lang, monthlyFromAnnual(s.median!))} (n=${s.n})`,
+      tip: `${programmeName(ctx, p)}, ${salaryLevelName(ctx, lvl)}: ${fmtEuro(lang, monthlyFromAnnual(s.median!))} (n=${s.n})`,
       colorVar: PROGRAMME_COLOR[p], muted: isIndicative(s.n, min),
     })), lang === "nl" ? "Salarisbereik" : "Salary range", tr.chart.noData, (v) => fmtEuro(lang, v)),
     provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx),
                                   n: rows.filter((r) => r.lvl === "all").reduce((t, r) => t + r.s.n, 0),
                                   unit: lang === "nl" ? "vacatures met salaris" : "vacancies with a salary" }),
     table: table(lang === "nl" ? "Salaris" : "Salary", ["", "n", lang === "nl" ? "Mediaan" : "Median"],
-      rows.map(({ p, lvl, s }) => [`${programmeName(ctx, p)} · ${seniorityName(ctx, lvl)}`, fmtInt(lang, s.n), fmtEuro(lang, monthlyFromAnnual(s.median!))])),
+      rows.map(({ p, lvl, s }) => [`${programmeName(ctx, p)} · ${salaryLevelName(ctx, lvl)}`, fmtInt(lang, s.n), fmtEuro(lang, monthlyFromAnnual(s.median!))])),
     badges: rows.some((r) => isIndicative(r.s.n, min)) ? [indicativeBadge(ctx)] : [],
   }));
 

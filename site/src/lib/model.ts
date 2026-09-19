@@ -10,7 +10,11 @@ export const DEFAULT_PERIOD: Period = "12m"; // FR-01
 export const SENIORITIES = ["all", "entry", "internship", "junior", "medior", "senior", "unknown"] as const;
 export type Seniority = (typeof SENIORITIES)[number];
 
-export const SALARY_BUCKET = 2500;
+/**
+ * Salary buckets (annual gross, euro) are 600 wide below 30,000 and 2,500 wide above, so the
+ * width follows from the bucket value. Same rule as pipeline/src/jobmarket/aggregate.py.
+ */
+export const bucketWidth = (bucket: number) => (bucket < 30000 ? 600 : 2500);
 
 export interface Window {
   months: number[]; // indices into meta months
@@ -114,7 +118,10 @@ export interface SalaryStat {
   p75: number | null;
 }
 
-/** Quantiles from 2,500-euro buckets, interpolated within the bucket. */
+/**
+ * Quantiles from salary buckets, interpolated within the bucket. Internship allowances are only
+ * stored under seniority "internship"; "all" and the other levels contain salaries only.
+ */
 export function salaryStats(rows: SalaryRow[], months: number[], programme = "all",
                             seniority: string = "all"): SalaryStat {
   const has = inSet(months);
@@ -129,10 +136,11 @@ export function salaryStats(rows: SalaryRow[], months: number[], programme = "al
     const target = p * n;
     let cum = 0;
     for (const [bucket, c] of sorted) {
-      if (cum + c >= target) return bucket + ((target - cum) / c) * SALARY_BUCKET;
+      if (cum + c >= target) return bucket + ((target - cum) / c) * bucketWidth(bucket);
       cum += c;
     }
-    return sorted[sorted.length - 1][0] + SALARY_BUCKET;
+    const last = sorted[sorted.length - 1][0];
+    return last + bucketWidth(last);
   };
   return { n, p25: q(0.25), median: q(0.5), p75: q(0.75) };
 }

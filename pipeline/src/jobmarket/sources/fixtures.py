@@ -224,7 +224,9 @@ def _salary(rng: random.Random, level: str, title: str) -> tuple[float | None, f
     if rng.random() > 0.4:  # most postings state no salary
         return None, None
     if "tage" in title or "Werkstudent" in title:
-        return 500.0 * 12, 700.0 * 12
+        # Internship allowances are stated per month, like real postings ("€ 500 stagevergoeding").
+        lo = float(rng.choice([300, 400, 450, 500, 600]))
+        return lo, lo + rng.choice([0, 100, 150])
     base = {"Junior ": 38000, "Medior ": 50000, "Senior ": 64000, "Lead ": 75000}.get(level, 48000)
     lo = round(base * rng.uniform(0.85, 1.05), -2)
     return lo, round(lo * rng.uniform(1.1, 1.3), -2)

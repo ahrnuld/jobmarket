@@ -22,9 +22,19 @@ from pathlib import Path
 from jobmarket.classify import CLASSIFIER_VERSION
 from jobmarket.db import utc_now
 
-SALARY_BUCKET = 2500  # euro per year; medians are read from buckets, so +/- half a bucket
+# Salaries are stored as counts per bucket of annual gross salary; medians are read from buckets.
+# Below 30,000 a year (internship allowances, low salaries) buckets are 600 wide (50 a month),
+# above that 2,500. 30,000 is a multiple of both, so a bucket's width follows from its value.
+# The site uses the same rule (site/src/lib/model.ts, bucketWidth).
+SALARY_FINE_BELOW = 30_000
+SALARY_BUCKET_FINE = 600
+SALARY_BUCKET = 2500
 SALARY_MIN_ANNUAL = 12_000
 SALARY_MAX_ANNUAL = 250_000
+# Internship allowances ("stagevergoeding") are stated per month: an internship lasts a few
+# months, so an annual amount does not occur.
+INTERN_MONTHLY_MIN = 100
+INTERN_MONTHLY_MAX = 2_000
 LEVEL_WORDS = {
     "junior",
     "jr",
@@ -61,13 +71,20 @@ TABLES = {
 
 
 def annual_salary(
-    salary_min: float | None, salary_max: float | None, predicted: int | None
+    salary_min: float | None,
+    salary_max: float | None,
+    predicted: int | None,
+    seniority: str | None = None,
 ) -> float | None:
-    """Annual gross salary midpoint, or None when absent, estimated or of unknown unit.
+    """Annual gross salary (or internship allowance) midpoint; None when absent, estimated or of
+    unknown unit.
 
-    Postings state salaries per year, month, day or hour without saying which. Values of 12,000
-    and up are read as annual, 1,000-12,000 as monthly; lower values (day or hour rates) are
-    dropped, as are values above 250,000.
+    Postings state amounts per year, month, day or hour without saying which.
+    - Internships: only 100-2,000 counts, as a monthly allowance (internships last months, so
+      there are no annual amounts). Anything else is dropped: hourly rates, or a real salary on
+      a posting classified as an internship (more likely a misclassification than an allowance).
+    - Other levels: 12,000 and up is annual, 1,000-12,000 monthly; lower values (day or hour
+      rates) and values above 250,000 are dropped.
     """
     if predicted:
         return None
@@ -75,11 +92,20 @@ def annual_salary(
     if not values:
         return None
     mid = sum(values) / len(values)
+    if seniority == "internship":
+        if INTERN_MONTHLY_MIN <= mid <= INTERN_MONTHLY_MAX:
+            return mid * 12  # stored like all salaries as an annual figure; the site divides by 12
+        return None
     if 1_000 <= mid < SALARY_MIN_ANNUAL:
         mid *= 12
     if not SALARY_MIN_ANNUAL <= mid <= SALARY_MAX_ANNUAL:
         return None
     return mid
+
+
+def salary_bucket(annual: float) -> int:
+    width = SALARY_BUCKET_FINE if annual < SALARY_FINE_BELOW else SALARY_BUCKET
+    return int(annual // width * width)
 
 
 def display_title(title_norm: str) -> str:
@@ -130,7 +156,13 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
         prog_ids = ["all"] + [p for p, _ in progs]
         level = v["seniority"] or "unknown"
         levels = ["all", level] + (["entry"] if level in ("internship", "junior") else [])
-        salary = annual_salary(v["salary_min"], v["salary_max"], v["salary_is_predicted"])
+        salary = annual_salary(
+            v["salary_min"], v["salary_max"], v["salary_is_predicted"], seniority=level
+        )
+        # An internship allowance is not a salary: it is kept under 'internship' only, never
+        # mixed into 'all' or 'entry' (which would otherwise mix allowances with junior pay).
+        salary_levels = ["internship"] if level == "internship" else ["all", level]
+        bucket = salary_bucket(salary) if salary is not None else None
         title = display_title(v["title_norm"] or "")
         for g in geos:
             for p in prog_ids:
@@ -138,8 +170,8 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                     counts["vacancies"][(month, g, p, s)] += 1
                     for sk in skills.get(v["id"], []):
                         counts["skills"][(month, g, p, s, sk)] += 1
-                    if salary is not None:
-                        bucket = int(salary // SALARY_BUCKET * SALARY_BUCKET)
+                if bucket is not None:
+                    for s in salary_levels:
                         counts["salaries"][(month, g, p, s, bucket)] += 1
                 if title:
                     counts["titles"][(month, g, p, title)] += 1

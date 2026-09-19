@@ -5,7 +5,7 @@ import { barList, columns, lineChart, type Marker, table } from "../lib/charts";
 import { fmtDate, fmtEuro, fmtInt, fmtMonth, fmtPct, fmtPp, fmtPeriod } from "../lib/format";
 import { MIN_HALF_MONTHS, SPAN_YEARS, monthly, movers, quarters, salaryStats, spanMonths, type Mover } from "../lib/model";
 import type { GeoData, Stats } from "../lib/types";
-import { monthlyFromAnnual } from "./blocks";
+import { monthlyFromAnnual, salaryLevelName } from "./blocks";
 import {
   card, type Ctx, familyName, type FilterState, geoName, monthLabel, PROGRAMME_COLOR, provenance,
   skillLabel, vacancyUpdated,
@@ -133,9 +133,9 @@ export function renderTrends(ctx: Ctx, state: FilterState, data: Record<string, 
 
   // Salary per quarter
   const qs = quarters(months, idx);
-  const salarySeries = (["all", "entry"] as const).map((lvl, k) => {
+  const salarySeries = (["all", "junior"] as const).map((lvl, k) => {
     const st = qs.map((q) => salaryStats(d.salaries, q.months, "all", lvl));
-    return { id: lvl, label: (tr.seniority as Record<string, string>)[lvl], colorVar: k ? "--series-2" : "--series-1",
+    return { id: lvl, label: salaryLevelName(ctx, lvl), colorVar: k ? "--series-2" : "--series-1",
              values: st.map((s) => (s.n >= meta.min_sample_size && s.median !== null ? monthlyFromAnnual(s.median) : null)), n: st.map((s) => s.n) };
   });
   const qLabels = qs.map((q) => fmtPeriod(lang, q.label));

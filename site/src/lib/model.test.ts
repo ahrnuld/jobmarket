@@ -61,6 +61,11 @@ describe("salaryStats", () => {
     expect(s.p25).toBe(41250);
     expect(s.p75).toBe(51250);
   });
+  it("uses 600-euro buckets below 30,000 (internship allowances)", () => {
+    const rows: SalaryRow[] = [[0, "all", "internship", 6000, 10]]; // 500-550 a month
+    const s = salaryStats(rows, [0], "all", "internship");
+    expect(s.median).toBe(6300); // middle of the 6,000-6,600 bucket = 525 a month
+  });
   it("returns nulls without data", () => {
     expect(salaryStats([], [0])).toEqual({ n: 0, p25: null, median: null, p75: null });
   });

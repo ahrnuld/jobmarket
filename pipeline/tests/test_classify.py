@@ -15,6 +15,7 @@ def seniority(ref, title, description=None):
     [
         ("Stagiair Softwareontwikkeling", None, "internship"),
         ("Afstudeerstage Data Science", None, "internship"),
+        ("Meewerkstage Data Science (Nederlands sprekend!)", None, "internship"),
         ("Internship Backend Developer", None, "internship"),
         ("Junior Java Developer", None, "junior"),
         ("Traineeship IT", None, "junior"),
