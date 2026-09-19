@@ -27,7 +27,8 @@ const locations = programme.locations.join(nl ? " en " : " and ");
   description={nl
     ? `${programme.name[lang]}: vacatures, meest gevraagde skills, typische functies en salarissen.`
     : `${programme.name[lang]}: vacancies, most requested skills, typical roles and salaries.`}>
-  <p><a href={path(lang, "programmes")}>← {nl ? "Alle opleidingen" : "All programmes"}</a></p>
+  <p><a href={path(lang, "programmes")}>← {nl ? "Alle opleidingen" : "All programmes"}</a> ·
+    <a href={`${path(lang, "compare")}?a=${id}&b=${meta.programmes.find((p) => p.id !== id)!.id}`}>{nl ? "Vergelijk met een andere opleiding" : "Compare with another programme"}</a></p>
   <h1>{programme.name[lang]}</h1>
   <p class="lead">{programme.summary[lang]} {nl ? `In deze regio te volgen in ${locations}.` : `Offered in this region in ${locations}.`}</p>
   <p class="muted">

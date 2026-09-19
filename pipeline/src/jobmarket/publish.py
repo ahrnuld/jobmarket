@@ -276,6 +276,7 @@ def publish(
         for kind, rows in data.items():
             _write_json(staging / "geo" / geo_filename(geo_id) / f"{kind}.json", rows)
     _write_csv_downloads(staging / "csv", history_dir)
+    _write_stats_csv(staging / "csv" / "statistics.csv", stats)
 
     conn.execute(
         "INSERT INTO snapshots (id, created_at, status, validation_report) VALUES (?, ?, ?, ?)",
@@ -310,6 +311,19 @@ def _write_csv_downloads(target: Path, history_dir: Path) -> None:
             writer.writerows(rows)
 
 
+STATS_CSV_COLUMNS = ["series", "source", "period", "start", "region", "breakdown", "value", "label",
+                     "n", "published", "retrieved", "url", "sample", "note"]
+
+
+def _write_stats_csv(path: Path, stats: dict) -> None:
+    """FR-11: the published statistics (CBS, HBO-Monitor, ROA, UWV) as one CSV."""
+    with path.open("w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=STATS_CSV_COLUMNS, lineterminator="\n")
+        writer.writeheader()
+        for o in stats["observations"]:
+            writer.writerow({**o, "sample": int(o["sample"])})
+
+
 def _swap_in(staging: Path, publish_dir: Path) -> None:
     """Replace publish_dir with a copy of staging; the staged snapshot stays as a record."""
     publish_dir.parent.mkdir(parents=True, exist_ok=True)
@@ -319,11 +333,38 @@ def _swap_in(staging: Path, publish_dir: Path) -> None:
         if p.exists():
             shutil.rmtree(p)
     shutil.copytree(staging, incoming)
-    if publish_dir.exists():
-        publish_dir.rename(old)
-    incoming.rename(publish_dir)
+    try:
+        if publish_dir.exists():
+            publish_dir.rename(old)
+        incoming.rename(publish_dir)
+    except PermissionError:
+        # Windows refuses to rename a directory that another process watches (e.g. the site's
+        # dev server). Fall back to replacing files one by one, each atomically.
+        _sync_tree(incoming, publish_dir)
+        shutil.rmtree(incoming)
     if old.exists():
         shutil.rmtree(old)
+
+
+def _sync_tree(src: Path, dst: Path) -> None:
+    """Make dst identical to src: replace changed files atomically, then remove stale files."""
+    wanted = set()
+    for f in src.rglob("*"):
+        if f.is_dir():
+            continue
+        rel = f.relative_to(src)
+        wanted.add(rel)
+        target = dst / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        tmp = target.with_name(target.name + ".tmp")
+        shutil.copyfile(f, tmp)
+        os.replace(tmp, target)
+    for f in sorted(dst.rglob("*"), reverse=True):
+        rel = f.relative_to(dst)
+        if f.is_file() and rel not in wanted:
+            f.unlink()
+        elif f.is_dir() and not any(f.iterdir()):
+            f.rmdir()
 
 
 def prune_snapshots(snapshots_dir: Path, keep: int = 10) -> None:

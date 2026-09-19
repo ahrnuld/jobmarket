@@ -2,7 +2,7 @@
 
 import { fill, t } from "../i18n";
 import { escapeHtml as esc, fmtDate, fmtInt, fmtMonth } from "../lib/format";
-import type { Period, Seniority, Window } from "../lib/model";
+import type { Period, Seniority, Span, Window } from "../lib/model";
 import type { Lang, Meta } from "../lib/types";
 
 export interface Ctx {
@@ -130,6 +130,9 @@ export interface FilterState {
   period: Period;
   seniority: Seniority;
   programme: string;
+  span: Span; // trends page (FR-08)
+  a: string; // compare page (FR-09): first programme
+  b: string; // compare page: second programme
 }
 
 export const DEFAULT_STATE: FilterState = {
@@ -137,4 +140,7 @@ export const DEFAULT_STATE: FilterState = {
   period: "12m",
   seniority: "all",
   programme: "all",
+  span: "5y",
+  a: "informatica",
+  b: "technische-informatica", // persona Sanne compares these two
 };

@@ -13,6 +13,9 @@ const strings = {
     programmes: { nl: "Opleidingen", en: "Programmes" },
     skills: { nl: "Skills", en: "Skills" },
     salaries: { nl: "Salarissen", en: "Salaries" },
+    trends: { nl: "Trends", en: "Trends" },
+    internships: { nl: "Stages", en: "Internships" },
+    data: { nl: "Data", en: "Data" },
     methodology: { nl: "Methode", en: "Method" },
     about: { nl: "Over", en: "About" },
   },
@@ -109,6 +112,7 @@ const strings = {
       en: "This site uses no cookies and does not track you.",
     },
     report: { nl: "Fout gezien? Meld het", en: "Spotted an error? Report it" },
+    download: { nl: "Data downloaden (CSV)", en: "Download data (CSV)" },
   },
 };
 

@@ -25,11 +25,11 @@ const collected: Record<string, string> = nl
 const toc = nl
   ? [["summary", "In het kort"], ["sources", "Bronnen"], ["collection", "Verzamelen"], ["dedup", "Dubbele vacatures"],
      ["ict", "Wat telt als ICT-vacature"], ["seniority", "Niveau"], ["programmes", "Opleidingen"], ["skills", "Skills"],
-     ["salary", "Salaris"], ["regions", "Regio's"], ["sample-size", "Kleine aantallen"], ["comparison", "Vergelijking met CBS"],
+     ["salary", "Salaris"], ["trends", "Trends"], ["regions", "Regio's"], ["sample-size", "Kleine aantallen"], ["comparison", "Vergelijking met CBS"],
      ["limitations", "Bekende beperkingen"], ["accuracy", "Nauwkeurigheid"], ["changelog", "Wijzigingen"]]
   : [["summary", "In short"], ["sources", "Sources"], ["collection", "Collection"], ["dedup", "Duplicate vacancies"],
      ["ict", "What counts as an ICT vacancy"], ["seniority", "Level"], ["programmes", "Programmes"], ["skills", "Skills"],
-     ["salary", "Salary"], ["regions", "Regions"], ["sample-size", "Small numbers"], ["comparison", "Comparison with CBS"],
+     ["salary", "Salary"], ["trends", "Trends"], ["regions", "Regions"], ["sample-size", "Small numbers"], ["comparison", "Comparison with CBS"],
      ["limitations", "Known limitations"], ["accuracy", "Accuracy"], ["changelog", "Changes"]];
 ---
 <Layout lang={lang} page="methodology" route="methodology"
@@ -198,6 +198,13 @@ const toc = nl
       {nl
         ? "De startsalarissen van afgestudeerden komen uit de HBO-Monitor, een jaarlijkse enquête onder alumni, en staan los van de vacaturecijfers."
         : "Graduate starting salaries come from the HBO-Monitor, an annual alumni survey, and are separate from the vacancy figures."}
+    </p>
+
+    <h2 id="trends">Trends</h2>
+    <p>
+      {nl
+        ? "Een skill of functie heet stijgend of dalend als het aandeel vacatures dat hem noemt verandert tussen de recente helft van de gekozen periode en de helft daarvoor. We vergelijken aandelen, geen aantallen, zodat een drukke maand niet alles laat stijgen. Elke helft moet minstens 3 maanden beslaan en een skill moet minstens 10 keer voorkomen. Lijnen van aantallen tonen alleen complete maanden: de lopende maand en de maand waarin de reeks begon zouden een valse daling of stijging laten zien."
+        : "A skill or role is called rising or declining when the share of vacancies mentioning it changes between the recent half of the chosen period and the half before. We compare shares, not counts, so a busy month does not make everything rise. Each half must span at least 3 months and a skill must occur at least 10 times. Lines of counts show complete months only: the current month and the month the series began would show a false drop or rise."}
     </p>
 
     <h2 id="regions">{nl ? "Regio's" : "Regions"}</h2>

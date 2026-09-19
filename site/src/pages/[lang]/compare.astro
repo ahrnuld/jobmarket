@@ -1,0 +1,49 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { LANGS } from "../../i18n";
+import { loadGeo, loadMeta, loadStats } from "../../lib/data";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../views/common";
+import { renderCompare } from "../../views/compare";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const initial = renderCompare(ctx, state, { [state.geo]: loadGeo(state.geo) }, loadStats());
+const nl = lang === "nl";
+---
+<Layout lang={lang} page="programmes" route="compare"
+  title={nl ? "Opleidingen vergelijken" : "Compare programmes"}
+  description={nl ? "Twee hbo-ICT-opleidingen naast elkaar: vacatures, skills, salarissen." : "Two HBO ICT programmes side by side: vacancies, skills, salaries."}>
+  <h1>{nl ? "Twee opleidingen vergelijken" : "Compare two programmes"}</h1>
+  <p class="lead">
+    {nl
+      ? "Kies twee opleidingen en zie ze naast elkaar: hoeveel vacatures, voor welk niveau, welke skills en welk salaris."
+      : "Choose two programmes and see them side by side: how many vacancies, for which level, which skills and what salary."}
+  </p>
+  <FilterBar lang={lang} id="compare-filters" fields={["a", "b", "geo", "period"]}
+    geoLabel={nl ? "Regio" : "Region"} />
+  <div id="compare-root" data-lang={lang} set:html={initial} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../scripts/controller";
+  import { COMPARE_KINDS, renderCompare } from "../../views/compare";
+  import type { Lang } from "../../lib/types";
+
+  const root = document.getElementById("compare-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("compare-filters") as HTMLFormElement,
+    kinds: COMPARE_KINDS,
+    geos: (s) => [s.geo],
+    render: renderCompare,
+    withStats: true,
+  });
+</script>

@@ -32,6 +32,7 @@ const families = (p: string) => meta.role_families.filter((f) => f.programmes.in
       </a>
     ))}
   </div>
+  <p><a href={path(lang, "compare")}>{nl ? "Twee opleidingen naast elkaar vergelijken →" : "Compare two programmes side by side →"}</a></p>
   <Fragment set:html={graduateCard(ctx, loadStats(), meta.programmes.map((p) => p.id), 2)} />
   <section class="prose">
     <h2>{nl ? "Welke functies horen bij welke opleiding?" : "Which roles belong to which programme?"}</h2>

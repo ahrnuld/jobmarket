@@ -1,0 +1,57 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { fill, LANGS, path, t } from "../../i18n";
+import { loadGeo, loadMeta, loadStats } from "../../lib/data";
+import { fmtDate } from "../../lib/format";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../views/common";
+import { renderTrends } from "../../views/trends";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const initial = renderTrends(ctx, state, { [state.geo]: loadGeo(state.geo) }, loadStats());
+const nl = lang === "nl";
+---
+<Layout lang={lang} page="trends" route="trends"
+  title="Trends"
+  description={nl ? "Stijgende en dalende skills en functies, vacatures en salarissen door de tijd." : "Rising and declining skills and roles, vacancies and salaries over time."}>
+  <h1>{nl ? "Wat verandert er?" : "What is changing?"}</h1>
+  <p class="lead">
+    {nl
+      ? "Stijgende en dalende skills en functies, het aantal vacatures en salarissen door de tijd, naast de langere reeksen van CBS en de HBO-Monitor."
+      : "Rising and declining skills and roles, vacancy numbers and salaries over time, next to the longer series from CBS and the HBO-Monitor."}
+  </p>
+  {meta.vacancies.first_posted && (
+    <p class="muted">
+      {fill(t(lang).banner.seriesStart, { date: fmtDate(lang, meta.vacancies.first_posted) })}
+      {" "}{nl ? "Wijzigingen in de methode die een reeks breken, zijn gemarkeerd en staan in de" : "Method changes that break a series are marked and listed in the"}
+      {" "}<a href={`${path(lang, "methodology")}#changelog`}>{nl ? "lijst met wijzigingen" : "list of changes"}</a>.
+    </p>
+  )}
+  <FilterBar lang={lang} id="trends-filters" fields={["geo", "span"]}
+    geoLabel={nl ? "Regio (vacaturecijfers)" : "Region (vacancy figures)"} />
+  <div id="trends-root" data-lang={lang} set:html={initial} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../scripts/controller";
+  import { TRENDS_KINDS, renderTrends } from "../../views/trends";
+  import type { Lang } from "../../lib/types";
+
+  const root = document.getElementById("trends-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("trends-filters") as HTMLFormElement,
+    kinds: TRENDS_KINDS,
+    geos: (s) => [s.geo],
+    render: renderTrends,
+    withStats: true,
+  });
+</script>

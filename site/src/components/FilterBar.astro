@@ -2,25 +2,33 @@
 // One row of filters above everything it scopes (dataviz interaction rule; FR-07).
 import { t } from "../i18n";
 import { loadMeta } from "../lib/data";
-import { PERIODS, SENIORITIES } from "../lib/model";
+import { PERIODS, SENIORITIES, SPANS } from "../lib/model";
 import type { Lang } from "../lib/types";
 import { DEFAULT_STATE, type FilterState } from "../views/common";
 
 interface Props {
   lang: Lang;
   id: string;
-  fields: ("geo" | "period" | "seniority" | "programme")[];
+  fields: ("geo" | "period" | "seniority" | "programme" | "span" | "a" | "b")[];
+  /** Label for the region field; defaults to "region (next to the Netherlands)" when two panels show. */
+  geoLabel?: string;
   defaults?: Partial<FilterState>;
 }
-const { lang, id, fields, defaults = {} } = Astro.props;
+const { lang, id, fields, defaults = {}, geoLabel } = Astro.props;
 const tr = t(lang);
 const meta = loadMeta();
 const state = { ...DEFAULT_STATE, ...defaults };
 const byLevel = (level: string) =>
   meta.geos.filter((g) => g.level === level).sort((a, b) => a.name[lang].localeCompare(b.name[lang], lang));
-const regionLabel = lang === "nl"
+const regionLabel = geoLabel ?? (lang === "nl"
   ? (fields.includes("geo") && state.geo !== "nl" ? "Regio (naast heel Nederland)" : tr.filters.region)
-  : (fields.includes("geo") && state.geo !== "nl" ? "Region (next to the Netherlands)" : tr.filters.region);
+  : (fields.includes("geo") && state.geo !== "nl" ? "Region (next to the Netherlands)" : tr.filters.region));
+const spanLabels = {
+  "1y": lang === "nl" ? "1 jaar" : "1 year",
+  "2y": lang === "nl" ? "2 jaar" : "2 years",
+  "5y": lang === "nl" ? "5 jaar" : "5 years",
+  all: lang === "nl" ? "Alles wat beschikbaar is" : "All available",
+};
 ---
 <form class="filters" id={id} aria-label={tr.filters.label}>
   {fields.includes("geo") && (
@@ -40,6 +48,20 @@ const regionLabel = lang === "nl"
       <select name="programme">
         <option value="all" selected={state.programme === "all"}>{tr.filters.allProgrammes}</option>
         {meta.programmes.map((p) => <option value={p.id} selected={state.programme === p.id}>{p.name[lang]}</option>)}
+      </select>
+    </label>
+  )}
+  {(["a", "b"] as const).filter((f) => fields.includes(f)).map((f) => (
+    <label>{lang === "nl" ? (f === "a" ? "Opleiding 1" : "Opleiding 2") : (f === "a" ? "Programme 1" : "Programme 2")}
+      <select name={f}>
+        {meta.programmes.map((p) => <option value={p.id} selected={state[f] === p.id}>{p.name[lang]}</option>)}
+      </select>
+    </label>
+  ))}
+  {fields.includes("span") && (
+    <label>{lang === "nl" ? "Tijdspanne" : "Time span"}
+      <select name="span">
+        {SPANS.map((s) => <option value={s} selected={state.span === s}>{spanLabels[s]}</option>)}
       </select>
     </label>
   )}

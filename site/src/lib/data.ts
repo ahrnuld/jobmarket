@@ -8,6 +8,8 @@ const DATA_DIR = join(process.cwd(), "public", "data");
 const cache = new Map<string, unknown>();
 
 function readJson<T>(rel: string): T {
+  // Cache during a build only; the dev server must pick up a new `jobmarket publish` right away.
+  if (!import.meta.env.PROD) return JSON.parse(readFileSync(join(DATA_DIR, rel), "utf-8")) as T;
   if (!cache.has(rel)) cache.set(rel, JSON.parse(readFileSync(join(DATA_DIR, rel), "utf-8")));
   return cache.get(rel) as T;
 }

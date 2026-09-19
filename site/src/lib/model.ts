@@ -137,5 +137,83 @@ export function salaryStats(rows: SalaryRow[], months: number[], programme = "al
   return { n, p25: q(0.25), median: q(0.5), p75: q(0.75) };
 }
 
+// ---- Trends (FR-08) --------------------------------------------------------------------------
+
+export type Span = "1y" | "2y" | "5y" | "all";
+export const SPANS: Span[] = ["1y", "2y", "5y", "all"];
+export const SPAN_YEARS: Record<Span, number | null> = { "1y": 1, "2y": 2, "5y": 5, all: null };
+
+/** Month indices within the last N years (or all). */
+export function spanMonths(months: MonthInfo[], span: Span): number[] {
+  const years = SPAN_YEARS[span];
+  const all = months.map((_, i) => i);
+  return years === null ? all : all.slice(Math.max(all.length - years * 12, 0));
+}
+
+/**
+ * ISO date `years` before `iso`, used as the lower bound (exclusive) of a statistics series:
+ * a quarterly series over 5 years then shows the latest 20 quarters.
+ */
+export function yearsBefore(iso: string, years: number): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCFullYear(d.getUTCFullYear() - years);
+  return d.toISOString().slice(0, 10);
+}
+
+export const MIN_HALF_MONTHS = 3;
+export const MIN_MOVER_COUNT = 10; // a skill needs this many mentions in the recent half
+
+export interface Mover {
+  id: string;
+  recentShare: number;
+  earlierShare: number;
+  change: number; // percentage points
+  recentN: number;
+}
+
+/**
+ * Rising and declining items: the share in the recent half of the span against the earlier half.
+ * Shares, not counts, so a partial month or a growing market does not look like a rising skill.
+ */
+export function movers(rows: [mi: number, id: string, n: number][], totals: Map<number, number>,
+                       months: number[], limit = 8) {
+  const half = Math.floor(months.length / 2);
+  if (half < MIN_HALF_MONTHS) return null;
+  const earlier = new Set(months.slice(months.length - 2 * half, months.length - half));
+  const recent = new Set(months.slice(months.length - half));
+  const sum = (set: Set<number>) => [...set].reduce((t, m) => t + (totals.get(m) ?? 0), 0);
+  const totE = sum(earlier);
+  const totR = sum(recent);
+  if (!totE || !totR) return null;
+  const e = new Map<string, number>();
+  const r = new Map<string, number>();
+  for (const [mi, id, n] of rows) {
+    if (recent.has(mi)) r.set(id, (r.get(id) ?? 0) + n);
+    else if (earlier.has(mi)) e.set(id, (e.get(id) ?? 0) + n);
+  }
+  const all: Mover[] = [...new Set([...e.keys(), ...r.keys()])].map((id) => {
+    const recentShare = (r.get(id) ?? 0) / totR;
+    const earlierShare = (e.get(id) ?? 0) / totE;
+    return { id, recentShare, earlierShare, change: (recentShare - earlierShare) * 100, recentN: r.get(id) ?? 0 };
+  }).filter((m) => m.recentN >= MIN_MOVER_COUNT || (e.get(m.id) ?? 0) >= MIN_MOVER_COUNT);
+  return {
+    earlier: [...earlier],
+    recent: [...recent],
+    rising: all.filter((m) => m.change > 0).sort((a, b) => b.change - a.change).slice(0, limit),
+    falling: all.filter((m) => m.change < 0).sort((a, b) => a.change - b.change).slice(0, limit),
+  };
+}
+
+/** Group month indices into calendar quarters: [{ label: "2026Q3", months: [..] }]. */
+export function quarters(months: MonthInfo[], indices: number[]) {
+  const out = new Map<string, number[]>();
+  for (const i of indices) {
+    const [y, m] = months[i].month.split("-").map(Number);
+    const key = `${y}Q${Math.floor((m - 1) / 3) + 1}`;
+    out.set(key, [...(out.get(key) ?? []), i]);
+  }
+  return [...out.entries()].map(([label, ms]) => ({ label, months: ms }));
+}
+
 /** TR-02: figures on fewer records than the minimum are shown as indicative. */
 export const isIndicative = (n: number, min: number) => n < min;

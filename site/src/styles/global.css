@@ -16,6 +16,9 @@
   --series-1: #2a78d6;
   --series-2: #eb6834;
   --series-3: #1baf7a;
+  --series-4: #eda100;
+  --rise: #2a78d6;  /* diverging pair: blue <-> red */
+  --fall: #e34948;
   --warn-bg: #fff4d6;
   --warn-ink: #5c4300;
   --info-bg: #e8f1fc;
@@ -41,6 +44,9 @@
     --series-1: #3987e5;
     --series-2: #d95926;
     --series-3: #199e70;
+    --series-4: #c98500;
+    --rise: #3987e5;
+    --fall: #e66767;
     --warn-bg: #3a2e0a;
     --warn-ink: #f5d98a;
     --info-bg: #13243b;
@@ -63,6 +69,9 @@
   --series-1: #3987e5;
   --series-2: #d95926;
   --series-3: #199e70;
+  --series-4: #c98500;
+  --rise: #3987e5;
+  --fall: #e66767;
   --warn-bg: #3a2e0a;
   --warn-ink: #f5d98a;
   --info-bg: #13243b;
@@ -211,6 +220,10 @@ figure { margin: 0; }
 .linechart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .linechart path { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
 .linechart .grid, .linechart .baseline { stroke: transparent; }
+/* Series start and methodology breaks (FR-08): a hairline with a small label */
+.marker { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px solid var(--ink-muted); pointer-events: none; }
+.marker-label { position: absolute; top: -2px; left: 4px; font-size: 0.72rem; color: var(--ink-2); white-space: nowrap;
+                background: var(--surface); padding: 0 3px; border-radius: 3px; }
 .crosshair { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--ink-muted); pointer-events: none; }
 .legend { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0 0 10px; padding: 0; font-size: 0.88rem; color: var(--ink-2); }
 .legend li { display: flex; align-items: center; gap: 6px; }
@@ -223,6 +236,11 @@ figure { margin: 0; }
 .tooltip-row { display: flex; align-items: center; gap: 8px; }
 .tooltip-row strong { font-weight: 700; }
 .tooltip-row span:last-child { opacity: 0.8; }
+
+/* Compare page: each column is headed by its programme with the programme's color as key */
+.compare-head { display: flex; align-items: center; gap: 8px; font-size: 1rem; margin: 0 0 10px; }
+.compare-head::before { content: ""; width: 12px; height: 12px; border-radius: 3px; background: var(--c); flex: none; }
+@container (min-width: 620px) { .card .grid-2.compare { column-gap: 32px; } }
 
 /* Programme cards on the overview */
 .programme-cards { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 12px 0 24px; }

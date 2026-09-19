@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, t } from "../../i18n";
+import { loadGeo, loadMeta } from "../../lib/data";
+import { PERIODS } from "../../lib/model";
+import type { Lang } from "../../lib/types";
+import { makeCtx } from "../../views/common";
+import { renderInternships } from "../../views/internships";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const tr = t(lang);
+const geos = Object.fromEntries(meta.geos.filter((g) => g.level !== "province" || g.id === "p:noord-holland")
+  .map((g) => [g.id, loadGeo(g.id)]));
+// Pre-render every period; switching is instant and needs no data download.
+const variants = PERIODS.map((p) => ({ p, html: renderInternships(ctx, p, geos) }));
+const nl = lang === "nl";
+---
+<Layout lang={lang} page="internships" route="internships"
+  title={nl ? "Stages" : "Internships"}
+  description={nl ? "Waar zijn stagevacatures in ICT, voor welke opleiding en met welke skills?" : "Where are ICT internship postings, for which programme and with which skills?"}>
+  <h1>{nl ? "Stage zoeken" : "Looking for an internship"}</h1>
+  <p class="lead">
+    {nl
+      ? "Waar stagevacatures in ICT staan, bij welke opleiding ze passen en welke skills ze vragen."
+      : "Where ICT internship postings are, which programme they fit and which skills they ask for."}
+  </p>
+  <p class="muted">
+    {nl
+      ? "In welke sector de werkgever zit, staat niet in onze vacaturebron; een uitsplitsing naar sector kan pas met een betaalde vacaturedataset. Veel stages worden bovendien nooit als vacature geplaatst."
+      : "Our vacancy source does not include the employer's sector; a breakdown by sector needs a paid vacancy dataset. Many internships are also never posted as a vacancy."}
+  </p>
+  <form class="filters" id="intern-filters" aria-label={tr.filters.label}>
+    <label>{tr.filters.period}
+      <select name="period">
+        {PERIODS.map((p) => <option value={p} selected={p === "12m"}>{tr.periods[p]}</option>)}
+      </select>
+    </label>
+  </form>
+  {variants.map((v) => <div class="variant" data-period={v.p} hidden={v.p !== "12m"} set:html={v.html} />)}
+</Layout>
+
+<script>
+  const form = document.getElementById("intern-filters") as HTMLFormElement;
+  const select = form.elements.namedItem("period") as HTMLSelectElement;
+  const show = (p: string) => document.querySelectorAll<HTMLElement>(".variant").forEach((el) => {
+    el.hidden = el.dataset.period !== p;
+  });
+  const fromUrl = new URLSearchParams(location.search).get("period");
+  if (fromUrl && [...select.options].some((o) => o.value === fromUrl)) {
+    select.value = fromUrl;
+    show(fromUrl);
+  }
+  select.addEventListener("change", () => {
+    show(select.value);
+    history.replaceState(null, "", select.value === "12m" ? location.pathname : `?period=${select.value}`);
+  });
+</script>

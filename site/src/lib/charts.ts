@@ -98,8 +98,14 @@ export interface LineSeries {
 }
 
 /** Line chart over a shared x axis. One y axis only (dataviz rule: never dual-axis). */
+export interface Marker {
+  index: number; // x position (may be fractional)
+  label: string;
+}
+
 export function lineChart(xLabels: string[], series: LineSeries[], ariaLabel: string,
-                          formatTick: (n: number) => string, formatValue: (n: number) => string): string {
+                          formatTick: (n: number) => string, formatValue: (n: number) => string,
+                          markers: Marker[] = []): string {
   const all = series.flatMap((s) => s.values.filter((v): v is number => v !== null));
   if (!all.length) return "";
   const max = niceMax(Math.max(...all));
@@ -133,6 +139,8 @@ export function lineChart(xLabels: string[], series: LineSeries[], ariaLabel: st
     + `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">`
     + `<line class="grid" x1="0" x2="${W}" y1="${H / 2}" y2="${H / 2}" />`
     + `<line class="baseline" x1="0" x2="${W}" y1="${H}" y2="${H}" />${paths.join("")}</svg>`
+    + markers.map((m) => `<span class="marker" style="left:${((x(m.index) / W) * 100).toFixed(2)}%">`
+      + `<span class="marker-label">${esc(m.label)}</span></span>`).join("")
     + `<span class="crosshair" hidden></span></div>`
     + `<div class="colchart-x" aria-hidden="true"><span>${esc(xLabels[0])}</span><span>${esc(xLabels[xLabels.length - 1])}</span></div>`
     + `</figure>`;

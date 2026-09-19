@@ -9,7 +9,7 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
-  page: "dashboard" | "programmes" | "skills" | "salaries" | "methodology" | "about";
+  page: "dashboard" | "programmes" | "skills" | "salaries" | "trends" | "internships" | "methodology" | "about" | "data";
   /** Path of this page without the language prefix, e.g. "skills" or "programmes/informatica". */
   route: string;
 }
@@ -23,6 +23,8 @@ const nav = [
   ["programmes", "programmes"],
   ["skills", "skills"],
   ["salaries", "salaries"],
+  ["trends", "trends"],
+  ["internships", "internships"],
   ["methodology", "methodology"],
   ["about", "about"],
 ] as const;
@@ -73,7 +75,7 @@ const seriesStart = meta.vacancies.first_posted;
         )}
         <p>{tr.footer.snapshot} {fmtDate(lang, meta.generated_at)}{seriesStart && ` · ${fill(tr.banner.seriesStart, { date: fmtDate(lang, seriesStart) })}`}</p>
         <p>{tr.independent} {tr.footer.noTracking}</p>
-        <p><a href={`${path(lang, "about")}#report`}>{tr.footer.report}</a></p>
+        <p><a href={`${path(lang, "about")}#report`}>{tr.footer.report}</a> · <a href={path(lang, "data")}>{tr.footer.download}</a></p>
       </div>
     </footer>
     <script>

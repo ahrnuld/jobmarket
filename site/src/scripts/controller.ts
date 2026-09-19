@@ -2,9 +2,9 @@
 // Changing a filter fetches the needed aggregate files and re-renders with the same view
 // function used at build time. The filter state lives in the URL query, so views can be shared.
 
-import { fetchGeo, fetchMeta } from "../lib/client-data";
+import { fetchGeo, fetchMeta, fetchStats } from "../lib/client-data";
 import { PERIODS, SENIORITIES, type Period, type Seniority } from "../lib/model";
-import type { GeoData, Lang } from "../lib/types";
+import type { GeoData, Lang, Stats } from "../lib/types";
 import { DEFAULT_STATE, type Ctx, type FilterState, makeCtx } from "../views/common";
 
 interface Options {
@@ -13,7 +13,9 @@ interface Options {
   form: HTMLFormElement;
   kinds: (keyof GeoData)[];
   geos: (state: FilterState) => string[];
-  render: (ctx: Ctx, state: FilterState, data: Record<string, GeoData>) => string;
+  render: (ctx: Ctx, state: FilterState, data: Record<string, GeoData>, stats?: Stats) => string;
+  /** Also load stats.json (the trends page re-renders official series too). */
+  withStats?: boolean;
   defaults?: Partial<FilterState>;
   onRendered?: () => void;
 }
@@ -52,10 +54,13 @@ export function initFilteredView(o: Options) {
     try {
       const meta = await fetchMeta();
       const geos = o.geos(state);
-      const loaded = await Promise.all(geos.map((g) => fetchGeo(g, o.kinds)));
+      const [loaded, stats] = await Promise.all([
+        Promise.all(geos.map((g) => fetchGeo(g, o.kinds))),
+        o.withStats ? fetchStats() : Promise.resolve(undefined),
+      ]);
       if (mine !== request) return; // a newer selection won
       const data = Object.fromEntries(geos.map((g, i) => [g, loaded[i]]));
-      o.root.innerHTML = o.render(makeCtx(o.lang, meta), state, data);
+      o.root.innerHTML = o.render(makeCtx(o.lang, meta), state, data, stats);
       o.onRendered?.();
       if (pushUrl) {
         const params = new URLSearchParams();

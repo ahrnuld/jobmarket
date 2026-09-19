@@ -113,6 +113,7 @@ def test_publish_writes_snapshot(loaded, ref, settings):
     assert any("synthetic" in w for w in meta["validation"]["warnings"])
     assert (settings.publish_dir / "geo" / "nl" / "vacancies.json").is_file()
     assert (settings.publish_dir / "csv" / "skills.csv").is_file()
+    assert (settings.publish_dir / "csv" / "statistics.csv").read_text("utf-8").startswith("series,")
 
 
 def test_production_refuses_sample_data_and_keeps_old_snapshot(loaded, ref, settings, monkeypatch):
@@ -129,6 +130,22 @@ def test_production_refuses_sample_data_and_keeps_old_snapshot(loaded, ref, sett
     assert any("synthetic" in e for e in second.report.errors)
     meta = json.loads((settings.publish_dir / "meta.json").read_text("utf-8"))
     assert meta["snapshot_id"] == first.snapshot_id  # NFR-07: last good snapshot stays
+
+
+def test_sync_tree_replaces_and_removes_files(tmp_path):
+    from jobmarket.publish import _sync_tree
+
+    src, dst = tmp_path / "src", tmp_path / "dst"
+    (src / "geo" / "nl").mkdir(parents=True)
+    (src / "meta.json").write_text("new", "utf-8")
+    (src / "geo" / "nl" / "a.json").write_text("a", "utf-8")
+    (dst / "geo" / "old").mkdir(parents=True)
+    (dst / "meta.json").write_text("old", "utf-8")
+    (dst / "geo" / "old" / "stale.json").write_text("x", "utf-8")
+    _sync_tree(src, dst)
+    assert (dst / "meta.json").read_text("utf-8") == "new"
+    assert (dst / "geo" / "nl" / "a.json").is_file()
+    assert not (dst / "geo" / "old").exists()
 
 
 def _meta(months, last_posted="2026-09-18", **extra):

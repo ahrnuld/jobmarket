@@ -1,0 +1,75 @@
+---
+// FR-11: the aggregated data as CSV, with a data dictionary. Never vacancy texts (LR-02).
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import { loadMeta } from "../../lib/data";
+import { fmtDate } from "../../lib/format";
+import type { Lang } from "../../lib/types";
+import { siteConfig } from "../../site-config";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const nl = lang === "nl";
+const common = nl
+  ? "month = maand (JJJJ-MM) · geo = nl, p:<provincie> of r:<arbeidsmarktregio> · programme = opleiding of all · seniority = niveau (all, entry = stage+junior, internship, junior, medior, senior, unknown) · n = aantal unieke ICT-vacatures"
+  : "month = month (YYYY-MM) · geo = nl, p:<province> or r:<labour market region> · programme = programme or all · seniority = level (all, entry = internship+junior, internship, junior, medior, senior, unknown) · n = number of unique ICT vacancies";
+const files = [
+  { file: "vacancies.csv", title: nl ? "Vacatures per maand" : "Vacancies per month",
+    cols: "month, geo, programme, seniority, n", note: "" },
+  { file: "skills.csv", title: nl ? "Skills per maand" : "Skills per month",
+    cols: "month, geo, programme, seniority, skill, n",
+    note: nl ? "n = aantal vacatures dat de skill noemt. Skill-ids en ESCO-koppelingen staan op de methodepagina." : "n = number of vacancies mentioning the skill. Skill ids and ESCO links are on the method page." },
+  { file: "families.csv", title: nl ? "Functiefamilies per maand" : "Role families per month", cols: "month, geo, programme, family, n", note: "" },
+  { file: "titles.csv", title: nl ? "Functietitels per maand" : "Job titles per month", cols: "month, geo, programme, title, n",
+    note: nl ? "Genormaliseerde titels zonder niveauwoorden; alleen titels die minstens 3 keer voorkomen." : "Normalised titles without level words; only titles occurring at least 3 times." },
+  { file: "salaries.csv", title: nl ? "Salarissen per maand" : "Salaries per month", cols: "month, geo, programme, seniority, bucket, n",
+    note: nl ? "bucket = ondergrens van een klasse van € 2.500 bruto per jaar; n = aantal vacatures met een salaris in die klasse." : "bucket = lower bound of a €2,500 gross-per-year class; n = number of vacancies with a salary in that class." },
+  { file: "months.csv", title: nl ? "Maanden" : "Months", cols: "month, first_posted, last_posted, partial, computed_at, classifier_version",
+    note: nl ? "partial = 1 als de maand niet compleet is." : "partial = 1 if the month is incomplete." },
+  { file: "statistics.csv", title: nl ? "Officiële statistiek" : "Official statistics",
+    cols: "series, source, period, start, region, breakdown, value, label, n, published, retrieved, url, sample, note",
+    note: nl ? "CBS, HBO-Monitor, ROA en UWV. sample = 1 voor voorbeeldwaarden die nog vervangen moeten worden." : "CBS, HBO-Monitor, ROA and UWV. sample = 1 for example values that still need replacing." },
+];
+---
+<Layout lang={lang} page="data" route="data"
+  title="Data"
+  description={nl ? "Download de geaggregeerde cijfers van deze site als CSV." : "Download the aggregated figures of this site as CSV."}>
+  <div class="prose">
+    <h1>{nl ? "Data downloaden" : "Download data"}</h1>
+    <p class="lead">
+      {nl
+        ? "Alle cijfers op deze site als CSV-bestanden (UTF-8, komma-gescheiden). Het zijn tellingen per maand; de vacatures zelf publiceren we niet."
+        : "All figures on this site as CSV files (UTF-8, comma-separated). They are monthly counts; we do not publish the vacancies themselves."}
+    </p>
+    <p class="muted">
+      {nl ? "Gegevens van" : "Data as of"} {fmtDate(lang, meta.generated_at)} · {nl ? "versie" : "version"} {meta.snapshot_id} ·
+      {" "}{siteConfig.dataLicence
+        ? (nl ? `Licentie: ${siteConfig.dataLicence}. Vermeld deze site en de oorspronkelijke bronnen.` : `Licence: ${siteConfig.dataLicence}. Credit this site and the original sources.`)
+        : (nl ? "De licentie voor hergebruik is nog niet vastgesteld; vermeld in elk geval deze site en de oorspronkelijke bronnen." : "The reuse licence has not been decided yet; in any case credit this site and the original sources.")}
+    </p>
+    <p class="muted">{common}</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr>
+          <th scope="col">{nl ? "Bestand" : "File"}</th>
+          <th scope="col">{nl ? "Kolommen" : "Columns"}</th>
+        </tr></thead>
+        <tbody>
+          {files.map((f) => (
+            <tr>
+              <th scope="row"><a href={`/data/csv/${f.file}`} download>{f.title}</a><br /><span class="muted">{f.file}</span></th>
+              <td><code>{f.cols}</code>{f.note && <><br /><span class="muted">{f.note}</span></>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p>
+      {nl ? "Hoe de cijfers tot stand komen, en hun beperkingen: " : "How the figures are made, and their limitations: "}
+      <a href={path(lang, "methodology")}>{nl ? "methode" : "method"}</a>.
+    </p>
+  </div>
+</Layout>

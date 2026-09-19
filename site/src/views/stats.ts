@@ -2,8 +2,11 @@
 
 import { lineChart, table } from "../lib/charts";
 import { fmtEuro, fmtInt, fmtPct, fmtPeriod } from "../lib/format";
+import { yearsBefore } from "../lib/model";
 import type { Observation, Stats } from "../lib/types";
-import { card, type Ctx, indicativeBadge, programmeName, provenance, sampleBadge, tile } from "./common";
+import {
+  card, type Ctx, indicativeBadge, PROGRAMME_COLOR, programmeName, provenance, sampleBadge, tile,
+} from "./common";
 
 export const obs = (stats: Stats, series: string, filter: Partial<Observation> = {}) =>
   stats.observations.filter((o) => o.series === series
@@ -59,14 +62,15 @@ export function graduateCard(ctx: Ctx, stats: Stats, programmes: string[], headi
 
 /** A line chart of one statistics series split by region or breakdown, last `years` years. */
 export function statLines(ctx: Ctx, stats: Stats, seriesId: string, split: "region" | "breakdown",
-                          keys: { key: string; label: string; colorVar: string }[], years = 10,
+                          keys: { key: string; label: string; colorVar: string }[], years: number | null = 10,
                           headingLevel: 2 | 3 = 3): string {
   const { lang, tr } = ctx;
   const meta = stats.series[seriesId];
   const all = obs(stats, seriesId);
   if (!meta || !all.length) return "";
-  const cutoff = `${Number(all.at(-1)!.start.slice(0, 4)) - years}`;
-  const periods = [...new Set(all.filter((o) => o.start >= cutoff).map((o) => o.period))]
+  const latestStart = all.map((o) => o.start).sort().at(-1)!;
+  const cutoff = years === null ? "" : yearsBefore(latestStart, years);
+  const periods = [...new Set(all.filter((o) => o.start > cutoff).map((o) => o.period))]
     .sort((a, b) => (all.find((o) => o.period === a)!.start < all.find((o) => o.period === b)!.start ? -1 : 1));
   const series = keys.map((k) => ({
     id: k.key, label: k.label, colorVar: k.colorVar,
@@ -92,4 +96,16 @@ export function statLines(ctx: Ctx, stats: Stats, seriesId: string, split: "regi
     badges: all.some((o) => o.sample) ? [sampleBadge(ctx)] : [],
     headingLevel,
   });
+}
+
+/** Graduate starting salary per programme over the years (HBO-Monitor). */
+export function graduateTrend(ctx: Ctx, stats: Stats): string {
+  const { lang } = ctx;
+  const all = obs(stats, "hbo_starting_salary");
+  if (!all.length) return "";
+  const html = statLines(ctx, stats, "hbo_starting_salary", "breakdown",
+    ctx.meta.programmes.map((p) => ({ key: p.id, label: p.name[lang], colorVar: PROGRAMME_COLOR[p.id] })), null);
+  const years = new Set(all.map((o) => o.period)).size;
+  return years > 1 ? html : html.replace("</section>",
+    `<p class="empty">${lang === "nl" ? "Nog maar één jaar ingevoerd; een lijn verschijnt vanaf twee jaren." : "Only one year entered so far; a line appears from two years."}</p></section>`);
 }
