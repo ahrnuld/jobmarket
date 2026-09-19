@@ -1,0 +1,176 @@
+from __future__ import annotations
+
+import urllib.parse
+
+import pytest
+
+from jobmarket.config import REPO_ROOT
+from jobmarket.db import connect, init_schema
+from jobmarket.stats import load_series_config
+from jobmarket.stats.cbs import CbsClient, parse_period
+from jobmarket.stats.manual import ManualDataError, read_file
+from jobmarket.stats.run import refresh_cbs, refresh_manual
+
+
+def test_parse_period():
+    assert parse_period("2025KW03") == ("2025Q3", "2025-07-01", "quarter")
+    assert parse_period("2024JJ00") == ("2024", "2024-01-01", "year")
+    assert parse_period("2024MM02") == ("2024-02", "2024-02-01", "month")
+    assert parse_period("2023SJ00") is None
+
+
+class FakeCbs:
+    """Mimics the StatLine API, including its space-padded dimension keys."""
+
+    def __init__(self):
+        self.urls = []
+
+    def __call__(self, url):
+        self.urls.append(url)
+        path = urllib.parse.urlparse(url).path
+        if path.endswith("/TableInfos"):
+            return {"value": [{"Modified": "2026-07-30T06:30:00"}]}
+        if path.endswith("/Perioden"):
+            return {
+                "value": [
+                    {"Key": "2026KW01", "Status": "Definitief"},
+                    {"Key": "2026KW02", "Status": "Voorlopig"},
+                ]
+            }
+        if path.endswith("/SBI2008PartBedrijvenOverheid"):
+            return {"value": [{"Key": "391600  "}, {"Key": "T001081 "}]}
+        if path.endswith("/TypedDataSet"):
+            return {
+                "value": [
+                    {
+                        "SBI2008PartBedrijvenOverheid": "391600  ",
+                        "Perioden": "2026KW01",
+                        "V_1": 20.5,
+                    },
+                    {
+                        "SBI2008PartBedrijvenOverheid": "391600  ",
+                        "Perioden": "2026KW02",
+                        "V_1": 21.0,
+                    },
+                    {
+                        "SBI2008PartBedrijvenOverheid": "391600  ",
+                        "Perioden": "2025JJ00",
+                        "V_1": 19.0,
+                    },
+                ],
+                "odata.nextLink": None,
+            }
+        raise AssertionError(url)
+
+
+SERIES = {
+    "series_id": "test_series",
+    "table": "80474ned",
+    "measure": "V_1",
+    "multiplier": 1000,
+    "unit": "vacancies",
+    "frequency": "quarter",
+    "filters": {"SBI2008PartBedrijvenOverheid": "391600"},
+}
+
+
+def test_cbs_uses_padded_keys_and_marks_provisional():
+    fake = FakeCbs()
+    obs = CbsClient(fetch=fake).fetch_series(SERIES)
+    typed_url = next(u for u in fake.urls if "TypedDataSet" in u)
+    assert urllib.parse.quote("'391600  '") in typed_url
+    assert [(o.period, o.value, o.note) for o in obs] == [
+        ("2026Q1", 20500.0, None),
+        ("2026Q2", 21000.0, "voorlopig"),
+    ]  # yearly row skipped
+    assert obs[0].published_at == "2026-07-30"
+
+
+def test_cbs_unknown_key_fails_loudly():
+    with pytest.raises(ValueError, match="not found"):
+        CbsClient(fetch=FakeCbs()).fetch_series(
+            {**SERIES, "filters": {"SBI2008PartBedrijvenOverheid": "999"}}
+        )
+
+
+def test_failed_cbs_run_keeps_old_data(conn, ref):
+    refresh_cbs(conn, ref, {"cbs": [SERIES]}, CbsClient(fetch=FakeCbs()))
+    broken = {"cbs": [{**SERIES, "filters": {"SBI2008PartBedrijvenOverheid": "999"}}]}
+    result = refresh_cbs(conn, ref, broken, CbsClient(fetch=FakeCbs()))
+    assert result.status == "failed"
+    assert conn.execute("SELECT COUNT(*) FROM stat_observations").fetchone()[0] == 2
+
+
+@pytest.fixture
+def manual_series():
+    cfg = load_series_config(REPO_ROOT / "data" / "reference")
+    return {s["series_id"]: s for s in cfg["manual"]}
+
+
+def test_shipped_manual_files_are_valid_and_marked_as_sample(ref, manual_series):
+    for path in (REPO_ROOT / "data" / "manual").glob("*.csv"):
+        rows = read_file(path, manual_series, ref)
+        assert rows and all(o.is_sample for o in rows), path.name
+
+
+HEADER = (
+    "source_id,series_id,period,region,breakdown,value,value_label,unit,sample_size,"
+    "published_at,source_url,is_sample,note\n"
+)
+
+
+def test_manual_file_with_error_is_rejected(tmp_path, ref, manual_series):
+    path = tmp_path / "hbo_monitor.csv"
+    path.write_text(
+        HEADER
+        + "hbo_monitor,hbo_starting_salary,2024,NL,informatica,3100,,eur_month_gross,120,2025-06-01,https://x.nl,0,\n"
+        + "hbo_monitor,hbo_starting_salary,24,NL,wiskunde,abc,,eur_month_gross,,juni,,2,\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ManualDataError) as exc:
+        read_file(path, manual_series, ref)
+    message = str(exc.value)
+    for fragment in [
+        "period",
+        "programme id",
+        "not a number",
+        "published_at",
+        "source_url",
+        "is_sample",
+    ]:
+        assert fragment in message
+
+
+def test_manual_refresh_replaces_source_rows(tmp_path, ref):
+    conn = connect(":memory:")
+    init_schema(conn)
+    from jobmarket.reference import sync_sources
+
+    sync_sources(conn, ref)
+    cfg = load_series_config(REPO_ROOT / "data" / "reference")
+    (tmp_path / "roa.csv").write_text(
+        HEADER
+        + "roa,roa_outlook,2025-2030,NL,informatica,,goed,label,,2025-12-01,https://roa.nl,0,\n",
+        encoding="utf-8",
+    )
+    results = refresh_manual(conn, ref, cfg, tmp_path)
+    assert [(r.source_id, r.status, r.rows) for r in results] == [("roa", "success", 1)]
+    row = conn.execute("SELECT value_label, period_start FROM stat_observations").fetchone()
+    assert tuple(row) == ("goed", "2025-01-01")
+
+
+def test_schema_migration_from_version_1(tmp_path):
+    db = tmp_path / "old.sqlite"
+    conn = connect(db)
+    conn.executescript(
+        "CREATE TABLE schema_version (version INTEGER NOT NULL);"
+        "INSERT INTO schema_version VALUES (1);"
+        "CREATE TABLE stat_observations (source_id TEXT, series_id TEXT, period TEXT, "
+        "period_start TEXT, region TEXT, breakdown TEXT, value REAL, unit TEXT, sample_size INT, "
+        "published_at TEXT, retrieved_at TEXT, licence TEXT, source_url TEXT, is_sample INT, "
+        "note TEXT, PRIMARY KEY (source_id, series_id, period, region, breakdown));"
+    )
+    init_schema(conn)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(stat_observations)")}
+    assert "value_label" in cols
+    assert conn.execute("SELECT version FROM schema_version").fetchone()[0] == 2

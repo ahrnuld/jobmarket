@@ -1,0 +1,3 @@
+source_id,series_id,period,region,breakdown,value,value_label,unit,sample_size,published_at,source_url,is_sample,note
+uwv,uwv_tension,2026Q2,noord-holland,ict-occupations,,voorbeeld,label,,2026-08-01,https://example.invalid/replace-with-real-source,1,VOORBEELDWAARDE - vervang door echte UWV-spanningsindicator
+uwv,uwv_tension,2026Q2,NL,ict-occupations,,voorbeeld,label,,2026-08-01,https://example.invalid/replace-with-real-source,1,VOORBEELDWAARDE - vervang door echte UWV-spanningsindicator

@@ -27,6 +27,13 @@ Put your Adzuna credentials in `.env` (copy `.env.example`; never commit it). Th
 .\.venv\Scripts\jobmarket.exe process                           # clean, deduplicate, classify
 ```
 
+Published statistics (CBS via its API; HBO-Monitor, ROA and UWV from `data/manual/*.csv`, see
+[data/manual/README.md](data/manual/README.md)):
+
+```powershell
+.\.venv\Scripts\jobmarket.exe stats
+```
+
 Without credentials, use synthetic data in a separate database:
 
 ```powershell
@@ -41,7 +48,7 @@ Built step by step:
 
 1. [x] Repository skeleton, data model, reference data (programmes, seniority, skills + ESCO, regions)
 2. [x] Vacancy pipeline: Adzuna client and fixtures, PII scrubbing, deduplication, classification
-3. [ ] Statistics: CBS API, HBO-Monitor / ROA / UWV manual tables
+3. [x] Statistics: CBS API, HBO-Monitor / ROA / UWV manual tables
 4. [ ] Aggregation, validation, publishing, and the static site (FR-01 to FR-07)
 5. [ ] Trends, programme comparison, NL/EN, CSV downloads (FR-08 to FR-11)
 6. [ ] Admin tooling, accuracy measurement, scheduling, handover guide

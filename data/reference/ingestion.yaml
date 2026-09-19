@@ -10,9 +10,12 @@
 adzuna:
   country: nl
   results_per_page: 50
-  # Throttling. Set these to your plan's limits (see your Adzuna dashboard).
+  # Throttling. Plan limits (owner's dashboard, 2026-09-19): 25/minute, 250/day, 1,000/week,
+  # 2,500/month. A weekly run needs ~55 calls; a 30-day backfill needed 178.
+  # 3 s between calls = 20/minute. The per-run cap stays below the daily limit so a manual
+  # check on the same day still fits.
   min_seconds_between_calls: 3
-  max_calls_per_run: 250
+  max_calls_per_run: 200
   # Days of history fetched in a normal (weekly) run. A first run can pass --days to backfill.
   default_days: 8
   queries:

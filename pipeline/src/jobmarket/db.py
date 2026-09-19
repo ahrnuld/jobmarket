@@ -9,7 +9,13 @@ from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+
+# Upgrades from version N to N+1. schema.sql always describes the latest version, and a fresh
+# database is created from it directly; these only run on older databases.
+MIGRATIONS: dict[int, str] = {
+    1: "ALTER TABLE stat_observations ADD COLUMN value_label TEXT;",
+}
 
 
 def utc_now() -> str:
@@ -26,16 +32,25 @@ def connect(db_path: Path | str) -> sqlite3.Connection:
 
 
 def init_schema(conn: sqlite3.Connection) -> None:
-    sql = resources.files("jobmarket").joinpath("schema.sql").read_text(encoding="utf-8")
-    conn.executescript(sql)
-    row = conn.execute("SELECT version FROM schema_version").fetchone()
-    if row is None:
-        conn.execute("INSERT INTO schema_version (version) VALUES (?)", (SCHEMA_VERSION,))
-    elif row["version"] != SCHEMA_VERSION:
+    exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'schema_version'"
+    ).fetchone()
+    version = None
+    if exists:
+        row = conn.execute("SELECT version FROM schema_version").fetchone()
+        version = row["version"] if row else None
+    if version is not None and version < SCHEMA_VERSION:
+        for v in range(version, SCHEMA_VERSION):
+            conn.executescript(MIGRATIONS[v])
+        conn.execute("UPDATE schema_version SET version = ?", (SCHEMA_VERSION,))
+    elif version is not None and version > SCHEMA_VERSION:
         raise RuntimeError(
-            f"Database schema version {row['version']} does not match code version "
-            f"{SCHEMA_VERSION}; see docs/HANDOVER.md for migrating."
+            f"Database schema version {version} is newer than this code ({SCHEMA_VERSION})."
         )
+    sql = resources.files("jobmarket").joinpath("schema.sql").read_text(encoding="utf-8")
+    conn.executescript(sql)  # CREATE ... IF NOT EXISTS: adds tables new in this version
+    if version is None:
+        conn.execute("INSERT INTO schema_version (version) VALUES (?)", (SCHEMA_VERSION,))
     conn.commit()
 
 

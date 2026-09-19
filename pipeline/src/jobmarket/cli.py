@@ -108,6 +108,25 @@ def cmd_process(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_stats(args: argparse.Namespace) -> int:
+    from jobmarket.stats.run import refresh_all
+
+    settings = load_settings()
+    ref = load_reference(settings.reference_dir)
+    with open_db(settings.db_path) as conn:
+        sync_sources(conn, ref)
+        results = refresh_all(
+            conn, ref, settings.reference_dir, settings.manual_dir, which=args.source
+        )
+    failed = 0
+    for r in results:
+        print(f"{r.source_id:12} [{r.status}] {r.rows} observations")
+        if r.error:
+            failed += 1
+            print(f"  {r.error}", file=sys.stderr)
+    return 1 if failed else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="jobmarket", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -124,6 +143,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("process", help="normalise, deduplicate and classify stored vacancies")
     p.set_defaults(func=cmd_process)
+
+    p = sub.add_parser("stats", help="refresh CBS and manual (HBO-Monitor, ROA, UWV) statistics")
+    p.add_argument("--source", choices=["all", "cbs", "manual"], default="all")
+    p.set_defaults(func=cmd_stats)
 
     ref = sub.add_parser("reference", help="reference data tools").add_subparsers(
         dest="ref_command", required=True

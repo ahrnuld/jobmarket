@@ -26,7 +26,7 @@ class IngestResult:
     error: str | None = None
 
 
-def _start_run(conn: sqlite3.Connection, source_id: str) -> int:
+def start_run(conn: sqlite3.Connection, source_id: str) -> int:
     cur = conn.execute(
         "INSERT INTO ingestion_runs (source_id, started_at, status) VALUES (?, ?, 'running')",
         (source_id, utc_now()),
@@ -35,7 +35,7 @@ def _start_run(conn: sqlite3.Connection, source_id: str) -> int:
     return cur.lastrowid
 
 
-def _finish_run(conn, run_id, status, fetched, new, error=None) -> None:
+def finish_run(conn, run_id, status, fetched, new, error=None) -> None:
     conn.execute(
         """UPDATE ingestion_runs SET finished_at = ?, status = ?, records_fetched = ?,
            records_new = ?, error = ? WHERE id = ?""",
@@ -86,7 +86,7 @@ def ingest(
 ) -> IngestResult:
     """Consume `records` into the database. Exceptions from the source are caught and logged."""
     source = ref.sources[source_id]
-    run_id = _start_run(conn, source_id)
+    run_id = start_run(conn, source_id)
     fetched = new = 0
     try:
         retrieved_at = utc_now()
@@ -98,7 +98,7 @@ def ingest(
     except Exception as exc:  # noqa: BLE001 - any source failure must be logged, not crash the run
         conn.rollback()
         message = f"{type(exc).__name__}: {exc}"[:1000]
-        _finish_run(conn, run_id, "failed", fetched, 0, message)
+        finish_run(conn, run_id, "failed", fetched, 0, message)
         return IngestResult(run_id, "failed", fetched, 0, message)
-    _finish_run(conn, run_id, "success", fetched, new)
+    finish_run(conn, run_id, "success", fetched, new)
     return IngestResult(run_id, "success", fetched, new)

@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS stat_observations (
     region        TEXT NOT NULL DEFAULT 'NL',
     breakdown     TEXT NOT NULL DEFAULT '',   -- e.g. programme id or sector code
     value         REAL,
+    value_label   TEXT,                   -- for categorical figures, e.g. ROA 'goed'
     unit          TEXT NOT NULL,
     sample_size   INTEGER,
     published_at  TEXT,                   -- date the source published the figure

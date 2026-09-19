@@ -1,0 +1,113 @@
+# Published statistics shown next to the vacancy data (section 3 of REQUIREMENTS.md).
+#
+# CBS series are fetched from the open StatLine OData API (https://opendata.cbs.nl/). Table ids
+# and dimension keys were checked against the API on 2026-09-19. `filters` pins every dimension
+# that is not broken down; `regions` / `breakdowns` map CBS keys onto our own ids.
+#
+# Manual series (HBO-Monitor, ROA, UWV) have no API. Their figures are typed over from the
+# publications into data/manual/*.csv; see data/manual/README.md. Every series used in a CSV must
+# be declared here, so the site knows its title, unit and meaning.
+
+cbs:
+  - series_id: cbs_vacancies_ict_sector
+    table: 80474ned
+    measure: VacaturesSeizoengecorrigeerd_1
+    multiplier: 1000
+    unit: vacancies
+    frequency: quarter
+    filters: { SBI2008PartBedrijvenOverheid: "391600" }
+    title:
+      nl: Openstaande vacatures in de sector Informatie en communicatie (seizoengecorrigeerd)
+      en: Open vacancies in the Information and communication sector (seasonally adjusted)
+    note:
+      nl: >-
+        Sector J telt alle vacatures bij ICT-bedrijven, ook niet-ICT-functies, en mist
+        ICT-functies bij bijvoorbeeld banken of de overheid.
+      en: >-
+        Sector J counts all vacancies at ICT companies, including non-ICT roles, and misses ICT
+        roles at e.g. banks or government.
+
+  - series_id: cbs_open_vacancies_ict_sector_region
+    table: 83599NED
+    measure: OpenstaandeVacatures_1
+    multiplier: 1000
+    unit: vacancies
+    frequency: quarter
+    filters: { BedrijfstakkenBranchesSBI2008: "391600" }
+    region_dimension: RegioS
+    regions: { NL01: NL, PV27: noord-holland }
+    title:
+      nl: Openstaande vacatures in de sector Informatie en communicatie, Nederland en Noord-Holland
+      en: Open vacancies in the Information and communication sector, Netherlands and Noord-Holland
+
+  - series_id: cbs_new_vacancies_ict_occupations
+    table: 85081NED
+    measure: OntstaneVacatures_1
+    multiplier: 1000
+    unit: vacancies
+    frequency: year
+    filters: { BedrijfstakkenBranchesSBI2008: T001081 }
+    breakdown_dimension: Beroepenindeling
+    breakdowns: { A000273: ict-occupations, A000274: ict-specialists, A000277: ict-technicians }
+    title:
+      nl: Ontstane vacatures in ICT-beroepen, alle sectoren (per jaar)
+      en: New vacancies in ICT occupations, all sectors (per year)
+    note:
+      nl: >-
+        Beroepenindeling ROA-CBS 2014. 'Specialisten ICT' is grofweg hbo/wo-niveau,
+        'Vakspecialisten ICT' mbo-niveau.
+      en: >-
+        ROA-CBS 2014 occupation classification. 'ICT specialists' is roughly higher-education
+        level, 'ICT technicians' vocational level.
+
+  - series_id: cbs_employed_ict_occupations
+    table: 86320NED
+    measure: WerkzameBeroepsbevolking_1
+    multiplier: 1000
+    unit: persons
+    frequency: quarter
+    filters: { Geslacht: T001038, Persoonskenmerken: T009002 }
+    breakdown_dimension: Beroep
+    breakdowns:
+      A000273: ict-occupations
+      A000218: ict-managers
+      A000276: system-network-specialists
+      A059353: system-analysts-advisers
+      A059354: software-developers
+      A000278: user-support
+    title:
+      nl: Werkenden in ICT-beroepen
+      en: Employed persons in ICT occupations
+
+manual:
+  - series_id: hbo_starting_salary
+    source_id: hbo_monitor
+    unit: eur_month_gross
+    breakdown: programme
+    title:
+      nl: Bruto startsalaris per maand, ruim een jaar na afstuderen
+      en: Gross starting salary per month, about a year after graduating
+  - series_id: hbo_job_match
+    source_id: hbo_monitor
+    unit: percent
+    breakdown: programme
+    title:
+      nl: Afgestudeerden met werk op minimaal hbo-niveau
+      en: Graduates working at bachelor level or above
+  - series_id: roa_outlook
+    source_id: roa
+    unit: label
+    breakdown: programme
+    title:
+      nl: Arbeidsmarktperspectief voor afgestudeerden (ROA-prognose)
+      en: Labour market outlook for graduates (ROA forecast)
+    note:
+      nl: Een prognose is een scenario, geen zekerheid (LR-06).
+      en: A forecast is a scenario, not a certainty (LR-06).
+  - series_id: uwv_tension
+    source_id: uwv
+    unit: label
+    breakdown: occupation
+    title:
+      nl: Spanning op de arbeidsmarkt voor ICT-beroepen (UWV)
+      en: Labour market tightness for ICT occupations (UWV)
