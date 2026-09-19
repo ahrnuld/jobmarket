@@ -52,6 +52,15 @@ def refresh_manual(
 ) -> list[StatsResult]:
     series = {s["series_id"]: s for s in config.get("manual", [])}
     results = []
+    # A manual source whose CSV was removed has no figures any more: drop its stored rows too.
+    present = {p.stem for p in manual_dir.glob("*.csv")}
+    placeholders = ",".join("?" * len(present)) or "''"
+    conn.execute(
+        f"DELETE FROM stat_observations WHERE source_id != 'cbs' "
+        f"AND source_id NOT IN ({placeholders})",
+        tuple(present),
+    )
+    conn.commit()
     for path in sorted(manual_dir.glob("*.csv")):
         source_id = path.stem
         if source_id not in ref.sources:

@@ -4,9 +4,9 @@
 # and dimension keys were checked against the API on 2026-09-19. `filters` pins every dimension
 # that is not broken down; `regions` / `breakdowns` map CBS keys onto our own ids.
 #
-# Manual series (HBO-Monitor, ROA, UWV) have no API. Their figures are typed over from the
-# publications into data/manual/*.csv; see data/manual/README.md. Every series used in a CSV must
-# be declared here, so the site knows its title, unit and meaning.
+# Manual series have no API we can use yet. Their figures are copied from the publications into
+# data/manual/<source_id>.csv; see data/manual/README.md. Every series used in a CSV must be
+# declared here, so the site knows its title, unit, underlying source (`origin`) and meaning.
 
 cbs:
   - series_id: cbs_vacancies_ict_sector
@@ -80,32 +80,83 @@ cbs:
       en: Employed persons in ICT occupations
 
 manual:
-  - series_id: hbo_starting_salary
-    source_id: hbo_monitor
+  # Labour market outcomes per programme, from the Studiekeuzedatabase of the Landelijk Centrum
+  # Studiekeuze as shown on Studiekeuze123 (national figures per study, full-time graduates).
+  # `origin` is the underlying source, shown next to every figure. Breakdown: a programme id, or
+  # 'hbo-bachelor' for the national average of all hbo bachelors. The figures are computed per
+  # group of related programmes (SOI rubriek), so related programmes can share identical values.
+  - series_id: sk_starting_salary
+    source_id: studiekeuze123
+    origin: CBS Microdata
     unit: eur_month_gross
     breakdown: programme
     title:
-      nl: Bruto startsalaris per maand, ruim een jaar na afstuderen
-      en: Gross starting salary per month, about a year after graduating
-  - series_id: hbo_job_match
-    source_id: hbo_monitor
+      nl: Geschat bruto startsalaris per maand
+      en: Estimated gross starting salary per month
+  - series_id: sk_job_at_level
+    source_id: studiekeuze123
+    origin: HBO-Monitor
     unit: percent
     breakdown: programme
     title:
-      nl: Afgestudeerden met werk op minimaal hbo-niveau
-      en: Graduates working at bachelor level or above
-  - series_id: roa_outlook
-    source_id: roa
+      nl: Afgestudeerden met een baan op het niveau van de studie
+      en: Graduates with a job at the level of their studies
+  - series_id: sk_job_in_field
+    source_id: studiekeuze123
+    origin: HBO-Monitor
+    unit: percent
+    breakdown: programme
+    title:
+      nl: Afgestudeerden met een baan in het vakgebied
+      en: Graduates with a job in their field
+  - series_id: sk_months_to_job
+    source_id: studiekeuze123
+    origin: CBS Microdata
+    unit: months
+    breakdown: programme
+    title:
+      nl: Gemiddelde tijd tot een substantiële baan
+      en: Average time to a substantial job
+  - series_id: sk_permanent_contract
+    source_id: studiekeuze123
+    origin: CBS Microdata
+    unit: percent
+    breakdown: programme
+    title:
+      nl: Werkende afgestudeerden met een vast contract
+      en: Working graduates with a permanent contract
+  - series_id: sk_hours_per_week
+    source_id: studiekeuze123
+    origin: CBS Microdata
+    unit: hours
+    breakdown: programme
+    title:
+      nl: Gemiddeld aantal werkuren per week
+      en: Average working hours per week
+  - series_id: sk_outlook
+    source_id: studiekeuze123
+    origin: ROA
     unit: label
     breakdown: programme
     title:
-      nl: Arbeidsmarktperspectief voor afgestudeerden (ROA-prognose)
-      en: Labour market outlook for graduates (ROA forecast)
+      nl: Arbeidsmarktperspectief (ROA-prognose)
+      en: Labour market outlook (ROA forecast)
     note:
       nl: Een prognose is een scenario, geen zekerheid (LR-06).
       en: A forecast is a scenario, not a certainty (LR-06).
+  - series_id: sk_occupation
+    source_id: studiekeuze123
+    origin: HBO-Monitor
+    unit: percent
+    breakdown: programme_item   # '<programme id>/<occupation>'
+    title:
+      nl: Beroepen van afgestudeerden, anderhalf jaar na afstuderen
+      en: Occupations of graduates, about a year and a half after graduating
+
+  # Defined for later use; no data yet.
   - series_id: uwv_tension
     source_id: uwv
+    origin: UWV
     unit: label
     breakdown: occupation
     title:

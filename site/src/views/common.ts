@@ -53,6 +53,8 @@ interface ProvenanceOpts {
   n?: number | null;
   unit?: string; // "vacatures" etc.
   extra?: string;
+  /** Label before the date; default "bijgewerkt". Use "geraadpleegd" for figures copied by hand. */
+  dateLabel?: string;
 }
 
 /** FR-05 / TR-01: source, last update and number of records under every chart. */
@@ -64,7 +66,7 @@ export function provenance(ctx: Ctx, o: ProvenanceOpts): string {
     return s.url.startsWith("https://example") ? esc(name) : `<a href="${esc(s.url)}">${esc(name)}</a>`;
   });
   const parts = [`${ctx.tr.chart.source}: ${links.join(", ")}`,
-                 `${ctx.tr.chart.updated} ${esc(fmtDate(ctx.lang, o.updated))}`];
+                 `${o.dateLabel ?? ctx.tr.chart.updated} ${esc(fmtDate(ctx.lang, o.updated))}`];
   if (o.n !== undefined && o.n !== null) {
     parts.push(`${ctx.tr.chart.basedOn} ${fmtInt(ctx.lang, o.n)} ${esc(o.unit ?? ctx.tr.chart.vacancies)}`);
   }

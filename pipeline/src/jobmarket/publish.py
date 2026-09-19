@@ -171,6 +171,7 @@ def build(
     for s in config.get("manual", []):
         series_meta[s["series_id"]] = {
             "source": s["source_id"],
+            "origin": s.get("origin"),  # underlying source, e.g. CBS Microdata
             "unit": s["unit"],
             "title": s["title"],
             "note": s.get("note"),
@@ -192,7 +193,11 @@ def build(
             "sample": bool(r["is_sample"]),
             "note": r["note"],
         }
-        for r in conn.execute("SELECT * FROM stat_observations ORDER BY series_id, period_start")
+        # Example values (is_sample) are never published, in any mode: a placeholder figure on
+        # the public site could be mistaken for a real one.
+        for r in conn.execute(
+            "SELECT * FROM stat_observations WHERE is_sample = 0 ORDER BY series_id, period_start"
+        )
     ]
     stats = {"series": series_meta, "observations": observations}
 

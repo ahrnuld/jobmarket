@@ -48,6 +48,20 @@ sources:
     terms_checked_on: null
     release: mvp
 
+  # Labour market outcomes per programme: Studiekeuzedatabase of the Landelijk Centrum Studiekeuze
+  # (LCSK), as shown on Studiekeuze123. Underlying sources: CBS Microdata, HBO-Monitor, ROA. LCSK
+  # requires it to be named clearly as the source. Figures copied by hand from the national study
+  # pages until database access (free, on request) is arranged.
+  - id: studiekeuze123
+    name: Studiekeuze123 (Landelijk Centrum Studiekeuze)
+    url: https://www.studiekeuze123.nl/
+    licence: Studiekeuzedatabase, LCSK delivery terms; name LCSK as the source
+    licence_url: https://lcsk.nl/over-ons/leveringsvoorwaarden/
+    attribution: "Bron: Landelijk Centrum Studiekeuze (Studiekeuze123)"
+    raw_retention_days: null
+    terms_checked_on: null
+    release: mvp
+
   - id: esco
     name: ESCO (European Skills, Competences, Qualifications and Occupations)
     url: https://esco.ec.europa.eu/

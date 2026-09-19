@@ -1,11 +1,11 @@
-// Published statistics (CBS, HBO-Monitor, ROA, UWV). Rendered at build time only.
+// Published statistics (CBS; Studiekeuze123 with HBO-Monitor, CBS Microdata and ROA figures).
 
-import { lineChart, table } from "../lib/charts";
-import { fmtEuro, fmtInt, fmtPct, fmtPeriod } from "../lib/format";
+import { barList, lineChart, table } from "../lib/charts";
+import { escapeHtml as esc, fmtEuro, fmtInt, fmtPct, fmtPeriod } from "../lib/format";
 import { yearsBefore } from "../lib/model";
 import type { Observation, Stats } from "../lib/types";
 import {
-  card, type Ctx, indicativeBadge, PROGRAMME_COLOR, programmeName, provenance, sampleBadge, tile,
+  card, type Ctx, PROGRAMME_COLOR, programmeName, provenance, sampleBadge,
 } from "./common";
 
 export const obs = (stats: Stats, series: string, filter: Partial<Observation> = {}) =>
@@ -17,45 +17,136 @@ const latestPublished = (list: Observation[]) =>
 
 const latest = (list: Observation[]) => [...list].sort((a, b) => (a.start < b.start ? -1 : 1)).at(-1);
 
+const SK = "studiekeuze123";
+
+/** The latest value of a Studiekeuze123 series for one breakdown. */
+const skValue = (stats: Stats, series: string, breakdown: string) =>
+  latest(obs(stats, series, { breakdown }));
+
+/** Programmes whose graduate figures are identical (computed per group of related programmes). */
+function sharedWith(ctx: Ctx, stats: Stats, programme: string): string[] {
+  const key = (p: string) => ["sk_starting_salary", "sk_job_at_level", "sk_job_in_field", "sk_permanent_contract"]
+    .map((s) => skValue(stats, s, p)?.value ?? "-").join("|");
+  const mine = key(programme);
+  if (mine.replace(/[|-]/g, "") === "") return [];
+  return ctx.meta.programmes.map((p) => p.id).filter((p) => p !== programme && key(p) === mine);
+}
+
 /**
- * Graduate outcomes per programme (HBO-Monitor) and the forecast (ROA), as tiles.
- * FR-04 (graduate part) and FR-02 (starting salary). Forecasts are labelled as scenarios (LR-06).
+ * What graduates achieve, per programme: estimated starting salary, work at level and in field,
+ * time to a job, contracts, and ROA's outlook (FR-02, FR-04). Source: Studiekeuzedatabase of the
+ * Landelijk Centrum Studiekeuze; each figure names its underlying source. Forecasts are labelled
+ * as scenarios (LR-06).
  */
 export function graduateCard(ctx: Ctx, stats: Stats, programmes: string[], headingLevel: 2 | 3 = 3): string {
-  const { lang, tr, meta } = ctx;
+  const { lang } = ctx;
+  const nl = lang === "nl";
+  const avg = skValue(stats, "sk_starting_salary", "hbo-bachelor")?.value ?? null;
   const used: Observation[] = [];
+  const rows: string[][] = [];
+  const pct = (v: number | null | undefined) => (v == null ? "–" : fmtPct(lang, v / 100));
   const tiles = programmes.map((p) => {
-    const sal = latest(obs(stats, "hbo_starting_salary", { breakdown: p }));
-    const match = latest(obs(stats, "hbo_job_match", { breakdown: p }));
-    const outlook = latest(obs(stats, "roa_outlook", { breakdown: p }));
-    for (const o of [sal, match, outlook]) if (o) used.push(o);
-    const badges = [sal, match, outlook].some((o) => o?.sample) ? [sampleBadge(ctx)] : [];
-    if (sal?.n !== null && sal?.n !== undefined && sal.n < meta.min_sample_size) badges.push(indicativeBadge(ctx));
-    const parts = [
-      match?.value != null ? `${fmtPct(lang, match.value / 100)} ${lang === "nl" ? "werkt op minimaal hbo-niveau" : "work at bachelor level or above"}` : null,
-      outlook?.label ? `${lang === "nl" ? "Vooruitzicht" : "Outlook"} ${outlook.period}: ${outlook.label}` : null,
-      sal ? `${lang === "nl" ? "Afgestudeerd" : "Graduated"} ${sal.period}${sal.n ? `, n=${fmtInt(lang, sal.n)}` : ""}` : null,
-    ].filter(Boolean);
-    return tile({
-      label: programmes.length > 1 ? programmeName(ctx, p) : (lang === "nl" ? "Startsalaris afgestudeerden" : "Graduate starting salary"),
-      value: sal?.value != null ? fmtEuro(lang, sal.value) : "–",
-      sub: parts.join(" · "),
-      badges,
-    });
-  });
-  if (!used.length) return "";
-  const sources = [...new Set(used.map((o) => o.source))];
+    const v = (s: string) => {
+      const o = skValue(stats, s, p);
+      if (o) used.push(o);
+      return o;
+    };
+    const sal = v("sk_starting_salary");
+    const lvl = v("sk_job_at_level");
+    const fld = v("sk_job_in_field");
+    const mon = v("sk_months_to_job");
+    const perm = v("sk_permanent_contract");
+    const out = v("sk_outlook");
+    if (!sal && !lvl && !out) return "";
+    const diff = sal?.value != null && avg != null ? sal.value - avg : null;
+    const items = [
+      diff !== null && avg !== null
+        ? `${fmtEuro(lang, Math.abs(diff))} ${diff >= 0 ? (nl ? "boven" : "above") : (nl ? "onder" : "below")} `
+          + `${nl ? "het gemiddelde van alle hbo-bachelors" : "the average of all hbo bachelors"} (${fmtEuro(lang, avg)})`
+        : null,
+      lvl?.value != null ? `${pct(lvl.value)} ${nl ? "heeft een baan op hbo-niveau" : "have a job at bachelor level"}` : null,
+      fld?.value != null ? `${pct(fld.value)} ${nl ? "werkt in het eigen vakgebied" : "work in their own field"}` : null,
+      mon?.value != null ? `${nl ? "gemiddeld" : "on average"} ${fmtInt(lang, mon.value)} ${nl ? "maanden tot een baan" : "months to a job"}` : null,
+      perm?.value != null ? `${pct(perm.value)} ${nl ? "heeft een vast contract" : "have a permanent contract"}` : null,
+      out?.label ? `${nl ? "Perspectief tot" : "Outlook to"} ${out.period} (ROA): ${out.label}` : null,
+    ].filter((x): x is string => !!x);
+    rows.push([programmeName(ctx, p), sal?.value != null ? fmtEuro(lang, sal.value) : "–", pct(lvl?.value), pct(fld?.value),
+               mon?.value != null ? fmtInt(lang, mon.value) : "–", pct(perm?.value), out?.label ?? "–"]);
+    const label = programmes.length > 1
+      ? programmeName(ctx, p)
+      : (nl ? "Geschat startsalaris (bruto per maand)" : "Estimated starting salary (gross per month)");
+    return `<div class="tile"><p class="tile-label">${esc(label)}</p>`
+      + `<p class="tile-value">${sal?.value != null ? esc(fmtEuro(lang, sal.value)) : "–"}</p>`
+      + `<ul class="tile-list">${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>`;
+  }).filter(Boolean);
+  if (!tiles.length) return "";
+
+  // Programmes that share identical figures: say so instead of suggesting separate measurements.
+  const notes: string[] = [];
+  const seen = new Set<string>();
+  for (const p of programmes) {
+    if (seen.has(p)) continue;
+    const partners = sharedWith(ctx, stats, p);
+    const group = [p, ...partners];
+    group.forEach((x) => seen.add(x));
+    if (!partners.length) continue;
+    const names = group.map((x) => programmeName(ctx, x));
+    notes.push(nl
+      ? `${names.join(" en ")} hebben dezelfde cijfers: ze worden landelijk berekend voor een groep verwante opleidingen, niet per opleiding afzonderlijk.`
+      : `${names.join(" and ")} have the same figures: they are calculated nationally for a group of related programmes, not per programme.`);
+  }
+  const links = [...new Set(used.map((o) => o.url).filter((u): u is string => !!u))];
   const updated = used.map((o) => o.published ?? o.retrieved).sort().at(-1) ?? null;
-  const links = [...new Set(used.map((o) => o.url).filter((u): u is string => !!u && !u.includes("example.invalid")))];
+  const linkLabel = (u: string) => {
+    const code = /studies\/(\d+)/.exec(u)?.[1];
+    return code ? `Studiekeuze123 ${code}` : "Studiekeuze123";
+  };
   return card(ctx, {
-    title: lang === "nl" ? "Na het afstuderen" : "After graduating",
-    subtitle: lang === "nl"
-      ? "Bruto maandsalaris ongeveer een jaar na afstuderen en werk op niveau (HBO-Monitor), en het arbeidsmarktperspectief volgens ROA. Een prognose is een scenario, geen zekerheid."
-      : "Gross monthly salary about a year after graduating and work at level (HBO-Monitor), and the labour market outlook according to ROA. A forecast is a scenario, not a certainty.",
+    title: nl ? "Na het afstuderen" : "After graduating",
+    subtitle: (nl
+      ? "Landelijke cijfers over afgestudeerden van voltijdopleidingen. Salaris, contract en tijd tot een baan: CBS Microdata. Baan op niveau en in vakgebied: HBO-Monitor, anderhalf jaar na afstuderen. Perspectief: prognose van ROA, een scenario en geen zekerheid."
+      : "National figures on graduates of full-time programmes. Salary, contract and time to a job: CBS Microdata. Job at level and in field: HBO-Monitor, about a year and a half after graduating. Outlook: ROA forecast, a scenario and not a certainty.")
+      + (notes.length ? ` ${notes.join(" ")}` : ""),
     body: `<div class="tiles">${tiles.join("")}</div>`,
-    provenance: provenance(ctx, { sourceIds: sources, updated,
-                                  extra: used.some((o) => o.sample) ? tr.chart.sampleExplain : undefined })
-      + (links.length ? `<p class="provenance">${links.map((u) => `<a href="${u}">${new URL(u).hostname} ↗</a>`).join(" · ")}</p>` : ""),
+    provenance: provenance(ctx, {
+      sourceIds: [SK], updated, dateLabel: nl ? "geraadpleegd" : "consulted",
+      extra: nl ? "meetjaar en aantal respondenten niet gepubliceerd" : "measurement year and number of respondents not published",
+    }) + (links.length
+      ? `<p class="provenance">${links.map((u) => `<a href="${esc(u)}">${esc(linkLabel(u))} ↗</a>`).join(" · ")}</p>`
+      : ""),
+    table: table(nl ? "Na het afstuderen" : "After graduating",
+      [nl ? "Opleiding" : "Programme", nl ? "Startsalaris" : "Starting salary", nl ? "Op niveau" : "At level",
+       nl ? "In vakgebied" : "In field", nl ? "Maanden tot baan" : "Months to job",
+       nl ? "Vast contract" : "Permanent contract", nl ? "Perspectief" : "Outlook"],
+      rows),
+    headingLevel,
+  });
+}
+
+/** Where graduates of a programme work (HBO-Monitor via Studiekeuze123). */
+export function occupationsCard(ctx: Ctx, stats: Stats, programme: string, headingLevel: 2 | 3 = 3): string {
+  const { lang, tr } = ctx;
+  const nl = lang === "nl";
+  const list = obs(stats, "sk_occupation")
+    .filter((o) => o.breakdown.startsWith(`${programme}/`) && o.value != null)
+    .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
+  if (!list.length) return "";
+  const name = (o: Observation) => o.breakdown.slice(programme.length + 1);
+  return card(ctx, {
+    title: nl ? "Waar werken afgestudeerden?" : "Where do graduates work?",
+    subtitle: nl
+      ? "Beroepen van afgestudeerden anderhalf jaar na afstuderen (landelijk, alle opleidingsvormen). Alleen de grootste beroepen staan erin, dus de percentages tellen niet op tot 100%."
+      : "Occupations of graduates about a year and a half after graduating (national, all study modes). Only the largest occupations are listed, so the percentages do not add up to 100%.",
+    body: barList(list.map((o) => ({
+      label: name(o), value: o.value!, valueText: fmtPct(lang, o.value! / 100),
+      tip: `${name(o)}: ${fmtPct(lang, o.value! / 100)}`, colorVar: PROGRAMME_COLOR[programme],
+    })), nl ? "Beroepen van afgestudeerden" : "Occupations of graduates", tr.chart.noData),
+    provenance: provenance(ctx, {
+      sourceIds: [SK], updated: latestPublished(list), dateLabel: nl ? "geraadpleegd" : "consulted",
+      extra: nl ? "onderliggende bron: HBO-Monitor" : "underlying source: HBO-Monitor",
+    }),
+    table: table(nl ? "Beroepen" : "Occupations", [nl ? "Beroep" : "Occupation", tr.chart.share],
+                 list.map((o) => [name(o), fmtPct(lang, o.value! / 100)])),
     headingLevel,
   });
 }
@@ -98,14 +189,13 @@ export function statLines(ctx: Ctx, stats: Stats, seriesId: string, split: "regi
   });
 }
 
-/** Graduate starting salary per programme over the years (HBO-Monitor). */
+/** Estimated starting salary per programme over the years; shown once there are several years. */
 export function graduateTrend(ctx: Ctx, stats: Stats): string {
   const { lang } = ctx;
-  const all = obs(stats, "hbo_starting_salary");
+  const all = obs(stats, "sk_starting_salary").filter((o) => o.breakdown !== "hbo-bachelor");
   if (!all.length) return "";
-  const html = statLines(ctx, stats, "hbo_starting_salary", "breakdown",
+  const html = statLines(ctx, stats, "sk_starting_salary", "breakdown",
     ctx.meta.programmes.map((p) => ({ key: p.id, label: p.name[lang], colorVar: PROGRAMME_COLOR[p.id] })), null);
-  const years = new Set(all.map((o) => o.period)).size;
-  return years > 1 ? html : html.replace("</section>",
-    `<p class="empty">${lang === "nl" ? "Nog maar één jaar ingevoerd; een lijn verschijnt vanaf twee jaren." : "Only one year entered so far; a line appears from two years."}</p></section>`);
+  // A trend needs at least two measurement years; a single year is shown on the programme pages.
+  return new Set(all.map((o) => o.period)).size > 1 ? html : "";
 }

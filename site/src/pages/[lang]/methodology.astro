@@ -18,9 +18,9 @@ const min = meta.min_sample_size;
 const acc = meta.accuracy;
 const escoLinked = meta.skills.filter((s) => s.esco_uri).length;
 const collected: Record<string, string> = nl
-  ? { adzuna: "API, wekelijks", cbs: "open data-API, wekelijks gecontroleerd", hbo_monitor: "overgenomen uit publicatie",
+  ? { adzuna: "API, wekelijks", cbs: "open data-API, wekelijks gecontroleerd", studiekeuze123: "overgenomen van Studiekeuze123 (landelijke cijfers per opleiding)", hbo_monitor: "overgenomen uit publicatie",
       roa: "overgenomen uit publicatie", uwv: "overgenomen uit publicatie", esco: "API, bij het opstellen van de skillslijst" }
-  : { adzuna: "API, weekly", cbs: "open data API, checked weekly", hbo_monitor: "copied from publication",
+  : { adzuna: "API, weekly", cbs: "open data API, checked weekly", studiekeuze123: "copied from Studiekeuze123 (national figures per programme)", hbo_monitor: "copied from publication",
       roa: "copied from publication", uwv: "copied from publication", esco: "API, when compiling the skills list" };
 const toc = nl
   ? [["summary", "In het kort"], ["sources", "Bronnen"], ["collection", "Verzamelen"], ["dedup", "Dubbele vacatures"],
@@ -53,7 +53,7 @@ const toc = nl
           <li>We halen elke week nieuwe online vacatures op via Adzuna, een vacaturezoekmachine met een openbare API.</li>
           <li>We verwijderen persoonsgegevens, halen dubbele vacatures eruit en bepalen per vacature of het een ICT-functie is, voor welk niveau, bij welke opleiding hij past en welke skills hij noemt.</li>
           <li>We publiceren alleen tellingen per maand, nooit de vacatures zelf.</li>
-          <li>Officiële cijfers van CBS, HBO-Monitor, ROA en UWV staan ernaast ter vergelijking.</li>
+          <li>Officiële cijfers van CBS, en cijfers over afgestudeerden van het Landelijk Centrum Studiekeuze (HBO-Monitor, CBS Microdata, ROA), staan ernaast ter vergelijking.</li>
           <li>Onder elk cijfer staan de bron, de datum en het aantal records. Cijfers op minder dan {min} records zijn gemarkeerd als indicatief.</li>
         </>
       ) : (
@@ -61,7 +61,7 @@ const toc = nl
           <li>Every week we collect new online vacancies through Adzuna, a job search engine with a public API.</li>
           <li>We remove personal data, drop duplicate vacancies and decide for each vacancy whether it is an ICT role, for which level, which programme it fits and which skills it mentions.</li>
           <li>We only publish monthly counts, never the vacancies themselves.</li>
-          <li>Official figures from CBS, HBO-Monitor, ROA and UWV are shown alongside for comparison.</li>
+          <li>Official figures from CBS, and graduate figures from the Landelijk Centrum Studiekeuze (HBO-Monitor, CBS Microdata, ROA), are shown alongside for comparison.</li>
           <li>Every figure shows its source, date and number of records. Figures based on fewer than {min} records are marked as indicative.</li>
         </>
       )}
@@ -201,8 +201,8 @@ const toc = nl
     </p>
     <p>
       {nl
-        ? "De startsalarissen van afgestudeerden komen uit de HBO-Monitor, een jaarlijkse enquête onder alumni, en staan los van de vacaturecijfers."
-        : "Graduate starting salaries come from the HBO-Monitor, an annual alumni survey, and are separate from the vacancy figures."}
+        ? "De cijfers over afgestudeerden (startsalaris, baan op niveau, tijd tot een baan) komen uit de Studiekeuzedatabase van het Landelijk Centrum Studiekeuze, zoals getoond op Studiekeuze123. Het geschatte startsalaris komt uit CBS Microdata, baan op niveau en in vakgebied uit de HBO-Monitor (een enquête onder alumni, anderhalf jaar na afstuderen). Ze worden landelijk berekend per groep verwante opleidingen, daarom hebben Informatica en Technische Informatica dezelfde cijfers. Ze staan los van de vacaturecijfers."
+        : "Graduate figures (starting salary, job at level, time to a job) come from the Studiekeuzedatabase of the Landelijk Centrum Studiekeuze, as shown on Studiekeuze123. The estimated starting salary comes from CBS Microdata, job at level and in field from the HBO-Monitor (an alumni survey, about a year and a half after graduating). They are calculated nationally per group of related programmes, which is why Informatica and Technische Informatica have the same figures. They are separate from the vacancy figures."}
     </p>
 
     <h2 id="trends">Trends</h2>

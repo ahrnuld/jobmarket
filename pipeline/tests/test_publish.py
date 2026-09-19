@@ -279,3 +279,21 @@ def test_validate_detects_pii_in_titles_and_stale_data():
     )
     assert any("personal data" in e for e in report.errors)
     assert any("days ago" in w for w in report.warnings)
+
+
+def test_example_statistics_are_never_published(loaded, ref, settings):
+    loaded.execute(
+        "INSERT INTO stat_observations (source_id, series_id, period, period_start, breakdown, "
+        "value, unit, retrieved_at, licence, is_sample) VALUES "
+        "('studiekeuze123', 'sk_starting_salary', '2026', '2026-01-01', 'informatica', 3000, "
+        "'eur_month_gross', '2026-09-19', 'x', 1), "
+        "('studiekeuze123', 'sk_starting_salary', '2026', '2026-01-01', 'business-it-management', "
+        "3312, 'eur_month_gross', '2026-09-19', 'x', 0)"
+    )
+    merge_into_history(settings.history_dir, compute(loaded, sample=True, today=TODAY))
+    publish(loaded, ref, settings, dataset="sample", history_dir=settings.history_dir, today=TODAY)
+    stats = json.loads((settings.publish_dir / "stats.json").read_text("utf-8"))
+    assert [(o["breakdown"], o["value"]) for o in stats["observations"]] == [
+        ("business-it-management", 3312.0)
+    ]
+    assert stats["series"]["sk_starting_salary"]["origin"] == "CBS Microdata"

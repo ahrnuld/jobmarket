@@ -1,4 +1,0 @@
-source_id,series_id,period,region,breakdown,value,value_label,unit,sample_size,published_at,source_url,is_sample,note
-roa,roa_outlook,2025-2030,NL,informatica,,voorbeeld,label,,2025-12-01,https://example.invalid/replace-with-real-source,1,VOORBEELDWAARDE - vervang door echte ROA-prognose
-roa,roa_outlook,2025-2030,NL,business-it-management,,voorbeeld,label,,2025-12-01,https://example.invalid/replace-with-real-source,1,VOORBEELDWAARDE - vervang door echte ROA-prognose
-roa,roa_outlook,2025-2030,NL,technische-informatica,,voorbeeld,label,,2025-12-01,https://example.invalid/replace-with-real-source,1,VOORBEELDWAARDE - vervang door echte ROA-prognose

@@ -163,6 +163,8 @@ main { padding: 24px 0 48px; }
 .tile-value { font-size: 1.9rem; font-weight: 650; margin: 0; line-height: 1.15; }
 .tile-sub { font-size: 0.85rem; color: var(--ink-muted); margin: 6px 0 0; }
 .tile .badges { margin-top: 8px; }
+.tile-list { list-style: none; margin: 8px 0 0; padding: 0; font-size: 0.85rem; color: var(--ink-2); }
+.tile-list li { padding: 2px 0; }
 .provenance { font-size: 0.82rem; color: var(--ink-muted); margin: 14px 0 0; }
 .provenance a { color: inherit; }
 .empty { color: var(--ink-muted); font-style: italic; }

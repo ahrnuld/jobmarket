@@ -6,7 +6,7 @@ import { loadGeo, loadMeta, loadStats } from "../../../lib/data";
 import type { Lang } from "../../../lib/types";
 import { DEFAULT_STATE, makeCtx } from "../../../views/common";
 import { renderProgramme } from "../../../views/pages";
-import { graduateCard } from "../../../views/stats";
+import { graduateCard, occupationsCard } from "../../../views/stats";
 
 export function getStaticPaths() {
   const meta = loadMeta();
@@ -37,6 +37,7 @@ const locations = programme.locations.join(nl ? " en " : " and ");
       : "This site is independent and not run by any university. The programme name is only used to group vacancies."}
   </p>
   <Fragment set:html={graduateCard(ctx, loadStats(), [id], 2)} />
+  <Fragment set:html={occupationsCard(ctx, loadStats(), id, 2)} />
   <h2>{nl ? "Vacatures die bij deze opleiding passen" : "Vacancies that fit this programme"}</h2>
   <FilterBar lang={lang} id="programme-filters" fields={["geo", "seniority", "period"]} />
   <div id="programme-root" data-lang={lang} data-programme={id} set:html={initial} />

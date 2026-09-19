@@ -101,6 +101,7 @@ export interface GeoData {
 
 export interface StatSeries {
   source: string;
+  origin?: string | null; // underlying source of a figure shown via another source
   unit: string;
   title: I18nText;
   note?: I18nText | null;

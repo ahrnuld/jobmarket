@@ -29,6 +29,8 @@ COLUMNS = [
     "is_sample",
     "note",
 ]
+# Breakdown value for the national average of all hbo bachelors (programme series).
+NATIONAL_AVG = "hbo-bachelor"
 # '2025' (a year), '2025Q3' (a quarter), '2025-2030' (a forecast horizon)
 PERIOD = re.compile(r"^(\d{4})(?:Q([1-4])|-(\d{4}))?$")
 
@@ -76,10 +78,19 @@ def read_file(path: Path, series: dict[str, dict], ref: Reference) -> list[Obser
             region = row["region"] or "NL"
             if region != "NL" and region not in ref.provinces and region not in ref.regions:
                 errors.append(f"{where}: unknown region {region!r}")
-            if cfg.get("breakdown") == "programme" and row["breakdown"] not in ref.programmes:
+            kind = cfg.get("breakdown")
+            if kind == "programme" and row["breakdown"] not in (*ref.programmes, NATIONAL_AVG):
                 errors.append(
-                    f"{where}: breakdown must be a programme id, got {row['breakdown']!r}"
+                    f"{where}: breakdown must be a programme id or {NATIONAL_AVG!r}, "
+                    f"got {row['breakdown']!r}"
                 )
+            if kind == "programme_item":
+                programme, _, item = row["breakdown"].partition("/")
+                if programme not in ref.programmes or not item.strip():
+                    errors.append(
+                        f"{where}: breakdown must look like '<programme id>/<item>', "
+                        f"got {row['breakdown']!r}"
+                    )
             value = None
             if cfg["unit"] == "label":
                 if not row["value_label"]:
