@@ -1,0 +1,89 @@
+# Skills vocabulary (DR-05). Each skill links to an ESCO skill or knowledge concept.
+#
+# patterns: case-insensitive regular expressions matched against title + description
+#           (Dutch and English, DR-06). Keep them specific: 'go' alone would match everything,
+#           so it needs context (e.g. 'golang').
+# esco_query: search text used by `jobmarket reference resolve-esco` to find the ESCO concept.
+#           The result is stored in esco_links.yaml, where each match is checked by hand.
+#           A skill without a fitting ESCO concept is still counted and shown, just without a link.
+
+skills:
+  # Programming languages
+  - { id: python, label: Python, category: language, patterns: ['\bpython\b'], esco_query: "Python (computer programming)" }
+  - { id: java, label: Java, category: language, patterns: ['\bjava\b(?!\s*script)'], esco_query: "Java (computer programming)" }
+  - { id: csharp, label: "C#", category: language, patterns: ['(?<![\w#])c#(?![\w#])', '\bc sharp\b'], esco_query: "C#" }
+  - { id: dotnet, label: ".NET", category: framework, patterns: ['(?<!\w)\.net\b', '\basp\.net\b', '\bdotnet\b'], esco_query: "ASP.NET" }
+  - { id: javascript, label: JavaScript, category: language, patterns: ['\bjavascript\b', '\bjs\b'], esco_query: "JavaScript" }
+  - { id: typescript, label: TypeScript, category: language, patterns: ['\btypescript\b'], esco_query: "TypeScript" }
+  - { id: php, label: PHP, category: language, patterns: ['\bphp\b'], esco_query: "PHP" }
+  - { id: cpp, label: "C++", category: language, patterns: ['(?<!\w)c\+\+(?!\w)'], esco_query: "C++" }
+  - { id: c, label: C, category: language, patterns: ['(?<![\w#+.-])c(?![\w#+.-])\s*(programmeren|programming|developer|ontwikkelaar|en c\+\+|/c\+\+)', '\bembedded c\b'], esco_query: "computer programming" }
+  - { id: golang, label: Go, category: language, patterns: ['\bgolang\b', '\bgo\s*(developer|programmeur|programming)\b'], esco_query: null }
+  - { id: kotlin, label: Kotlin, category: language, patterns: ['\bkotlin\b'], esco_query: null }
+  - { id: swift, label: Swift, category: language, patterns: ['\bswift\b'], esco_query: "Swift (computer programming)" }
+  - { id: sql, label: SQL, category: data, patterns: ['\bsql\b', '\bt-sql\b', '\bpl/sql\b'], esco_query: "SQL" }
+  - { id: r, label: R, category: data, patterns: ['(?<![\w-])r(?![\w-])\s*(en python|\/python|programmeren|programming|studio)', '\brstudio\b'], esco_query: "R (computer programming)" }
+
+  # Web and mobile
+  - { id: react, label: React, category: framework, patterns: ['\breact(\.js|js)?\b(?!\s*native)'], esco_query: "JavaScript Framework" }
+  - { id: angular, label: Angular, category: framework, patterns: ['\bangular(js)?\b'], esco_query: "JavaScript Framework" }
+  - { id: vue, label: Vue.js, category: framework, patterns: ['\bvue(\.js|js)?\b'], esco_query: "JavaScript Framework" }
+  - { id: nodejs, label: Node.js, category: framework, patterns: ['\bnode(\.js|js)\b'], esco_query: "JavaScript Framework" }
+  - { id: html-css, label: HTML/CSS, category: web, patterns: ['\bhtml5?\b', '\bcss3?\b'], esco_query: "use markup languages" }
+  - { id: spring, label: Spring, category: framework, patterns: ['\bspring( boot)?\b'], esco_query: "Java (computer programming)" }
+  - { id: laravel, label: Laravel, category: framework, patterns: ['\blaravel\b'], esco_query: "PHP" }
+  - { id: flutter, label: Flutter, category: framework, patterns: ['\bflutter\b'], esco_query: "mobile operating systems" }
+  - { id: android, label: Android, category: platform, patterns: ['\bandroid\b'], esco_query: "Android (mobile operating systems)" }
+  - { id: ios, label: iOS, category: platform, patterns: ['\bios\b'], esco_query: "iOS" }
+  - { id: rest-api, label: REST APIs, category: web, patterns: ['\brest(ful)?\s*api', '\bapi[- ]?(ontwikkeling|development|design)\b', '\bweb ?services?\b'], esco_query: "design application interfaces" }
+
+  # Data and AI
+  - { id: machine-learning, label: Machine learning, category: data, patterns: ['\bmachine learning\b', '\bml\b', '\bdeep learning\b'], esco_query: "utilise machine learning" }
+  - { id: ai-llm, label: AI / LLMs, category: data, patterns: ['\b(generative ai|genai|llms?|large language models?|artificial intelligence|kunstmatige intelligentie)\b', '\bai\b'], esco_query: "principles of artificial intelligence" }
+  - { id: data-analysis, label: Data analysis, category: data, patterns: ['\bdata[- ]?(analyse|analysis|analytics)\b'], esco_query: "perform data analysis" }
+  - { id: power-bi, label: Power BI, category: data, patterns: ['\bpower ?bi\b'], esco_query: "business intelligence" }
+  - { id: excel, label: Excel, category: data, patterns: ['\b(ms |microsoft )?excel\b'], esco_query: "use spreadsheets software" }
+  - { id: data-modelling, label: Data modelling, category: data, patterns: ['\bdata ?(modellering|modelling|modeling)\b', '\bdatamodel(len)?\b'], esco_query: "create data models" }
+  - { id: etl, label: ETL / data pipelines, category: data, patterns: ['\betl\b', '\bdata ?pipelines?\b', '\bdbt\b'], esco_query: "ETL" }
+  - { id: spark, label: Spark, category: data, patterns: ['\b(apache )?spark\b', '\bdatabricks\b'], esco_query: null }
+  - { id: nosql, label: NoSQL, category: data, patterns: ['\bnosql\b', '\bmongodb\b', '\bcosmos ?db\b'], esco_query: "NoSQL" }
+
+  # Cloud, infrastructure and operations
+  - { id: azure, label: Microsoft Azure, category: cloud, patterns: ['\bazure\b'], esco_query: "cloud technologies" }
+  - { id: aws, label: AWS, category: cloud, patterns: ['\baws\b', '\bamazon web services\b'], esco_query: "cloud technologies" }
+  - { id: gcp, label: Google Cloud, category: cloud, patterns: ['\bgcp\b', '\bgoogle cloud\b'], esco_query: "cloud technologies" }
+  - { id: docker, label: Docker, category: cloud, patterns: ['\bdocker\b', '\bcontainers?\b'], esco_query: "DevOps" }
+  - { id: kubernetes, label: Kubernetes, category: cloud, patterns: ['\bkubernetes\b', '\bk8s\b', '\baks\b', '\beks\b', '\bopenshift\b'], esco_query: "cloud technologies" }
+  - { id: ci-cd, label: CI/CD, category: devops, patterns: ['\bci ?/ ?cd\b', '\bcontinuous (integration|delivery|deployment)\b', '\b(github actions|gitlab ci|azure devops|jenkins)\b'], esco_query: "DevOps" }
+  - { id: git, label: Git, category: devops, patterns: ['\bgit\b', '\bgithub\b', '\bgitlab\b'], esco_query: "tools for software configuration management" }
+  - { id: terraform, label: Infrastructure as code, category: devops, patterns: ['\bterraform\b', '\binfrastructure as code\b', '\biac\b', '\bbicep\b', '\bansible\b'], esco_query: "DevOps" }
+  - { id: linux, label: Linux, category: infrastructure, patterns: ['\blinux\b', '\bunix\b'], esco_query: "operating systems" }
+  - { id: networking, label: Networking, category: infrastructure, patterns: ['\bnetwerk(en|beheer|techniek)?\b', '\bnetwork(ing)?\b', '\btcp/ip\b', '\bcisco\b', '\bccna\b'], esco_query: "ICT communications protocols" }
+  - { id: windows-server, label: Windows Server / M365, category: infrastructure, patterns: ['\bwindows server\b', '\bactive directory\b', '\b(microsoft|office) 365\b', '\bm365\b', '\bintune\b'], esco_query: "operating systems" }
+
+  # Security
+  - { id: cybersecurity, label: Cyber security, category: security, patterns: ['\bcyber ?security\b', '\binformatiebeveiliging\b', '\binformation security\b', '\bsecurity\b'], esco_query: "cyber security" }
+  - { id: iso27001, label: ISO 27001 / BIO, category: security, patterns: ['\biso ?27001\b', '\bbio\b', '\bnis2\b'], esco_query: "ICT security standards" }
+
+  # Embedded, IoT and automation
+  - { id: embedded, label: Embedded systems, category: embedded, patterns: ['\bembedded\b', '\bfirmware\b', '\bmicrocontroller', '\brtos\b'], esco_query: "embedded systems" }
+  - { id: iot, label: IoT, category: embedded, patterns: ['\biot\b', '\binternet of things\b'], esco_query: "Internet of Things" }
+  - { id: plc, label: PLC / SCADA, category: embedded, patterns: ['\bplc\b', '\bscada\b', '\bsiemens tia\b', '\bcodesys\b'], esco_query: "programmable logic controller" }
+  - { id: electronics, label: Electronics, category: embedded, patterns: ['\belektronica\b', '\belectronics\b', '\bpcb\b'], esco_query: "electronics" }
+  - { id: robotics, label: Robotics, category: embedded, patterns: ['\brobotica\b', '\brobotics\b', '\bros2?\b'], esco_query: "robotics" }
+
+  # Methods and business
+  - { id: agile-scrum, label: Agile / Scrum, category: method, patterns: ['\bagile\b', '\bscrum\b', '\bkanban\b', '\bscaled agile\b'], esco_query: "Agile development" }
+  - { id: testing, label: Software testing, category: method, patterns: ['\b(unit|integratie|integration|end-to-end|e2e|geautomatiseerd|automated)\s*(test|tests|testen|testing)\b', '\btest ?automation\b', '\btdd\b', '\bselenium\b', '\bcypress\b'], esco_query: "ICT test execution software" }
+  - { id: oop, label: Object-oriented programming, category: method, patterns: ['\bobject[- ]?(ge)?ori[eë]nte?e?d\b', '\boop\b'], esco_query: "object-oriented modelling" }
+  - { id: requirements, label: Requirements analysis, category: business, patterns: ['\brequirements?\b', '\buser stories\b', '\beisen ?(en wensen|analyse)\b'], esco_query: "ICT system user requirements" }
+  - { id: process-modelling, label: Process modelling (BPMN), category: business, patterns: ['\bbpmn\b', '\bproces(modellering|analyse|verbetering)\b', '\bprocess (modelling|modeling|improvement|mining)\b', '\blean\b'], esco_query: "business process modelling" }
+  - { id: erp, label: ERP systems, category: business, patterns: ['\berp\b', '\bsap\b', '\bexact online\b', '\bafas\b', '\bdynamics 365\b'], esco_query: "enterprise resource planning" }
+  - { id: crm, label: CRM systems, category: business, patterns: ['\bcrm\b', '\bsalesforce\b', '\bhubspot\b'], esco_query: "customer relationship management" }
+  - { id: project-management, label: Project management, category: business, patterns: ['\bprojectmanagement\b', '\bproject management\b', '\bprince ?2\b', '\bprojectleiding\b'], esco_query: "project management" }
+  - { id: stakeholder-management, label: Stakeholder management, category: business, patterns: ['\bstakeholder(s| management|management)\b'], esco_query: "build business relationships" }
+  - { id: ux-design, label: UX / UI design, category: web, patterns: ['\bux\b', '\bui\b', '\buser experience\b', '\bfigma\b'], esco_query: "software interaction design" }
+
+  # Languages (relevant for LR-07: check whether Dutch is required)
+  - { id: dutch-language, label: Dutch language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) nederlands', '\bnederlandse taal\b', '\bfluent (in )?dutch\b', '\bdutch (is|speaking|language)\b'], esco_query: "Dutch" }
+  - { id: english-language, label: English language, category: language-spoken, patterns: ['\b(vloeiend|goede beheersing van( de)?) engels', '\bengelse taal\b', '\bfluent (in )?english\b', '\bexcellent english\b'], esco_query: "English" }

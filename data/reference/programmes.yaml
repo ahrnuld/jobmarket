@@ -1,0 +1,134 @@
+# Programmes and role families (DR-04).
+#
+# A vacancy maps to every programme whose role family matches its title. A role family can serve
+# several programmes. Title patterns are case-insensitive regular expressions, matched against
+# the normalised title (lowercase, gender markers such as "(m/v/x)" removed). Dutch and English
+# titles are both covered (DR-06).
+#
+# OWNER REVIEW NEEDED (roadmap phase 0: "role families per programme defined"). This is a first
+# draft; check it against the programme descriptions and the labelled sample. Changes are
+# methodology changes: add a changelog entry (FR-22 / TR-06).
+
+programmes:
+  - id: informatica
+    name: { nl: Informatica, en: Computer Science }
+    locations: [Haarlem]
+    summary:
+      nl: Softwareontwikkeling, data en AI, security en cloud.
+      en: Software development, data and AI, security and cloud.
+  - id: business-it-management
+    name: { nl: Business IT & Management, en: Business IT & Management }
+    locations: [Alkmaar, Amsterdam]
+    summary:
+      nl: IT en organisatie verbinden - analyse, advies, data-analyse en projectmanagement.
+      en: Linking IT and organisations - analysis, consulting, data analysis and project management.
+  - id: technische-informatica
+    name: { nl: Technische Informatica, en: Computer Engineering }
+    locations: [Alkmaar]
+    summary:
+      nl: Embedded systemen, IoT, netwerken en industriele automatisering.
+      en: Embedded systems, IoT, networks and industrial automation.
+
+role_families:
+  # --- Informatica -------------------------------------------------------------------------------
+  - id: software-developer
+    name: { nl: Softwareontwikkelaar, en: Software developer }
+    programmes: [informatica]
+    title_patterns:
+      - '\b(software|applicatie|application)\s*(developer|ontwikkelaar|engineer|programmeur)\b'
+      - '\b(\.net|c#|java|python|php|golang|go|ruby|kotlin|scala|typescript|node(\.js)?)\s*(developer|ontwikkelaar|engineer|programmeur)\b'
+      - '\b(back[- ]?end|full[- ]?stack)\s*(developer|ontwikkelaar|engineer)\b'
+      - '^(developer|ontwikkelaar|programmeur)$'
+      - '\b(junior|medior|senior|lead|stagiair[e]?|trainee|graduate)\s+(developer|ontwikkelaar|programmeur)\b'
+  - id: web-mobile-developer
+    name: { nl: Web- en mobile developer, en: Web and mobile developer }
+    programmes: [informatica]
+    title_patterns:
+      - '\b(web|front[- ]?end|react|angular|vue)\s*(developer|ontwikkelaar|engineer)\b'
+      - '\b(mobile|app|ios|android|flutter)\s*(developer|ontwikkelaar|engineer)\b'
+  - id: data-ai-engineer
+    name: { nl: Data- en AI-engineer, en: Data and AI engineer }
+    programmes: [informatica]
+    title_patterns:
+      - '\bdata\s*(engineer|scientist)\b'
+      - '\b(machine learning|ml|ai|artificial intelligence)\s*(engineer|developer|specialist)\b'
+  - id: devops-cloud-engineer
+    name: { nl: DevOps- en cloud-engineer, en: DevOps and cloud engineer }
+    programmes: [informatica, technische-informatica]
+    title_patterns:
+      - '\b(devops|dev ops|cloud|platform|site reliability|sre)\s*(engineer|specialist|architect|consultant)\b'
+  - id: security-specialist
+    name: { nl: Security-specialist, en: Security specialist }
+    programmes: [informatica, technische-informatica]
+    title_patterns:
+      - '\b(cyber\s*)?security\s*(engineer|specialist|analist|analyst|officer|consultant)\b'
+      - '\b(soc|pentester|penetration tester|ethical hacker)\b'
+  - id: software-tester
+    name: { nl: Tester / QA-engineer, en: Tester / QA engineer }
+    programmes: [informatica]
+    title_patterns:
+      - '\b(software\s*)?(tester|test engineer|test automation engineer|qa engineer|quality assurance engineer)\b'
+  - id: game-developer
+    name: { nl: Game developer, en: Game developer }
+    programmes: [informatica]
+    title_patterns:
+      - '\b(game|unity|unreal)\s*(developer|ontwikkelaar|programmer|programmeur)\b'
+
+  # --- Business IT & Management ------------------------------------------------------------------
+  - id: business-functional-analyst
+    name: { nl: Business- of functioneel analist, en: Business or functional analyst }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(business|functioneel|functional|informatie|information|requirements)\s*(analist|analyst|engineer)\b'
+      - '\binformatieanalist\b'
+  - id: functional-application-manager
+    name: { nl: Functioneel beheerder, en: Functional application manager }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(functioneel|applicatie)\s*beheerder\b'
+      - '\b(functional|application)\s*(administrator|manager)\b'
+  - id: it-consultant
+    name: { nl: IT-consultant, en: IT consultant }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(it|ict|erp|crm|sap|salesforce|dynamics|process|proces|digital)\s*[- ]?(consultant|adviseur|advisor)\b'
+  - id: data-bi-analyst
+    name: { nl: Data- en BI-analist, en: Data and BI analyst }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(data|bi|business intelligence|reporting)\s*(analist|analyst|specialist|consultant)\b'
+  - id: product-project-role
+    name: { nl: Product owner / IT-projectleider, en: Product owner / IT project lead }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(product owner|scrum master|agile coach)\b'
+      - '\b(it|ict)\s*(project\s*(manager|leider)|projectleider|projectmanager)\b'
+  - id: it-auditor
+    name: { nl: IT-auditor, en: IT auditor }
+    programmes: [business-it-management]
+    title_patterns:
+      - '\b(it|ict)[- ]?(auditor|risk|compliance)\b'
+
+  # --- Technische Informatica --------------------------------------------------------------------
+  - id: embedded-engineer
+    name: { nl: Embedded software-engineer, en: Embedded software engineer }
+    programmes: [technische-informatica]
+    title_patterns:
+      - '\b(embedded|firmware)\s*(software\s*)?(developer|ontwikkelaar|engineer|programmeur)\b'
+      - '\b(c\+\+|c)\s+(developer|ontwikkelaar|engineer)\b'
+  - id: iot-engineer
+    name: { nl: IoT-engineer, en: IoT engineer }
+    programmes: [technische-informatica]
+    title_patterns:
+      - '\b(iot|internet of things)\s*(developer|ontwikkelaar|engineer|specialist)\b'
+  - id: industrial-automation
+    name: { nl: Industriele automatisering, en: Industrial automation engineer }
+    programmes: [technische-informatica]
+    title_patterns:
+      - '\b(plc|scada|automation|automatisering|besturings|robotics|robot)\s*(programmeur|programmer|engineer|ontwikkelaar|developer|technicus)\b'
+      - '\b(mechatronica|mechatronics)\s*(engineer|ontwikkelaar)\b'
+  - id: network-infrastructure-engineer
+    name: { nl: Netwerk- en infrastructuurspecialist, en: Network and infrastructure engineer }
+    programmes: [technische-informatica]
+    title_patterns:
+      - '\b(netwerk|network|infrastructuur|infrastructure|system|systeem)\s*(engineer|beheerder|administrator|specialist|architect)\b'

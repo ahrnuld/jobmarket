@@ -1,0 +1,86 @@
+# Geography for the region filter (FR-07): municipality -> labour market region -> province.
+#
+# Labour market regions (arbeidsmarktregio's) follow the UWV/Rijksoverheid division.
+# Coverage: every municipality in Noord-Holland (the primary audience), plus the larger cities
+# elsewhere. A vacancy in an unlisted municipality still gets its province from the source's
+# location data, and counts towards the national figure.
+# VERIFY against the current official list (https://www.rijksoverheid.nl/ or UWV) before launch;
+# municipal mergers change it.
+
+provinces:
+  - { id: noord-holland, name: Noord-Holland, aliases: [North Holland, Noord Holland] }
+  - { id: zuid-holland, name: Zuid-Holland, aliases: [South Holland, Zuid Holland] }
+  - { id: utrecht, name: Utrecht, aliases: [] }
+  - { id: noord-brabant, name: Noord-Brabant, aliases: [North Brabant, Noord Brabant] }
+  - { id: gelderland, name: Gelderland, aliases: [] }
+  - { id: overijssel, name: Overijssel, aliases: [] }
+  - { id: limburg, name: Limburg, aliases: [] }
+  - { id: groningen, name: Groningen, aliases: [] }
+  - { id: friesland, name: Friesland, aliases: [Fryslan, Fryslân] }
+  - { id: drenthe, name: Drenthe, aliases: [] }
+  - { id: flevoland, name: Flevoland, aliases: [] }
+  - { id: zeeland, name: Zeeland, aliases: [] }
+
+labour_market_regions:
+  # --- Noord-Holland: complete --------------------------------------------------------------------
+  - id: groot-amsterdam
+    name: Groot Amsterdam
+    province: noord-holland
+    municipalities: [Amsterdam, Weesp, Amstelveen, Aalsmeer, Diemen, Haarlemmermeer, Hoofddorp,
+                     Nieuw-Vennep, Badhoevedorp, Schiphol, Ouder-Amstel, Duivendrecht, Uithoorn]
+  - id: zuid-kennemerland-ijmond
+    name: Zuid-Kennemerland en IJmond
+    province: noord-holland
+    municipalities: [Haarlem, Zandvoort, Heemstede, Bloemendaal, Velsen, IJmuiden, Beverwijk,
+                     Heemskerk, Uitgeest]
+  - id: noord-holland-noord
+    name: Noord-Holland Noord
+    province: noord-holland
+    municipalities: [Alkmaar, Dijk en Waard, Heerhugowaard, Langedijk, Bergen, Castricum, Heiloo,
+                     Den Helder, Schagen, Hollands Kroon, Texel, Hoorn, Enkhuizen, Medemblik,
+                     Stede Broec, Drechterland, Koggenland, Opmeer]
+  - id: zaanstreek-waterland
+    name: Zaanstreek/Waterland
+    province: noord-holland
+    municipalities: [Zaanstad, Zaandam, Purmerend, Edam-Volendam, Waterland, Landsmeer, Oostzaan,
+                     Wormerland]
+  - id: gooi-vechtstreek
+    name: Gooi en Vechtstreek
+    province: noord-holland
+    municipalities: [Hilversum, Gooise Meren, Bussum, Naarden, Huizen, Blaricum, Laren, Wijdemeren]
+
+  # --- Other provinces: larger cities only --------------------------------------------------------
+  - { id: midden-utrecht, name: Midden-Utrecht, province: utrecht,
+      municipalities: [Utrecht, Nieuwegein, Zeist, Houten, IJsselstein, De Bilt, Stichtse Vecht] }
+  - { id: amersfoort, name: Amersfoort, province: utrecht, municipalities: [Amersfoort, Soest, Leusden] }
+  - { id: food-valley, name: Food Valley, province: gelderland,
+      municipalities: [Ede, Wageningen, Veenendaal, Barneveld] }
+  - { id: rijnmond, name: Rijnmond, province: zuid-holland,
+      municipalities: [Rotterdam, Schiedam, Vlaardingen, Capelle aan den IJssel, Spijkenisse, Nissewaard, Barendrecht] }
+  - { id: haaglanden, name: Haaglanden, province: zuid-holland,
+      municipalities: [Den Haag, "'s-Gravenhage", The Hague, Delft, Rijswijk, Westland, Leidschendam-Voorburg, Pijnacker-Nootdorp] }
+  - { id: holland-rijnland, name: Holland Rijnland, province: zuid-holland,
+      municipalities: [Leiden, Leiderdorp, Oegstgeest, Katwijk, Noordwijk, Alphen aan den Rijn, Teylingen] }
+  - { id: zuid-holland-centraal, name: Zuid-Holland Centraal, province: zuid-holland, municipalities: [Zoetermeer] }
+  - { id: midden-holland, name: Midden-Holland, province: zuid-holland, municipalities: [Gouda] }
+  - { id: drechtsteden, name: Drechtsteden, province: zuid-holland, municipalities: [Dordrecht, Zwijndrecht] }
+  - { id: zuidoost-brabant, name: Zuidoost-Brabant, province: noord-brabant,
+      municipalities: [Eindhoven, Veldhoven, Best, Son en Breugel] }
+  - { id: helmond-de-peel, name: Helmond-De Peel, province: noord-brabant, municipalities: [Helmond] }
+  - { id: midden-brabant, name: Midden-Brabant, province: noord-brabant, municipalities: [Tilburg] }
+  - { id: west-brabant, name: West-Brabant, province: noord-brabant, municipalities: [Breda, Roosendaal, Bergen op Zoom] }
+  - { id: noordoost-brabant, name: Noordoost-Brabant, province: noord-brabant,
+      municipalities: ["'s-Hertogenbosch", Den Bosch, Oss] }
+  - { id: rijk-van-nijmegen, name: Rijk van Nijmegen, province: gelderland, municipalities: [Nijmegen] }
+  - { id: midden-gelderland, name: Midden-Gelderland, province: gelderland, municipalities: [Arnhem] }
+  - { id: stedendriehoek, name: Stedendriehoek en Noordwest Veluwe, province: gelderland,
+      municipalities: [Apeldoorn, Deventer, Zutphen] }
+  - { id: twente, name: Twente, province: overijssel, municipalities: [Enschede, Hengelo, Almelo] }
+  - { id: regio-zwolle, name: Regio Zwolle, province: overijssel, municipalities: [Zwolle, Kampen] }
+  - { id: zuid-limburg, name: Zuid-Limburg, province: limburg, municipalities: [Maastricht, Heerlen, Sittard-Geleen] }
+  - { id: noord-limburg, name: Noord-Limburg, province: limburg, municipalities: [Venlo] }
+  - { id: groningen, name: Groningen, province: groningen, municipalities: [Groningen] }
+  - { id: friesland, name: Friesland, province: friesland, municipalities: [Leeuwarden, Heerenveen, Sneek] }
+  - { id: drenthe, name: Drenthe, province: drenthe, municipalities: [Assen, Emmen] }
+  - { id: flevoland, name: Flevoland, province: flevoland, municipalities: [Almere, Lelystad] }
+  - { id: zeeland, name: Zeeland, province: zeeland, municipalities: [Middelburg, Vlissingen, Goes] }

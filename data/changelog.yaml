@@ -1,0 +1,20 @@
+# Public methodology changelog (FR-22, TR-06). Newest first. Shown on the methodology page.
+# Add entries with `jobmarket admin changelog add`, or edit by hand.
+#
+# series_break: list the series whose trend is not comparable across this date, e.g.
+#   [vacancies, skills, seniority, salaries]. The trends page draws a marker at `date`.
+
+entries:
+  - date: "2026-09-19"
+    version: "0.1.0"
+    title:
+      nl: Eerste versie van de methode
+      en: First version of the method
+    body:
+      nl: >-
+        Eerste opzet van ontdubbeling, seniorityclassificatie, koppeling aan opleidingen en
+        skill-extractie. Nog niet getoetst op een handmatig gelabelde steekproef.
+      en: >-
+        First version of deduplication, seniority classification, programme mapping and skill
+        extraction. Not yet measured against a manually labelled sample.
+    series_break: []

@@ -1,0 +1,57 @@
+# Seniority classification rules (DR-03). Documented in plain language on the methodology page.
+#
+# How the classifier uses this file:
+#   1. The title is checked first, levels in the order listed below; the first match wins.
+#   2. If the title gives no level, the description is checked for the same keywords.
+#   3. If there is still no level, required years of experience in the description decide:
+#      0-2 years -> junior, 3-5 -> medior, 6 or more -> senior.
+#   4. Otherwise: unknown.
+# Patterns are case-insensitive regular expressions. Dutch and English are both covered (DR-06).
+
+levels:
+  - id: internship
+    title_patterns:
+      - '\bstage\b'
+      - '\bstagiair[e]?\b'
+      - '\bafstudeer(opdracht|stage|der)?\b'
+      - '\bintern(ship)?\b'
+      - '\bwerkstudent\b'
+      - '\bworking student\b'
+    description_patterns:
+      - '\b(afstudeer|meewerk|werkervarings)?stage\s*(opdracht|plek|plaats)\b'
+      - '\binternship\b'
+      - '\bstagevergoeding\b'
+  - id: senior
+    title_patterns:
+      - '\bsenior\b'
+      - '\blead\b'
+      - '\bprincipal\b'
+      - '\bstaff\b'
+      - '\barchitect\b'
+      - '\bhead of\b'
+      - '\bteamlead\b'
+    description_patterns: []
+  - id: medior
+    title_patterns:
+      - '\bmedior\b'
+      - '\bmid[- ]?level\b'
+    description_patterns: []
+  - id: junior
+    title_patterns:
+      - '\bjunior\b'
+      - '\bstarter\b'
+      - '\btrainee(ship)?\b'
+      - '\bgraduate\b'
+      - '\bentry[- ]level\b'
+      - '\bafgestudeerde\b'
+    description_patterns:
+      - '\b(startende|beginnende) (professional|developer|ontwikkelaar)\b'
+      - '\bpas afgestudeerd\b'
+      - '\brecent(ly)? graduated?\b'
+      - '\bstarterspositie\b'
+      - '\bgeen (werk)?ervaring (vereist|nodig)\b'
+      - '\bno (prior )?experience (required|needed)\b'
+
+experience_years:
+  junior_max: 2
+  medior_max: 5

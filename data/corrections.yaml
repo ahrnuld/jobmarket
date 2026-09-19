@@ -1,0 +1,11 @@
+# Admin mapping corrections (FR-21). Applied on every classification run, after the rules.
+# Add entries with `jobmarket admin correct ...`; each entry is a log line and is never removed.
+# To undo a correction, add a new entry that reverses it.
+#
+# Types:
+#   programme  - set the programmes of vacancies whose normalised title equals `match`
+#   seniority  - set the seniority of vacancies whose normalised title equals `match`
+#   skill_add / skill_remove - add or remove a skill for vacancies whose normalised title equals `match`
+#   not_ict    - exclude vacancies whose normalised title equals `match` from all ICT figures
+
+corrections: []
