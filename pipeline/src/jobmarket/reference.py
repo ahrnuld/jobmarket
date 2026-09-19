@@ -158,7 +158,9 @@ def load_reference(reference_dir: Path) -> Reference:
         if unknown:
             raise ReferenceError(f"{where}: unknown programme(s) {sorted(unknown)}")
         role_families.append(
-            RoleFamily(rf["id"], rf["name"], rf["programmes"], _compile(rf["title_patterns"], where))
+            RoleFamily(
+                rf["id"], rf["name"], rf["programmes"], _compile(rf["title_patterns"], where)
+            )
         )
 
     sk = _read_yaml(reference_dir / "skills.yaml")
@@ -198,14 +200,18 @@ def load_reference(reference_dir: Path) -> Reference:
     years = sen.get("experience_years", {})
 
     reg = _read_yaml(reference_dir / "regions.yaml")
-    provinces = {p["id"]: Province(p["id"], p["name"], p.get("aliases", [])) for p in reg["provinces"]}
+    provinces = {
+        p["id"]: Province(p["id"], p["name"], p.get("aliases", [])) for p in reg["provinces"]
+    }
     regions = {}
     for r in reg["labour_market_regions"]:
         where = f"regions.yaml:{r.get('id')}"
         _require(r, ["id", "name", "province", "municipalities"], where)
         if r["province"] not in provinces:
             raise ReferenceError(f"{where}: unknown province {r['province']!r}")
-        regions[r["id"]] = LabourMarketRegion(r["id"], r["name"], r["province"], r["municipalities"])
+        regions[r["id"]] = LabourMarketRegion(
+            r["id"], r["name"], r["province"], r["municipalities"]
+        )
 
     ref = Reference(
         sources=sources,
@@ -244,6 +250,15 @@ def sync_sources(conn: sqlite3.Connection, ref: Reference) -> None:
                 raw_retention_days=excluded.raw_retention_days,
                 terms_checked_on=excluded.terms_checked_on, release=excluded.release
             """,
-            (s.id, s.name, s.url, s.licence, s.licence_url, s.attribution,
-             s.raw_retention_days, s.terms_checked_on, s.release),
+            (
+                s.id,
+                s.name,
+                s.url,
+                s.licence,
+                s.licence_url,
+                s.attribution,
+                s.raw_retention_days,
+                s.terms_checked_on,
+                s.release,
+            ),
         )

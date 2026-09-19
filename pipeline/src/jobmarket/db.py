@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Iterator
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
-from typing import Iterator
 
 SCHEMA_VERSION = 1
 

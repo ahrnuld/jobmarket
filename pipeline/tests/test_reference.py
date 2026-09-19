@@ -9,7 +9,11 @@ from jobmarket.reference import ReferenceError, load_reference
 
 
 def test_real_reference_data_loads(ref):
-    assert set(ref.programmes) == {"informatica", "business-it-management", "technische-informatica"}
+    assert set(ref.programmes) == {
+        "informatica",
+        "business-it-management",
+        "technische-informatica",
+    }
     assert {"adzuna", "cbs", "roa", "hbo_monitor", "esco", "uwv"} <= set(ref.sources)
     assert len(ref.skills) >= 50
 
@@ -46,7 +50,9 @@ def test_unknown_programme_in_role_family_is_reported(tmp_path):
     shutil.copytree(REPO_ROOT / "data" / "reference", ref_dir)
     path = ref_dir / "programmes.yaml"
     path.write_text(
-        path.read_text(encoding="utf-8").replace("programmes: [informatica]", "programmes: [wiskunde]", 1),
+        path.read_text(encoding="utf-8").replace(
+            "programmes: [informatica]", "programmes: [wiskunde]", 1
+        ),
         encoding="utf-8",
     )
     with pytest.raises(ReferenceError, match="unknown programme"):
