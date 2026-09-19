@@ -17,7 +17,7 @@ month,geo,programme,title,n
 2026-08,nl,all,backend developer kotlin java supply chain,1
 2026-08,nl,all,backend engineer ai,1
 2026-08,nl,all,backend engineer go studio ai,1
-2026-08,nl,all,betaalde opleiding tot security analist,3
+2026-08,nl,all,betaalde opleiding tot security analist,1
 2026-08,nl,all,budget controller,1
 2026-08,nl,all,business analist,1
 2026-08,nl,all,business analist ovpay,1
@@ -109,7 +109,7 @@ month,geo,programme,title,n
 2026-08,nl,all,product specialist gen ai specialist solutions architect,1
 2026-08,nl,all,project manager it,1
 2026-08,nl,all,projectleider it,1
-2026-08,nl,all,projectmanager ict cloud moderne werkplek,6
+2026-08,nl,all,projectmanager ict cloud moderne werkplek,1
 2026-08,nl,all,projectmanager it,1
 2026-08,nl,all,python aws developer,1
 2026-08,nl,all,python aws serverless developer,1
@@ -157,7 +157,7 @@ month,geo,programme,title,n
 2026-08,nl,all,solutions architect,1
 2026-08,nl,all,sql server database administrator,1
 2026-08,nl,all,student ai developer studying in nl,1
-2026-08,nl,all,support engineer,3
+2026-08,nl,all,support engineer,1
 2026-08,nl,all,systeembeheerder deta vast,1
 2026-08,nl,all,systeembeheerder windows,1
 2026-08,nl,all,systems engineer global accounts,1
@@ -169,7 +169,7 @@ month,geo,programme,title,n
 2026-08,nl,all,technisch developer,1
 2026-08,nl,all,test engineer,1
 2026-08,nl,all,test engineer embedded software,1
-2026-08,nl,all,tweedelijns support engineer,2
+2026-08,nl,all,tweedelijns support engineer,1
 2026-08,nl,all,typescript developer aws serverless node.js next.js graphql,1
 2026-08,nl,all,ua manager offerwalls rewarded,1
 2026-08,nl,all,ue4 c++ developer gamedev,1
@@ -211,7 +211,7 @@ month,geo,programme,title,n
 2026-08,nl,business-it-management,product owner technical ai stockbroking,1
 2026-08,nl,business-it-management,project manager it,1
 2026-08,nl,business-it-management,projectleider it,1
-2026-08,nl,business-it-management,projectmanager ict cloud moderne werkplek,6
+2026-08,nl,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,nl,business-it-management,projectmanager it,1
 2026-08,nl,business-it-management,scrum master identiteit toegangsbeheer iam,1
 2026-08,nl,business-it-management,servicenow consultant,1
@@ -232,7 +232,7 @@ month,geo,programme,title,n
 2026-08,nl,informatica,backend developer kotlin java supply chain,1
 2026-08,nl,informatica,backend engineer ai,1
 2026-08,nl,informatica,backend engineer go studio ai,1
-2026-08,nl,informatica,betaalde opleiding tot security analist,3
+2026-08,nl,informatica,betaalde opleiding tot security analist,1
 2026-08,nl,informatica,business information security officer,1
 2026-08,nl,informatica,cloud architect,2
 2026-08,nl,informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
@@ -333,7 +333,7 @@ month,geo,programme,title,n
 2026-08,nl,technische-informatica,azure data engineer,1
 2026-08,nl,technische-informatica,azure engineer,1
 2026-08,nl,technische-informatica,azure security engineer,1
-2026-08,nl,technische-informatica,betaalde opleiding tot security analist,3
+2026-08,nl,technische-informatica,betaalde opleiding tot security analist,1
 2026-08,nl,technische-informatica,business information security officer,1
 2026-08,nl,technische-informatica,cloud architect,2
 2026-08,nl,technische-informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
@@ -394,9 +394,6 @@ month,geo,programme,title,n
 2026-08,p:gelderland,informatica,software team,1
 2026-08,p:gelderland,technische-informatica,cloud architect,1
 2026-08,p:gelderland,technische-informatica,werkplekbeheerder arnhem,1
-2026-08,p:groningen,all,betaalde opleiding tot security analist,3
-2026-08,p:groningen,informatica,betaalde opleiding tot security analist,3
-2026-08,p:groningen,technische-informatica,betaalde opleiding tot security analist,3
 2026-08,p:noord-brabant,all,azure cloud engineer,1
 2026-08,p:noord-brabant,all,back end developer,1
 2026-08,p:noord-brabant,all,backend developer c#,1
@@ -418,14 +415,12 @@ month,geo,programme,title,n
 2026-08,p:noord-brabant,all,product owner technical ai investing,1
 2026-08,p:noord-brabant,all,product owner technical ai neobank,1
 2026-08,p:noord-brabant,all,product owner technical ai stockbroking,1
-2026-08,p:noord-brabant,all,projectmanager ict cloud moderne werkplek,2
 2026-08,p:noord-brabant,all,servicedesk medewerker den bosch,1
 2026-08,p:noord-brabant,all,servicedesk medewerker eindhoven,1
 2026-08,p:noord-brabant,all,servicenow bcm resilience developer,1
 2026-08,p:noord-brabant,all,software engineer,4
 2026-08,p:noord-brabant,all,software equipment engineer,1
 2026-08,p:noord-brabant,all,technical product manager ai finance app,1
-2026-08,p:noord-brabant,all,tweedelijns support engineer,2
 2026-08,p:noord-brabant,all,ua manager offerwalls rewarded,1
 2026-08,p:noord-brabant,all,ue4 c++ developer gamedev,1
 2026-08,p:noord-brabant,all,ui ux artist,1
@@ -437,7 +432,6 @@ month,geo,programme,title,n
 2026-08,p:noord-brabant,business-it-management,product owner technical ai investing,1
 2026-08,p:noord-brabant,business-it-management,product owner technical ai neobank,1
 2026-08,p:noord-brabant,business-it-management,product owner technical ai stockbroking,1
-2026-08,p:noord-brabant,business-it-management,projectmanager ict cloud moderne werkplek,2
 2026-08,p:noord-brabant,business-it-management,technical product manager ai finance app,1
 2026-08,p:noord-brabant,informatica,azure cloud engineer,1
 2026-08,p:noord-brabant,informatica,back end developer,1
@@ -488,7 +482,6 @@ month,geo,programme,title,n
 2026-08,p:noord-holland,all,network focused cloud engineer,1
 2026-08,p:noord-holland,all,oracle database administrator,1
 2026-08,p:noord-holland,all,platform engineer jfrog artifactory dutch speaking,1
-2026-08,p:noord-holland,all,projectmanager ict cloud moderne werkplek,2
 2026-08,p:noord-holland,all,python aws developer,1
 2026-08,p:noord-holland,all,python aws serverless developer,1
 2026-08,p:noord-holland,all,python engineer,1
@@ -506,7 +499,6 @@ month,geo,programme,title,n
 2026-08,p:noord-holland,all,software engineer java screening team,1
 2026-08,p:noord-holland,all,software engineer knowledge engineer,1
 2026-08,p:noord-holland,all,student ai developer studying in nl,1
-2026-08,p:noord-holland,all,support engineer,3
 2026-08,p:noord-holland,all,typescript developer aws serverless node.js next.js graphql,1
 2026-08,p:noord-holland,all,werkplekbeheerder omg schiphol,1
 2026-08,p:noord-holland,business-it-management,analyst global it internal controls sap,1
@@ -514,7 +506,6 @@ month,geo,programme,title,n
 2026-08,p:noord-holland,business-it-management,data analyst entry level,1
 2026-08,p:noord-holland,business-it-management,functioneel beheerder,1
 2026-08,p:noord-holland,business-it-management,it manager,1
-2026-08,p:noord-holland,business-it-management,projectmanager ict cloud moderne werkplek,2
 2026-08,p:noord-holland,informatica,backend developer kotlin java supply chain,1
 2026-08,p:noord-holland,informatica,business information security officer,1
 2026-08,p:noord-holland,informatica,cloud architect,1
@@ -578,7 +569,6 @@ month,geo,programme,title,n
 2026-08,p:utrecht,all,it teamlead supportdesk,1
 2026-08,p:utrecht,all,mendix engineer,1
 2026-08,p:utrecht,all,php webontwikkelaar,1
-2026-08,p:utrecht,all,projectmanager ict cloud moderne werkplek,1
 2026-08,p:utrecht,all,servicedesk medewerker amersfoort,1
 2026-08,p:utrecht,all,servicedesk medewerker utrecht,1
 2026-08,p:utrecht,all,software architect,1
@@ -589,7 +579,6 @@ month,geo,programme,title,n
 2026-08,p:utrecht,all,word microsoft 365 specialist,1
 2026-08,p:utrecht,all,word microsoft security architect,1
 2026-08,p:utrecht,business-it-management,business analyst iam,1
-2026-08,p:utrecht,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,p:utrecht,informatica,data engineer,1
 2026-08,p:utrecht,informatica,developer,1
 2026-08,p:utrecht,informatica,mendix engineer,1
@@ -609,7 +598,6 @@ month,geo,programme,title,n
 2026-08,p:zuid-holland,all,ict medewerker almere,1
 2026-08,p:zuid-holland,all,power platform developer,1
 2026-08,p:zuid-holland,all,project manager it,1
-2026-08,p:zuid-holland,all,projectmanager ict cloud moderne werkplek,1
 2026-08,p:zuid-holland,all,security officer,1
 2026-08,p:zuid-holland,all,servicedesk medewerker almere,1
 2026-08,p:zuid-holland,all,software developer,1
@@ -619,7 +607,6 @@ month,geo,programme,title,n
 2026-08,p:zuid-holland,all,technisch applicatiebeheerder bancaire applicaties,1
 2026-08,p:zuid-holland,all,werkplekbeheerder rotterdam,1
 2026-08,p:zuid-holland,business-it-management,project manager it,1
-2026-08,p:zuid-holland,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,p:zuid-holland,business-it-management,technisch applicatiebeheerder bancaire applicaties,1
 2026-08,p:zuid-holland,informatica,.net developer,1
 2026-08,p:zuid-holland,informatica,devops engineer nederlands sprekend,1
@@ -638,14 +625,9 @@ month,geo,programme,title,n
 2026-08,p:zuid-holland,technische-informatica,werkplekbeheerder rotterdam,1
 2026-08,r:amersfoort,all,audio visual programmer,1
 2026-08,r:amersfoort,all,developer,1
-2026-08,r:amersfoort,all,projectmanager ict cloud moderne werkplek,1
 2026-08,r:amersfoort,all,servicedesk medewerker amersfoort,1
-2026-08,r:amersfoort,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,r:amersfoort,informatica,developer,1
 2026-08,r:friesland,all,consultant informatiebeveiliging,1
-2026-08,r:groningen,all,betaalde opleiding tot security analist,1
-2026-08,r:groningen,informatica,betaalde opleiding tot security analist,1
-2026-08,r:groningen,technische-informatica,betaalde opleiding tot security analist,1
 2026-08,r:groot-amsterdam,all,analyst global it internal controls sap,1
 2026-08,r:groot-amsterdam,all,automation engineer pcs7 amsterdam,1
 2026-08,r:groot-amsterdam,all,business analyst product owner,1
@@ -670,7 +652,6 @@ month,geo,programme,title,n
 2026-08,r:groot-amsterdam,all,network focused cloud engineer,1
 2026-08,r:groot-amsterdam,all,oracle database administrator,1
 2026-08,r:groot-amsterdam,all,platform engineer jfrog artifactory dutch speaking,1
-2026-08,r:groot-amsterdam,all,projectmanager ict cloud moderne werkplek,1
 2026-08,r:groot-amsterdam,all,python aws developer,1
 2026-08,r:groot-amsterdam,all,python aws serverless developer,1
 2026-08,r:groot-amsterdam,all,python engineer,1
@@ -688,7 +669,6 @@ month,geo,programme,title,n
 2026-08,r:groot-amsterdam,all,software engineer java screening team,1
 2026-08,r:groot-amsterdam,all,software engineer knowledge engineer,1
 2026-08,r:groot-amsterdam,all,student ai developer studying in nl,1
-2026-08,r:groot-amsterdam,all,support engineer,1
 2026-08,r:groot-amsterdam,all,typescript developer aws serverless node.js next.js graphql,1
 2026-08,r:groot-amsterdam,all,werkplekbeheerder omg schiphol,1
 2026-08,r:groot-amsterdam,business-it-management,analyst global it internal controls sap,1
@@ -696,7 +676,6 @@ month,geo,programme,title,n
 2026-08,r:groot-amsterdam,business-it-management,data analyst entry level,1
 2026-08,r:groot-amsterdam,business-it-management,functioneel beheerder,1
 2026-08,r:groot-amsterdam,business-it-management,it manager,1
-2026-08,r:groot-amsterdam,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,r:groot-amsterdam,informatica,business information security officer,1
 2026-08,r:groot-amsterdam,informatica,cloud architect,1
 2026-08,r:groot-amsterdam,informatica,cloud engineer,2
@@ -792,9 +771,6 @@ month,geo,programme,title,n
 2026-08,r:midden-utrecht,technische-informatica,word azure architect,1
 2026-08,r:midden-utrecht,technische-informatica,word microsoft security architect,1
 2026-08,r:noord-holland-noord,all,full stack application engineer,1
-2026-08,r:noord-holland-noord,all,projectmanager ict cloud moderne werkplek,1
-2026-08,r:noord-holland-noord,all,support engineer,2
-2026-08,r:noord-holland-noord,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,r:noord-holland-noord,informatica,full stack application engineer,1
 2026-08,r:noordoost-brabant,all,business analist,1
 2026-08,r:noordoost-brabant,all,servicedesk medewerker den bosch,1
@@ -803,13 +779,11 @@ month,geo,programme,title,n
 2026-08,r:regio-zwolle,informatica,software commissioning engineer,1
 2026-08,r:rijnmond,all,front end developer,1
 2026-08,r:rijnmond,all,ict medewerker almere,1
-2026-08,r:rijnmond,all,projectmanager ict cloud moderne werkplek,1
 2026-08,r:rijnmond,all,security officer,1
 2026-08,r:rijnmond,all,servicedesk medewerker almere,1
 2026-08,r:rijnmond,all,software developer,1
 2026-08,r:rijnmond,all,software engineer,1
 2026-08,r:rijnmond,all,werkplekbeheerder rotterdam,1
-2026-08,r:rijnmond,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,r:rijnmond,informatica,front end developer,1
 2026-08,r:rijnmond,informatica,security officer,1
 2026-08,r:rijnmond,informatica,software developer,1
@@ -835,13 +809,11 @@ month,geo,programme,title,n
 2026-08,r:zuidoost-brabant,all,product owner technical ai investing,1
 2026-08,r:zuidoost-brabant,all,product owner technical ai neobank,1
 2026-08,r:zuidoost-brabant,all,product owner technical ai stockbroking,1
-2026-08,r:zuidoost-brabant,all,projectmanager ict cloud moderne werkplek,1
 2026-08,r:zuidoost-brabant,all,servicedesk medewerker eindhoven,1
 2026-08,r:zuidoost-brabant,all,servicenow bcm resilience developer,1
 2026-08,r:zuidoost-brabant,all,software engineer,4
 2026-08,r:zuidoost-brabant,all,software equipment engineer,1
 2026-08,r:zuidoost-brabant,all,technical product manager ai finance app,1
-2026-08,r:zuidoost-brabant,all,tweedelijns support engineer,1
 2026-08,r:zuidoost-brabant,all,ua manager offerwalls rewarded,1
 2026-08,r:zuidoost-brabant,all,ue4 c++ developer gamedev,1
 2026-08,r:zuidoost-brabant,all,ui ux artist,1
@@ -851,7 +823,6 @@ month,geo,programme,title,n
 2026-08,r:zuidoost-brabant,business-it-management,product owner technical ai investing,1
 2026-08,r:zuidoost-brabant,business-it-management,product owner technical ai neobank,1
 2026-08,r:zuidoost-brabant,business-it-management,product owner technical ai stockbroking,1
-2026-08,r:zuidoost-brabant,business-it-management,projectmanager ict cloud moderne werkplek,1
 2026-08,r:zuidoost-brabant,business-it-management,technical product manager ai finance app,1
 2026-08,r:zuidoost-brabant,informatica,cloud security engineer azure contract,1
 2026-08,r:zuidoost-brabant,informatica,cyber security specialist,1
@@ -874,7 +845,7 @@ month,geo,programme,title,n
 2026-09,nl,all,.net c# full stack developer in het spoordomein,1
 2026-09,nl,all,.net developer,8
 2026-09,nl,all,.net full stack developer,2
-2026-09,nl,all,.net software engineer,8
+2026-09,nl,all,.net software engineer,1
 2026-09,nl,all,1e lijns servicedeskmedewerker,1
 2026-09,nl,all,2 x interim solution architect,2
 2026-09,nl,all,2026 0125 solutions architect ns tue 29 sep,1
@@ -980,7 +951,7 @@ month,geo,programme,title,n
 2026-09,nl,all,backend software engineer,1
 2026-09,nl,all,backup storage infra specialist infrastructure,1
 2026-09,nl,all,besturingstechnicus,1
-2026-09,nl,all,besturingstechnicus machinebouw,5
+2026-09,nl,all,besturingstechnicus machinebouw,1
 2026-09,nl,all,besturingstechnicus machinebouw food,1
 2026-09,nl,all,bi consultant,1
 2026-09,nl,all,bi engineer,3
@@ -1024,7 +995,7 @@ month,geo,programme,title,n
 2026-09,nl,all,clinical r automation ai solutions developer fsp,1
 2026-09,nl,all,cloud architect,1
 2026-09,nl,all,cloud architect entra specialisation,2
-2026-09,nl,all,cloud consultant,5
+2026-09,nl,all,cloud consultant,2
 2026-09,nl,all,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,nl,all,cloud devops engineer,1
 2026-09,nl,all,cloud engineer,6
@@ -1304,7 +1275,7 @@ month,geo,programme,title,n
 2026-09,nl,all,guidance navigation control engineer,1
 2026-09,nl,all,hardware engineer,1
 2026-09,nl,all,hardware engineer e plan industriële automatisering,1
-2026-09,nl,all,hardware engineer industriële automatisering,5
+2026-09,nl,all,hardware engineer industriële automatisering,1
 2026-09,nl,all,hardware engineer industriële automatisering 3.200 4.800,1
 2026-09,nl,all,helpdesk engineer sliedrecht 2.800 3.800,1
 2026-09,nl,all,helpdeskmedewerker applicatiebeheerder,1
@@ -1439,7 +1410,7 @@ month,geo,programme,title,n
 2026-09,nl,all,low code developer servicenow,2
 2026-09,nl,all,m3 functional analyst emea,1
 2026-09,nl,all,m365 consultant ref nr 17008,1
-2026-09,nl,all,machine learning engineer,8
+2026-09,nl,all,machine learning engineer,6
 2026-09,nl,all,machine learning engineer llms retrieval and mlops for nato with security clearance,1
 2026-09,nl,all,machine learning engineer ml engineer roleplay sessions,1
 2026-09,nl,all,maintenance support engineer,2
@@ -1473,7 +1444,7 @@ month,geo,programme,title,n
 2026-09,nl,all,mobile qa engineer android ios,1
 2026-09,nl,all,modern workplace specialist,1
 2026-09,nl,all,modern workplace specialist microsoft endpoint management and ms 365,1
-2026-09,nl,all,monitoring engineer,8
+2026-09,nl,all,monitoring engineer,1
 2026-09,nl,all,net developer,1
 2026-09,nl,all,netapp storage administrator,1
 2026-09,nl,all,netgroep zoekt een systeembeheerder,1
@@ -1525,7 +1496,7 @@ month,geo,programme,title,n
 2026-09,nl,all,platform engineer openbaar vervoer,1
 2026-09,nl,all,plc engineer,1
 2026-09,nl,all,plc engineer besturingskast nl vereist,1
-2026-09,nl,all,plc programmeur,8
+2026-09,nl,all,plc programmeur,2
 2026-09,nl,all,plc programmeur machinebouw 3.500 5.000,1
 2026-09,nl,all,plc programmeur technisch support specialist,2
 2026-09,nl,all,plc programmeur voedingsmiddelenindustrie,1
@@ -1563,7 +1534,7 @@ month,geo,programme,title,n
 2026-09,nl,all,production tester it,1
 2026-09,nl,all,programmeur,1
 2026-09,nl,all,project manager it,1
-2026-09,nl,all,projectleider ict,4
+2026-09,nl,all,projectleider ict,2
 2026-09,nl,all,projectleider ict ref nr 16990,1
 2026-09,nl,all,projectleider it,2
 2026-09,nl,all,projectmanager ict,1
@@ -1655,7 +1626,6 @@ month,geo,programme,title,n
 2026-09,nl,all,security threat analysis expert iii,1
 2026-09,nl,all,service engineer networking cisco aruba,1
 2026-09,nl,all,service support engineer mechatronica,1
-2026-09,nl,all,serviceadviseur,1
 2026-09,nl,all,servicedesk medewerker,1
 2026-09,nl,all,servicedesk medewerker amsterdam,1
 2026-09,nl,all,servicedesk medewerker arnhem,1
@@ -1788,7 +1758,7 @@ month,geo,programme,title,n
 2026-09,nl,all,support engineer eindhoven e.o,1
 2026-09,nl,all,support engineer plc,2
 2026-09,nl,all,support medewerker it,2
-2026-09,nl,all,systeem ontwikkelaar,5
+2026-09,nl,all,systeem ontwikkelaar,1
 2026-09,nl,all,systeembeheer,2
 2026-09,nl,all,systeembeheerder,6
 2026-09,nl,all,systeembeheerder deta vast,1
@@ -1905,7 +1875,7 @@ month,geo,programme,title,n
 2026-09,nl,all,traineeship it,1
 2026-09,nl,all,traineeship product owner,1
 2026-09,nl,all,transmission distribution technical,1
-2026-09,nl,all,tweedelijns support engineer,4
+2026-09,nl,all,tweedelijns support engineer,1
 2026-09,nl,all,ui ux artist illustrator художник иллюстратор,1
 2026-09,nl,all,user acquisition manager,1
 2026-09,nl,all,user experience study tester okx crypto exchange,1
@@ -2084,7 +2054,7 @@ month,geo,programme,title,n
 2026-09,nl,business-it-management,product owner sales,1
 2026-09,nl,business-it-management,product owner systeemintegratie,1
 2026-09,nl,business-it-management,project manager it,1
-2026-09,nl,business-it-management,projectleider ict,4
+2026-09,nl,business-it-management,projectleider ict,2
 2026-09,nl,business-it-management,projectleider ict ref nr 16990,1
 2026-09,nl,business-it-management,projectleider it,2
 2026-09,nl,business-it-management,projectmanager ict,1
@@ -2155,7 +2125,7 @@ month,geo,programme,title,n
 2026-09,nl,informatica,.net c# full stack developer in het spoordomein,1
 2026-09,nl,informatica,.net developer,8
 2026-09,nl,informatica,.net full stack developer,2
-2026-09,nl,informatica,.net software engineer,8
+2026-09,nl,informatica,.net software engineer,1
 2026-09,nl,informatica,2 x interim solution architect,2
 2026-09,nl,informatica,2026 0125 solutions architect ns tue 29 sep,1
 2026-09,nl,informatica,afstudeerstage data science operations forecasting,1
@@ -2260,7 +2230,7 @@ month,geo,programme,title,n
 2026-09,nl,informatica,clinical r automation ai solutions developer fsp,1
 2026-09,nl,informatica,cloud architect,1
 2026-09,nl,informatica,cloud architect entra specialisation,2
-2026-09,nl,informatica,cloud consultant,5
+2026-09,nl,informatica,cloud consultant,2
 2026-09,nl,informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,nl,informatica,cloud devops engineer,1
 2026-09,nl,informatica,cloud engineer,6
@@ -2458,7 +2428,7 @@ month,geo,programme,title,n
 2026-09,nl,informatica,lansa developer,1
 2026-09,nl,informatica,linux devops engineer,2
 2026-09,nl,informatica,low code developer servicenow,2
-2026-09,nl,informatica,machine learning engineer,8
+2026-09,nl,informatica,machine learning engineer,6
 2026-09,nl,informatica,machine learning engineer llms retrieval and mlops for nato with security clearance,1
 2026-09,nl,informatica,machine learning engineer ml engineer roleplay sessions,1
 2026-09,nl,informatica,manual functional tester pensions 6 months contract,1
@@ -2475,7 +2445,7 @@ month,geo,programme,title,n
 2026-09,nl,informatica,mlops engineer,3
 2026-09,nl,informatica,mobile engineer flutter,1
 2026-09,nl,informatica,mobile qa engineer android ios,1
-2026-09,nl,informatica,monitoring engineer,8
+2026-09,nl,informatica,monitoring engineer,1
 2026-09,nl,informatica,net developer,1
 2026-09,nl,informatica,netwerk security specialist,1
 2026-09,nl,informatica,offensive cyber specialist 591677,1
@@ -2671,7 +2641,7 @@ month,geo,programme,title,n
 2026-09,nl,informatica,solutions architect retail cpg aws emea retail cpg,2
 2026-09,nl,informatica,solutions architect software implementation,1
 2026-09,nl,informatica,source engine mod developer in debugging and gamecode fixes,1
-2026-09,nl,informatica,systeem ontwikkelaar,5
+2026-09,nl,informatica,systeem ontwikkelaar,1
 2026-09,nl,informatica,system application support engineer,1
 2026-09,nl,informatica,system engineer cloud,1
 2026-09,nl,informatica,system middleware architect,1
@@ -2778,7 +2748,7 @@ month,geo,programme,title,n
 2026-09,nl,technische-informatica,azure security engineer,1
 2026-09,nl,technische-informatica,backup storage infra specialist infrastructure,1
 2026-09,nl,technische-informatica,besturingstechnicus,1
-2026-09,nl,technische-informatica,besturingstechnicus machinebouw,5
+2026-09,nl,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,nl,technische-informatica,besturingstechnicus machinebouw food,1
 2026-09,nl,technische-informatica,bpmn automation developer java and camunda platform for nato with security clearance,1
 2026-09,nl,technische-informatica,business consultant industriële automatisering,1
@@ -2789,7 +2759,7 @@ month,geo,programme,title,n
 2026-09,nl,technische-informatica,cja aep platform architect,1
 2026-09,nl,technische-informatica,cloud architect,1
 2026-09,nl,technische-informatica,cloud architect entra specialisation,2
-2026-09,nl,technische-informatica,cloud consultant,5
+2026-09,nl,technische-informatica,cloud consultant,2
 2026-09,nl,technische-informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,nl,technische-informatica,cloud devops engineer,1
 2026-09,nl,technische-informatica,cloud engineer,6
@@ -2863,7 +2833,7 @@ month,geo,programme,title,n
 2026-09,nl,technische-informatica,group information security officer,1
 2026-09,nl,technische-informatica,guidance navigation control engineer,1
 2026-09,nl,technische-informatica,hardware engineer e plan industriële automatisering,1
-2026-09,nl,technische-informatica,hardware engineer industriële automatisering,5
+2026-09,nl,technische-informatica,hardware engineer industriële automatisering,1
 2026-09,nl,technische-informatica,hardware engineer industriële automatisering 3.200 4.800,1
 2026-09,nl,technische-informatica,iam consultant,1
 2026-09,nl,technische-informatica,ict specialist allround microsoft systeembeheer,2
@@ -2901,7 +2871,7 @@ month,geo,programme,title,n
 2026-09,nl,technische-informatica,mendix platform engineer,1
 2026-09,nl,technische-informatica,mes systems specialist,1
 2026-09,nl,technische-informatica,microsoft 365 and power platform developer sharepoint power apps and automate for nato with security clearance,2
-2026-09,nl,technische-informatica,monitoring engineer,8
+2026-09,nl,technische-informatica,monitoring engineer,1
 2026-09,nl,technische-informatica,netapp storage administrator,1
 2026-09,nl,technische-informatica,netgroep zoekt een systeembeheerder,1
 2026-09,nl,technische-informatica,netwerk architect zorg en it 5800 7600 utrecht,1
@@ -2933,7 +2903,7 @@ month,geo,programme,title,n
 2026-09,nl,technische-informatica,platform engineer openbaar vervoer,1
 2026-09,nl,technische-informatica,plc engineer,1
 2026-09,nl,technische-informatica,plc engineer besturingskast nl vereist,1
-2026-09,nl,technische-informatica,plc programmeur,8
+2026-09,nl,technische-informatica,plc programmeur,2
 2026-09,nl,technische-informatica,plc programmeur machinebouw 3.500 5.000,1
 2026-09,nl,technische-informatica,plc programmeur technisch support specialist,2
 2026-09,nl,technische-informatica,plc programmeur voedingsmiddelenindustrie,1
@@ -3055,7 +3025,6 @@ month,geo,programme,title,n
 2026-09,p:drenthe,informatica,technisch specialist e i energie dagdienst,1
 2026-09,p:drenthe,technische-informatica,cloud kubernetes container platform engineer,1
 2026-09,p:drenthe,technische-informatica,plc technicus omgeving emmen,1
-2026-09,p:flevoland,all,.net software engineer,1
 2026-09,p:flevoland,all,business analist,1
 2026-09,p:flevoland,all,data center technician netherlands almere on site,1
 2026-09,p:flevoland,all,data center technician netherlands dronten on site,1
@@ -3065,7 +3034,6 @@ month,geo,programme,title,n
 2026-09,p:flevoland,all,ict specialist noc,1
 2026-09,p:flevoland,all,team systeembeheerder wms,1
 2026-09,p:flevoland,business-it-management,business analist,1
-2026-09,p:flevoland,informatica,.net software engineer,1
 2026-09,p:flevoland,informatica,data engineer,1
 2026-09,p:flevoland,informatica,full stack developer,1
 2026-09,p:flevoland,technische-informatica,team systeembeheerder wms,1
@@ -3076,16 +3044,13 @@ month,geo,programme,title,n
 2026-09,p:friesland,all,devops engineer,1
 2026-09,p:friesland,all,devops engineer iucn26090182,1
 2026-09,p:friesland,all,devops engineer java angular iucn26090182,1
-2026-09,p:friesland,all,hardware engineer industriële automatisering,1
 2026-09,p:friesland,all,ict specialist modern workplace,1
 2026-09,p:friesland,all,infrastructure platform engineer,1
-2026-09,p:friesland,all,monitoring engineer,1
 2026-09,p:friesland,all,panelenbouwer tester allround monteur maritiem,1
 2026-09,p:friesland,all,plc programmeur voedingsmiddelenindustrie,1
 2026-09,p:friesland,all,product owner klantportaal digitale innovatie,1
 2026-09,p:friesland,all,software engineer industriële automatisering,2
 2026-09,p:friesland,all,software ontwikkelaar,1
-2026-09,p:friesland,all,systeem ontwikkelaar,1
 2026-09,p:friesland,all,system administrator,1
 2026-09,p:friesland,all,technisch applicatiebeheerder,1
 2026-09,p:friesland,all,technisch specialist,1
@@ -3104,11 +3069,9 @@ month,geo,programme,title,n
 2026-09,p:friesland,informatica,devops engineer iucn26090182,1
 2026-09,p:friesland,informatica,devops engineer java angular iucn26090182,1
 2026-09,p:friesland,informatica,infrastructure platform engineer,1
-2026-09,p:friesland,informatica,monitoring engineer,1
 2026-09,p:friesland,informatica,panelenbouwer tester allround monteur maritiem,1
 2026-09,p:friesland,informatica,software engineer industriële automatisering,2
 2026-09,p:friesland,informatica,software ontwikkelaar,1
-2026-09,p:friesland,informatica,systeem ontwikkelaar,1
 2026-09,p:friesland,informatica,technisch applicatiebeheerder,1
 2026-09,p:friesland,informatica,technisch specialist,1
 2026-09,p:friesland,informatica,test analyst iucn26090172,1
@@ -3117,21 +3080,16 @@ month,geo,programme,title,n
 2026-09,p:friesland,technische-informatica,devops engineer,1
 2026-09,p:friesland,technische-informatica,devops engineer iucn26090182,1
 2026-09,p:friesland,technische-informatica,devops engineer java angular iucn26090182,1
-2026-09,p:friesland,technische-informatica,hardware engineer industriële automatisering,1
 2026-09,p:friesland,technische-informatica,infrastructure platform engineer,1
-2026-09,p:friesland,technische-informatica,monitoring engineer,1
 2026-09,p:friesland,technische-informatica,plc programmeur voedingsmiddelenindustrie,1
 2026-09,p:friesland,technische-informatica,software engineer industriële automatisering,2
 2026-09,p:friesland,technische-informatica,system administrator,1
-2026-09,p:gelderland,all,.net software engineer,1
 2026-09,p:gelderland,all,1e lijns servicedeskmedewerker,1
 2026-09,p:gelderland,all,2e lijns servicedeskmedewerker systeembeheerder,1
 2026-09,p:gelderland,all,allround it medewerker,1
 2026-09,p:gelderland,all,allround software ontwikkelaar,1
 2026-09,p:gelderland,all,applicatiebeheerder,2
-2026-09,p:gelderland,all,besturingstechnicus machinebouw,2
 2026-09,p:gelderland,all,business analist,1
-2026-09,p:gelderland,all,cloud consultant,1
 2026-09,p:gelderland,all,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,p:gelderland,all,cloud specialist,1
 2026-09,p:gelderland,all,data center technician netherlands apeldoorn on site,1
@@ -3159,9 +3117,7 @@ month,geo,programme,title,n
 2026-09,p:gelderland,all,netwerkbeheerder,1
 2026-09,p:gelderland,all,packaging developer,1
 2026-09,p:gelderland,all,platform engineer,1
-2026-09,p:gelderland,all,plc programmeur,1
 2026-09,p:gelderland,all,plc software engineer siemens tia portal,1
-2026-09,p:gelderland,all,projectleider ict,2
 2026-09,p:gelderland,all,risk compliance officer,1
 2026-09,p:gelderland,all,servicedesk medewerker arnhem,1
 2026-09,p:gelderland,all,servicedesk medewerker nijmegen,1
@@ -3194,12 +3150,9 @@ month,geo,programme,title,n
 2026-09,p:gelderland,business-it-management,ifs pso consultant,1
 2026-09,p:gelderland,business-it-management,it traineeship hbo wo,1
 2026-09,p:gelderland,business-it-management,microsoft 365 consultant,1
-2026-09,p:gelderland,business-it-management,projectleider ict,2
 2026-09,p:gelderland,business-it-management,technisch beheerder,1
-2026-09,p:gelderland,informatica,.net software engineer,1
 2026-09,p:gelderland,informatica,allround software ontwikkelaar,1
 2026-09,p:gelderland,informatica,applicatiebeheerder,2
-2026-09,p:gelderland,informatica,cloud consultant,1
 2026-09,p:gelderland,informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,p:gelderland,informatica,cloud specialist,1
 2026-09,p:gelderland,informatica,data engineer,1
@@ -3225,24 +3178,19 @@ month,geo,programme,title,n
 2026-09,p:gelderland,informatica,test engineer operationele technologie,1
 2026-09,p:gelderland,informatica,tester it apparatuur,2
 2026-09,p:gelderland,technische-informatica,2e lijns servicedeskmedewerker systeembeheerder,1
-2026-09,p:gelderland,technische-informatica,besturingstechnicus machinebouw,2
-2026-09,p:gelderland,technische-informatica,cloud consultant,1
 2026-09,p:gelderland,technische-informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,p:gelderland,technische-informatica,cloud specialist,1
 2026-09,p:gelderland,technische-informatica,infrastructuurbeheerder it engineer,1
 2026-09,p:gelderland,technische-informatica,netwerkbeheerder,1
 2026-09,p:gelderland,technische-informatica,platform engineer,1
-2026-09,p:gelderland,technische-informatica,plc programmeur,1
 2026-09,p:gelderland,technische-informatica,systeembeheerder,1
 2026-09,p:gelderland,technische-informatica,system engineer,1
 2026-09,p:gelderland,technische-informatica,system engineer microsoft 365 nl vereist,1
 2026-09,p:gelderland,technische-informatica,werkplekbeheerder nijmegen,1
 2026-09,p:gelderland,technische-informatica,werkvoorbereider industriële automatisering,1
-2026-09,p:groningen,all,.net software engineer,1
 2026-09,p:groningen,all,agile test engineer,1
 2026-09,p:groningen,all,azure developer,1
 2026-09,p:groningen,all,business it traineeship regio groningen,3
-2026-09,p:groningen,all,cloud consultant,1
 2026-09,p:groningen,all,data center technician netherlands eemshaven on site,1
 2026-09,p:groningen,all,data center technician netherlands groningen on site,1
 2026-09,p:groningen,all,data center technician nl zuidbroek on site,1
@@ -3253,7 +3201,6 @@ month,geo,programme,title,n
 2026-09,p:groningen,all,it projectmanager groningen,1
 2026-09,p:groningen,all,medewerker servicedesk ict,1
 2026-09,p:groningen,all,microsoft 365 consultant,1
-2026-09,p:groningen,all,monitoring engineer,1
 2026-09,p:groningen,all,netwerk security specialist,1
 2026-09,p:groningen,all,pensioen configurator en tester tijdelijk,1
 2026-09,p:groningen,all,sap consultant publieke sector,1
@@ -3274,23 +3221,18 @@ month,geo,programme,title,n
 2026-09,p:groningen,business-it-management,scrum master groningen,1
 2026-09,p:groningen,business-it-management,scrummaster product owner,1
 2026-09,p:groningen,business-it-management,technisch applicatiebeheerder,1
-2026-09,p:groningen,informatica,.net software engineer,1
 2026-09,p:groningen,informatica,agile test engineer,1
 2026-09,p:groningen,informatica,azure developer,1
-2026-09,p:groningen,informatica,cloud consultant,1
 2026-09,p:groningen,informatica,devops engineer,1
 2026-09,p:groningen,informatica,information security officer,1
-2026-09,p:groningen,informatica,monitoring engineer,1
 2026-09,p:groningen,informatica,netwerk security specialist,1
 2026-09,p:groningen,informatica,pensioen configurator en tester tijdelijk,1
 2026-09,p:groningen,informatica,software engineer industriële automatisering,1
 2026-09,p:groningen,informatica,technical information security officer tiso groningen,1
 2026-09,p:groningen,informatica,technisch applicatiebeheerder,1
 2026-09,p:groningen,technische-informatica,azure developer,1
-2026-09,p:groningen,technische-informatica,cloud consultant,1
 2026-09,p:groningen,technische-informatica,devops engineer,1
 2026-09,p:groningen,technische-informatica,information security officer,1
-2026-09,p:groningen,technische-informatica,monitoring engineer,1
 2026-09,p:groningen,technische-informatica,netwerk security specialist,1
 2026-09,p:groningen,technische-informatica,software engineer industriële automatisering,1
 2026-09,p:groningen,technische-informatica,technical information security officer tiso groningen,1
@@ -3312,7 +3254,6 @@ month,geo,programme,title,n
 2026-09,p:limburg,all,it engineer linux,1
 2026-09,p:limburg,all,it specialist,1
 2026-09,p:limburg,all,java developer regio maastricht,1
-2026-09,p:limburg,all,machine learning engineer,1
 2026-09,p:limburg,all,manual functional tester pensions 6 months contract,1
 2026-09,p:limburg,all,microsoft 365 and power platform developer sharepoint power apps and automate for nato with security clearance,1
 2026-09,p:limburg,all,product owner continuous quality assurance,1
@@ -3344,7 +3285,6 @@ month,geo,programme,title,n
 2026-09,p:limburg,informatica,digital workflow developer rapid prototyping and pilots for nato with security clearance,1
 2026-09,p:limburg,informatica,it engineer linux,1
 2026-09,p:limburg,informatica,java developer regio maastricht,1
-2026-09,p:limburg,informatica,machine learning engineer,1
 2026-09,p:limburg,informatica,manual functional tester pensions 6 months contract,1
 2026-09,p:limburg,informatica,microsoft 365 and power platform developer sharepoint power apps and automate for nato with security clearance,1
 2026-09,p:limburg,informatica,pyspark databricks developer,1
@@ -3383,7 +3323,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,backend engineer hyperliquid ecosystem,1
 2026-09,p:noord-brabant,all,backend engineer product remote,1
 2026-09,p:noord-brabant,all,backend software developer gezocht voor slimme warmtepompen,1
-2026-09,p:noord-brabant,all,besturingstechnicus machinebouw,1
 2026-09,p:noord-brabant,all,besturingstechnicus machinebouw food,1
 2026-09,p:noord-brabant,all,bi consultant,1
 2026-09,p:noord-brabant,all,business analist,1
@@ -3393,7 +3332,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,c# unity engineer,1
 2026-09,p:noord-brabant,all,chinese to malay game localization translator,1
 2026-09,p:noord-brabant,all,cja aep platform architect,1
-2026-09,p:noord-brabant,all,cloud consultant,1
 2026-09,p:noord-brabant,all,cloud engineer,1
 2026-09,p:noord-brabant,all,cloud solution architect azure,1
 2026-09,p:noord-brabant,all,cloud value consultant,1
@@ -3443,7 +3381,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,game tester,1
 2026-09,p:noord-brabant,all,gamedev engineer c++,1
 2026-09,p:noord-brabant,all,gameplay ui developer,1
-2026-09,p:noord-brabant,all,hardware engineer industriële automatisering,1
 2026-09,p:noord-brabant,all,hy ai engineer consultancy meerdere locaties 85k,1
 2026-09,p:noord-brabant,all,hy data ai engineer consultancy veldhoven 85k,1
 2026-09,p:noord-brabant,all,ict consultant,1
@@ -3472,14 +3409,12 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,mendix developer,2
 2026-09,p:noord-brabant,all,microsoft 365 consultant,1
 2026-09,p:noord-brabant,all,middle c# unity developer,1
-2026-09,p:noord-brabant,all,monitoring engineer,3
 2026-09,p:noord-brabant,all,netwerk engineer cisco eindhoven,1
 2026-09,p:noord-brabant,all,ot engineer cybersecurity,1
 2026-09,p:noord-brabant,all,outsystems developer,1
 2026-09,p:noord-brabant,all,php developer 1 3 jaar ervaring,1
 2026-09,p:noord-brabant,all,platform engineer,1
 2026-09,p:noord-brabant,all,platform engineer identity platform authn authz,1
-2026-09,p:noord-brabant,all,plc programmeur,2
 2026-09,p:noord-brabant,all,proces analist analist zorginformatiesystemen,1
 2026-09,p:noord-brabant,all,product manager,1
 2026-09,p:noord-brabant,all,product owner,1
@@ -3503,7 +3438,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,security engineer offensive security,1
 2026-09,p:noord-brabant,all,security engineer pre sales,1
 2026-09,p:noord-brabant,all,security operations engineer,1
-2026-09,p:noord-brabant,all,serviceadviseur,1
 2026-09,p:noord-brabant,all,servicedeskmedewerker,1
 2026-09,p:noord-brabant,all,servicedeskmedewerker ict,1
 2026-09,p:noord-brabant,all,servicenow secops developer,1
@@ -3531,7 +3465,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,all,source engine mod developer in debugging and gamecode fixes,1
 2026-09,p:noord-brabant,all,support engineer,2
 2026-09,p:noord-brabant,all,support engineer eindhoven e.o,1
-2026-09,p:noord-brabant,all,systeem ontwikkelaar,1
 2026-09,p:noord-brabant,all,system engineer,1
 2026-09,p:noord-brabant,all,systems engineer compute infrastructure,1
 2026-09,p:noord-brabant,all,teamleider informatiebeveiliging,1
@@ -3627,7 +3560,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,informatica,c# programmeur,1
 2026-09,p:noord-brabant,informatica,c# unity engineer,1
 2026-09,p:noord-brabant,informatica,cja aep platform architect,1
-2026-09,p:noord-brabant,informatica,cloud consultant,1
 2026-09,p:noord-brabant,informatica,cloud engineer,1
 2026-09,p:noord-brabant,informatica,cloud solution architect azure,1
 2026-09,p:noord-brabant,informatica,cloud value consultant,1
@@ -3666,7 +3598,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,informatica,machine learning engineer ml engineer roleplay sessions,1
 2026-09,p:noord-brabant,informatica,mendix developer,2
 2026-09,p:noord-brabant,informatica,middle c# unity developer,1
-2026-09,p:noord-brabant,informatica,monitoring engineer,3
 2026-09,p:noord-brabant,informatica,outsystems developer,1
 2026-09,p:noord-brabant,informatica,php developer 1 3 jaar ervaring,1
 2026-09,p:noord-brabant,informatica,platform engineer,1
@@ -3706,7 +3637,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,informatica,solution architect,1
 2026-09,p:noord-brabant,informatica,solutions architect,1
 2026-09,p:noord-brabant,informatica,source engine mod developer in debugging and gamecode fixes,1
-2026-09,p:noord-brabant,informatica,systeem ontwikkelaar,1
 2026-09,p:noord-brabant,informatica,systems engineer compute infrastructure,1
 2026-09,p:noord-brabant,informatica,tech,1
 2026-09,p:noord-brabant,informatica,tech backend go developer,1
@@ -3728,10 +3658,8 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,informatica,vmware cloud architect,1
 2026-09,p:noord-brabant,informatica,vmware cloud engineer,1
 2026-09,p:noord-brabant,technische-informatica,ai automation engineer,1
-2026-09,p:noord-brabant,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,p:noord-brabant,technische-informatica,besturingstechnicus machinebouw food,1
 2026-09,p:noord-brabant,technische-informatica,cja aep platform architect,1
-2026-09,p:noord-brabant,technische-informatica,cloud consultant,1
 2026-09,p:noord-brabant,technische-informatica,cloud engineer,1
 2026-09,p:noord-brabant,technische-informatica,cloud solution architect azure,1
 2026-09,p:noord-brabant,technische-informatica,cloud value consultant,1
@@ -3743,7 +3671,6 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,technische-informatica,embedded software engineer,1
 2026-09,p:noord-brabant,technische-informatica,embedded software test engineer,1
 2026-09,p:noord-brabant,technische-informatica,erp cloud engineer,1
-2026-09,p:noord-brabant,technische-informatica,hardware engineer industriële automatisering,1
 2026-09,p:noord-brabant,technische-informatica,ict specialist allround microsoft systeembeheer,1
 2026-09,p:noord-brabant,technische-informatica,industrial automation network engineer,1
 2026-09,p:noord-brabant,technische-informatica,information security analyst grc,1
@@ -3751,12 +3678,10 @@ month,geo,programme,title,n
 2026-09,p:noord-brabant,technische-informatica,information security officer netherlands,1
 2026-09,p:noord-brabant,technische-informatica,kubernetes platform engineer,1
 2026-09,p:noord-brabant,technische-informatica,mechatronisch systeem architect,1
-2026-09,p:noord-brabant,technische-informatica,monitoring engineer,3
 2026-09,p:noord-brabant,technische-informatica,netwerk engineer cisco eindhoven,1
 2026-09,p:noord-brabant,technische-informatica,ot engineer cybersecurity,1
 2026-09,p:noord-brabant,technische-informatica,platform engineer,1
 2026-09,p:noord-brabant,technische-informatica,platform engineer identity platform authn authz,1
-2026-09,p:noord-brabant,technische-informatica,plc programmeur,2
 2026-09,p:noord-brabant,technische-informatica,remote presales systems engineer,1
 2026-09,p:noord-brabant,technische-informatica,security engineer,2
 2026-09,p:noord-brabant,technische-informatica,security engineer offensive security,1
@@ -3777,7 +3702,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,.net c# developer,2
 2026-09,p:noord-holland,all,.net developer,1
 2026-09,p:noord-holland,all,.net full stack developer,1
-2026-09,p:noord-holland,all,.net software engineer,1
 2026-09,p:noord-holland,all,2 x interim solution architect,1
 2026-09,p:noord-holland,all,afstudeerstage data science operations forecasting,1
 2026-09,p:noord-holland,all,afstudeerstage wo data scientist,1
@@ -3820,7 +3744,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,c# developer,1
 2026-09,p:noord-holland,all,chief information security officer ciso,1
 2026-09,p:noord-holland,all,cloud architect entra specialisation,1
-2026-09,p:noord-holland,all,cloud consultant,1
 2026-09,p:noord-holland,all,cloud engineer,1
 2026-09,p:noord-holland,all,cloud orchestration engineer,1
 2026-09,p:noord-holland,all,cloud security consultant,1
@@ -3921,7 +3844,7 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,lansa developer,1
 2026-09,p:noord-holland,all,learning technologies advisor,1
 2026-09,p:noord-holland,all,linux devops engineer,1
-2026-09,p:noord-holland,all,machine learning engineer,2
+2026-09,p:noord-holland,all,machine learning engineer,1
 2026-09,p:noord-holland,all,maintenance support engineer,1
 2026-09,p:noord-holland,all,manager cloud and connectivity,1
 2026-09,p:noord-holland,all,manager sap finance advisory technology sap finance,1
@@ -3930,7 +3853,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,mendix developer,1
 2026-09,p:noord-holland,all,mid level backend engineer iam,1
 2026-09,p:noord-holland,all,mobile engineer flutter,1
-2026-09,p:noord-holland,all,monitoring engineer,2
 2026-09,p:noord-holland,all,network and integration engineer,1
 2026-09,p:noord-holland,all,office 365 applicatiebeheerder dunamare,1
 2026-09,p:noord-holland,all,ontwikkelaar,1
@@ -3939,12 +3861,10 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,php developer,4
 2026-09,p:noord-holland,all,pl engineer backend capital markets amsterdam trading 120k,1
 2026-09,p:noord-holland,all,platform engineer,1
-2026-09,p:noord-holland,all,plc programmeur,2
 2026-09,p:noord-holland,all,plc programmeur technisch support specialist,2
 2026-09,p:noord-holland,all,product manager data machine learning genai platform,1
 2026-09,p:noord-holland,all,product owner,1
 2026-09,p:noord-holland,all,product owner credit risk monitoring,1
-2026-09,p:noord-holland,all,projectleider ict,1
 2026-09,p:noord-holland,all,projectleider it,1
 2026-09,p:noord-holland,all,purview security engineer,1
 2026-09,p:noord-holland,all,python ontwikkelaar,1
@@ -4021,7 +3941,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,all,tibco bw developer,1
 2026-09,p:noord-holland,all,trading systems engineer trading platform,1
 2026-09,p:noord-holland,all,trading tools software engineer,1
-2026-09,p:noord-holland,all,tweedelijns support engineer,2
 2026-09,p:noord-holland,all,ux designer,2
 2026-09,p:noord-holland,all,vie commercial data governance analyst amsterdam,1
 2026-09,p:noord-holland,all,web developer,1
@@ -4055,7 +3974,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,business-it-management,office 365 applicatiebeheerder dunamare,1
 2026-09,p:noord-holland,business-it-management,product owner,1
 2026-09,p:noord-holland,business-it-management,product owner credit risk monitoring,1
-2026-09,p:noord-holland,business-it-management,projectleider ict,1
 2026-09,p:noord-holland,business-it-management,projectleider it,1
 2026-09,p:noord-holland,business-it-management,salesforce business analyst functional consultant,1
 2026-09,p:noord-holland,business-it-management,salesforce consultant,1
@@ -4069,7 +3987,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,informatica,.net c# developer,2
 2026-09,p:noord-holland,informatica,.net developer,1
 2026-09,p:noord-holland,informatica,.net full stack developer,1
-2026-09,p:noord-holland,informatica,.net software engineer,1
 2026-09,p:noord-holland,informatica,2 x interim solution architect,1
 2026-09,p:noord-holland,informatica,afstudeerstage data science operations forecasting,1
 2026-09,p:noord-holland,informatica,afstudeerstage wo data scientist,1
@@ -4109,7 +4026,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,informatica,c# developer,1
 2026-09,p:noord-holland,informatica,chief information security officer ciso,1
 2026-09,p:noord-holland,informatica,cloud architect entra specialisation,1
-2026-09,p:noord-holland,informatica,cloud consultant,1
 2026-09,p:noord-holland,informatica,cloud engineer,1
 2026-09,p:noord-holland,informatica,cloud orchestration engineer,1
 2026-09,p:noord-holland,informatica,cloud security consultant,1
@@ -4163,11 +4079,10 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,informatica,kubernetes engineer go operators,1
 2026-09,p:noord-holland,informatica,lansa developer,1
 2026-09,p:noord-holland,informatica,linux devops engineer,1
-2026-09,p:noord-holland,informatica,machine learning engineer,2
+2026-09,p:noord-holland,informatica,machine learning engineer,1
 2026-09,p:noord-holland,informatica,mendix developer,1
 2026-09,p:noord-holland,informatica,mid level backend engineer iam,1
 2026-09,p:noord-holland,informatica,mobile engineer flutter,1
-2026-09,p:noord-holland,informatica,monitoring engineer,2
 2026-09,p:noord-holland,informatica,office 365 applicatiebeheerder dunamare,1
 2026-09,p:noord-holland,informatica,ontwikkelaar,1
 2026-09,p:noord-holland,informatica,ot security specialist,1
@@ -4239,7 +4154,6 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,technische-informatica,azure security engineer,1
 2026-09,p:noord-holland,technische-informatica,chief information security officer ciso,1
 2026-09,p:noord-holland,technische-informatica,cloud architect entra specialisation,1
-2026-09,p:noord-holland,technische-informatica,cloud consultant,1
 2026-09,p:noord-holland,technische-informatica,cloud engineer,1
 2026-09,p:noord-holland,technische-informatica,cloud orchestration engineer,1
 2026-09,p:noord-holland,technische-informatica,cloud security consultant,1
@@ -4268,11 +4182,9 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,technische-informatica,kubernetes engineer,2
 2026-09,p:noord-holland,technische-informatica,kubernetes engineer go operators,1
 2026-09,p:noord-holland,technische-informatica,linux devops engineer,1
-2026-09,p:noord-holland,technische-informatica,monitoring engineer,2
 2026-09,p:noord-holland,technische-informatica,network and integration engineer,1
 2026-09,p:noord-holland,technische-informatica,ot security specialist,1
 2026-09,p:noord-holland,technische-informatica,platform engineer,1
-2026-09,p:noord-holland,technische-informatica,plc programmeur,2
 2026-09,p:noord-holland,technische-informatica,plc programmeur technisch support specialist,2
 2026-09,p:noord-holland,technische-informatica,purview security engineer,1
 2026-09,p:noord-holland,technische-informatica,qa automation engineer,1
@@ -4311,7 +4223,6 @@ month,geo,programme,title,n
 2026-09,p:overijssel,all,embedded software engineer,1
 2026-09,p:overijssel,all,full stack developer,2
 2026-09,p:overijssel,all,functioneel beheerder zwolle,1
-2026-09,p:overijssel,all,hardware engineer industriële automatisering,2
 2026-09,p:overijssel,all,informatieanalist functioneel beheerder,1
 2026-09,p:overijssel,all,it business analist zwolle,1
 2026-09,p:overijssel,all,it projectmanager zwolle,1
@@ -4365,7 +4276,6 @@ month,geo,programme,title,n
 2026-09,p:overijssel,technische-informatica,cloud engineer,1
 2026-09,p:overijssel,technische-informatica,elektrotechnisch ingenieur industriële automatisering,2
 2026-09,p:overijssel,technische-informatica,embedded software engineer,1
-2026-09,p:overijssel,technische-informatica,hardware engineer industriële automatisering,2
 2026-09,p:overijssel,technische-informatica,netwerk engineer,2
 2026-09,p:overijssel,technische-informatica,netwerkarchitect,1
 2026-09,p:overijssel,technische-informatica,netwerkbeheerder,1
@@ -4375,7 +4285,6 @@ month,geo,programme,title,n
 2026-09,p:overijssel,technische-informatica,technical information security officer tiso zwolle,1
 2026-09,p:overijssel,technische-informatica,werkplekbeheerder,1
 2026-09,p:utrecht,all,.net developer,1
-2026-09,p:utrecht,all,.net software engineer,1
 2026-09,p:utrecht,all,afas consultant,1
 2026-09,p:utrecht,all,afstudeerstage hbo plc engineer elektrotechniek feb 2027,2
 2026-09,p:utrecht,all,afstudeerstage hbo plc engineer werktuigbouwkunde feb 2027,2
@@ -4390,7 +4299,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,all,aws backend engineer java spring boot axual kafka,1
 2026-09,p:utrecht,all,back end developer,1
 2026-09,p:utrecht,all,back end java developer,1
-2026-09,p:utrecht,all,besturingstechnicus machinebouw,1
 2026-09,p:utrecht,all,business analist configuratiespecialist,1
 2026-09,p:utrecht,all,business analyst configuration specialist 260910 ek 001,1
 2026-09,p:utrecht,all,business intelligence consultant bij creates,2
@@ -4483,7 +4391,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,all,solution architect power platform,1
 2026-09,p:utrecht,all,stage it support engineer,1
 2026-09,p:utrecht,all,support engineer,1
-2026-09,p:utrecht,all,systeem ontwikkelaar,1
 2026-09,p:utrecht,all,systeembeheerder,1
 2026-09,p:utrecht,all,systeembeheerder hai,1
 2026-09,p:utrecht,all,systeembeheerder infra,1
@@ -4497,7 +4404,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,all,traineeship business it den haag,2
 2026-09,p:utrecht,all,traineeship data science,1
 2026-09,p:utrecht,all,traineeship it,1
-2026-09,p:utrecht,all,tweedelijns support engineer,1
 2026-09,p:utrecht,all,vacancy security engineer cloud platforms,1
 2026-09,p:utrecht,all,web mobile full stack developer,1
 2026-09,p:utrecht,all,werkplekbeheerder amersfoort,1
@@ -4532,7 +4438,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,business-it-management,traineeship business it den haag,2
 2026-09,p:utrecht,business-it-management,traineeship it,1
 2026-09,p:utrecht,informatica,.net developer,1
-2026-09,p:utrecht,informatica,.net software engineer,1
 2026-09,p:utrecht,informatica,ai automation engineer,1
 2026-09,p:utrecht,informatica,ai engineer,1
 2026-09,p:utrecht,informatica,ai native shopify developer,1
@@ -4594,7 +4499,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,informatica,software engineer kotlin java,1
 2026-09,p:utrecht,informatica,software system engineer,1
 2026-09,p:utrecht,informatica,solution architect power platform,1
-2026-09,p:utrecht,informatica,systeem ontwikkelaar,1
 2026-09,p:utrecht,informatica,tech team metrics,1
 2026-09,p:utrecht,informatica,technical information security officer tiso utrecht,1
 2026-09,p:utrecht,informatica,technisch cybersecurity expert,1
@@ -4609,7 +4513,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,technische-informatica,ai automation engineer,1
 2026-09,p:utrecht,technische-informatica,automation engineer,1
 2026-09,p:utrecht,technische-informatica,aws backend engineer java spring boot axual kafka,1
-2026-09,p:utrecht,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,p:utrecht,technische-informatica,cloud engineer,1
 2026-09,p:utrecht,technische-informatica,cloud engineer devops engineer,1
 2026-09,p:utrecht,technische-informatica,cloud it solution architect,2
@@ -4657,7 +4560,6 @@ month,geo,programme,title,n
 2026-09,p:zeeland,technische-informatica,software engineer industriële automatisering,1
 2026-09,p:zuid-holland,all,.net c# full stack developer in het spoordomein,1
 2026-09,p:zuid-holland,all,.net developer,1
-2026-09,p:zuid-holland,all,.net software engineer,2
 2026-09,p:zuid-holland,all,2026 0125 solutions architect ns tue 29 sep,1
 2026-09,p:zuid-holland,all,afstudeerstage automatisch testen van plc software hbo industriële automatisering of elektrotechniek feb 2027,2
 2026-09,p:zuid-holland,all,ai engineer,2
@@ -4670,7 +4572,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,automation engineer,1
 2026-09,p:zuid-holland,all,automation engineer industriële automatisering voertuigen,1
 2026-09,p:zuid-holland,all,backup storage infra specialist infrastructure,1
-2026-09,p:zuid-holland,all,besturingstechnicus machinebouw,1
 2026-09,p:zuid-holland,all,bi engineer,1
 2026-09,p:zuid-holland,all,bovenschools ict coördinator 0 8 1 fte,1
 2026-09,p:zuid-holland,all,bpmn automation developer java and camunda platform for nato with security clearance,1
@@ -4737,7 +4638,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,group technisch specialist,1
 2026-09,p:zuid-holland,all,guidance navigation control engineer,1
 2026-09,p:zuid-holland,all,hardware engineer e plan industriële automatisering,1
-2026-09,p:zuid-holland,all,hardware engineer industriële automatisering,1
 2026-09,p:zuid-holland,all,helpdesk engineer sliedrecht 2.800 3.800,1
 2026-09,p:zuid-holland,all,hy scrum master consultancy zoetermeer 85k,1
 2026-09,p:zuid-holland,all,hydraulical tester,1
@@ -4764,7 +4664,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,java and angular developer mission software team for nato with security clearance,1
 2026-09,p:zuid-holland,all,java angular developer,1
 2026-09,p:zuid-holland,all,java developer detavast,1
-2026-09,p:zuid-holland,all,machine learning engineer,1
 2026-09,p:zuid-holland,all,machine learning engineer llms retrieval and mlops for nato with security clearance,1
 2026-09,p:zuid-holland,all,mastership data science ai,1
 2026-09,p:zuid-holland,all,mechatronics engineer,1
@@ -4778,13 +4677,11 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,microsoft 365 specialist,1
 2026-09,p:zuid-holland,all,mlops engineer,1
 2026-09,p:zuid-holland,all,modern workplace specialist,1
-2026-09,p:zuid-holland,all,monitoring engineer,1
 2026-09,p:zuid-holland,all,netgroep zoekt een systeembeheerder,1
 2026-09,p:zuid-holland,all,outsystems developer 52k 84k it,1
 2026-09,p:zuid-holland,all,outsystems developer energietransitie,1
 2026-09,p:zuid-holland,all,platform devops engineer,1
 2026-09,p:zuid-holland,all,platform engineer ai infrastructure,1
-2026-09,p:zuid-holland,all,plc programmeur,2
 2026-09,p:zuid-holland,all,plc software engineer,3
 2026-09,p:zuid-holland,all,power bi ontwikkelaar,2
 2026-09,p:zuid-holland,all,process automation specialist workflow platform operations for nato with security clearance,1
@@ -4825,7 +4722,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,sql server database administrator,1
 2026-09,p:zuid-holland,all,support engineer,2
 2026-09,p:zuid-holland,all,support medewerker it,2
-2026-09,p:zuid-holland,all,systeem ontwikkelaar,1
 2026-09,p:zuid-holland,all,systeembeheer,2
 2026-09,p:zuid-holland,all,systeembeheerder,4
 2026-09,p:zuid-holland,all,systeembeheerder deta vast,1
@@ -4862,7 +4758,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,all,traineeship business it den haag,2
 2026-09,p:zuid-holland,all,traineeship product owner,1
 2026-09,p:zuid-holland,all,transmission distribution technical,1
-2026-09,p:zuid-holland,all,tweedelijns support engineer,1
 2026-09,p:zuid-holland,all,ux researcher,2
 2026-09,p:zuid-holland,all,werkplek specialist,1
 2026-09,p:zuid-holland,all,werkplekbeheerder almere,1
@@ -4921,7 +4816,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,business-it-management,traineeship product owner,1
 2026-09,p:zuid-holland,informatica,.net c# full stack developer in het spoordomein,1
 2026-09,p:zuid-holland,informatica,.net developer,1
-2026-09,p:zuid-holland,informatica,.net software engineer,2
 2026-09,p:zuid-holland,informatica,2026 0125 solutions architect ns tue 29 sep,1
 2026-09,p:zuid-holland,informatica,ai engineer,2
 2026-09,p:zuid-holland,informatica,ai engineer machine learning pipelines and generative ai for nato with security clearance,1
@@ -4973,7 +4867,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,informatica,java and angular developer mission software team for nato with security clearance,1
 2026-09,p:zuid-holland,informatica,java angular developer,1
 2026-09,p:zuid-holland,informatica,java developer detavast,1
-2026-09,p:zuid-holland,informatica,machine learning engineer,1
 2026-09,p:zuid-holland,informatica,machine learning engineer llms retrieval and mlops for nato with security clearance,1
 2026-09,p:zuid-holland,informatica,mastership data science ai,1
 2026-09,p:zuid-holland,informatica,mendix developer,1
@@ -4981,7 +4874,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,informatica,metrology application engineer,1
 2026-09,p:zuid-holland,informatica,microsoft 365 and power platform developer sharepoint power apps and automate for nato with security clearance,1
 2026-09,p:zuid-holland,informatica,mlops engineer,1
-2026-09,p:zuid-holland,informatica,monitoring engineer,1
 2026-09,p:zuid-holland,informatica,outsystems developer 52k 84k it,1
 2026-09,p:zuid-holland,informatica,outsystems developer energietransitie,1
 2026-09,p:zuid-holland,informatica,platform devops engineer,1
@@ -5007,7 +4899,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,informatica,solution architect data,1
 2026-09,p:zuid-holland,informatica,solution architect netdigitalisering,1
 2026-09,p:zuid-holland,informatica,solutions architect current state baseline target architecture and roadmap for nato with security clearance,1
-2026-09,p:zuid-holland,informatica,systeem ontwikkelaar,1
 2026-09,p:zuid-holland,informatica,system engineer cloud,1
 2026-09,p:zuid-holland,informatica,tech,1
 2026-09,p:zuid-holland,informatica,technical information security officer,2
@@ -5035,7 +4926,6 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,technische-informatica,automation engineer,1
 2026-09,p:zuid-holland,technische-informatica,automation engineer industriële automatisering voertuigen,1
 2026-09,p:zuid-holland,technische-informatica,backup storage infra specialist infrastructure,1
-2026-09,p:zuid-holland,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,p:zuid-holland,technische-informatica,bpmn automation developer java and camunda platform for nato with security clearance,1
 2026-09,p:zuid-holland,technische-informatica,business consultant industriële automatisering,1
 2026-09,p:zuid-holland,technische-informatica,cloud architect,1
@@ -5055,18 +4945,15 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,technische-informatica,engineer infra,2
 2026-09,p:zuid-holland,technische-informatica,guidance navigation control engineer,1
 2026-09,p:zuid-holland,technische-informatica,hardware engineer e plan industriële automatisering,1
-2026-09,p:zuid-holland,technische-informatica,hardware engineer industriële automatisering,1
 2026-09,p:zuid-holland,technische-informatica,iam consultant,1
 2026-09,p:zuid-holland,technische-informatica,information security officer,2
 2026-09,p:zuid-holland,technische-informatica,infrastructure specialist linux,1
 2026-09,p:zuid-holland,technische-informatica,it systeembeheerder beveiligingstechniek,1
 2026-09,p:zuid-holland,technische-informatica,mechatronics engineer,1
 2026-09,p:zuid-holland,technische-informatica,microsoft 365 and power platform developer sharepoint power apps and automate for nato with security clearance,1
-2026-09,p:zuid-holland,technische-informatica,monitoring engineer,1
 2026-09,p:zuid-holland,technische-informatica,netgroep zoekt een systeembeheerder,1
 2026-09,p:zuid-holland,technische-informatica,platform devops engineer,1
 2026-09,p:zuid-holland,technische-informatica,platform engineer ai infrastructure,1
-2026-09,p:zuid-holland,technische-informatica,plc programmeur,2
 2026-09,p:zuid-holland,technische-informatica,process automation specialist workflow platform operations for nato with security clearance,1
 2026-09,p:zuid-holland,technische-informatica,propulsion control engineer,1
 2026-09,p:zuid-holland,technische-informatica,security analist,1
@@ -5111,9 +4998,7 @@ month,geo,programme,title,n
 2026-09,r:amersfoort,all,powerplatform developer,1
 2026-09,r:amersfoort,all,ruby developer,1
 2026-09,r:amersfoort,all,site reliability engineer cloud native platform openshift,1
-2026-09,r:amersfoort,all,systeem ontwikkelaar,1
 2026-09,r:amersfoort,all,technisch specialist cybersecurity en standaardisatie,1
-2026-09,r:amersfoort,all,tweedelijns support engineer,1
 2026-09,r:amersfoort,all,werkplekbeheerder amersfoort,1
 2026-09,r:amersfoort,business-it-management,applicatie beheerder,1
 2026-09,r:amersfoort,business-it-management,technisch specialist cybersecurity en standaardisatie,1
@@ -5133,7 +5018,6 @@ month,geo,programme,title,n
 2026-09,r:amersfoort,informatica,powerplatform developer,1
 2026-09,r:amersfoort,informatica,ruby developer,1
 2026-09,r:amersfoort,informatica,site reliability engineer cloud native platform openshift,1
-2026-09,r:amersfoort,informatica,systeem ontwikkelaar,1
 2026-09,r:amersfoort,informatica,technisch specialist cybersecurity en standaardisatie,1
 2026-09,r:amersfoort,technische-informatica,cloud engineer,1
 2026-09,r:amersfoort,technische-informatica,cloud engineer devops engineer,1
@@ -5157,11 +5041,9 @@ month,geo,programme,title,n
 2026-09,r:drenthe,informatica,sales account developer emmen,1
 2026-09,r:drenthe,informatica,technisch specialist e i energie dagdienst,1
 2026-09,r:drenthe,technische-informatica,plc technicus omgeving emmen,1
-2026-09,r:flevoland,all,.net software engineer,1
 2026-09,r:flevoland,all,data center technician netherlands almere on site,1
 2026-09,r:flevoland,all,data engineer,1
 2026-09,r:flevoland,all,team systeembeheerder wms,1
-2026-09,r:flevoland,informatica,.net software engineer,1
 2026-09,r:flevoland,informatica,data engineer,1
 2026-09,r:flevoland,technische-informatica,team systeembeheerder wms,1
 2026-09,r:food-valley,all,allround it medewerker,1
@@ -5248,11 +5130,9 @@ month,geo,programme,title,n
 2026-09,r:gooi-vechtstreek,technische-informatica,cloud engineer,1
 2026-09,r:gooi-vechtstreek,technische-informatica,kubernetes engineer,2
 2026-09,r:gooi-vechtstreek,technische-informatica,soc analist,1
-2026-09,r:groningen,all,.net software engineer,1
 2026-09,r:groningen,all,agile test engineer,1
 2026-09,r:groningen,all,azure developer,1
 2026-09,r:groningen,all,business it traineeship regio groningen,1
-2026-09,r:groningen,all,cloud consultant,1
 2026-09,r:groningen,all,data center technician netherlands groningen on site,1
 2026-09,r:groningen,all,devops engineer,1
 2026-09,r:groningen,all,functioneel beheerder groningen,1
@@ -5261,7 +5141,6 @@ month,geo,programme,title,n
 2026-09,r:groningen,all,it projectmanager groningen,1
 2026-09,r:groningen,all,medewerker servicedesk ict,1
 2026-09,r:groningen,all,microsoft 365 consultant,1
-2026-09,r:groningen,all,monitoring engineer,1
 2026-09,r:groningen,all,netwerk security specialist,1
 2026-09,r:groningen,all,pensioen configurator en tester tijdelijk,1
 2026-09,r:groningen,all,sap consultant publieke sector,1
@@ -5281,28 +5160,22 @@ month,geo,programme,title,n
 2026-09,r:groningen,business-it-management,scrum master groningen,1
 2026-09,r:groningen,business-it-management,scrummaster product owner,1
 2026-09,r:groningen,business-it-management,technisch applicatiebeheerder,1
-2026-09,r:groningen,informatica,.net software engineer,1
 2026-09,r:groningen,informatica,agile test engineer,1
 2026-09,r:groningen,informatica,azure developer,1
-2026-09,r:groningen,informatica,cloud consultant,1
 2026-09,r:groningen,informatica,devops engineer,1
 2026-09,r:groningen,informatica,information security officer,1
-2026-09,r:groningen,informatica,monitoring engineer,1
 2026-09,r:groningen,informatica,netwerk security specialist,1
 2026-09,r:groningen,informatica,pensioen configurator en tester tijdelijk,1
 2026-09,r:groningen,informatica,technical information security officer tiso groningen,1
 2026-09,r:groningen,informatica,technisch applicatiebeheerder,1
 2026-09,r:groningen,technische-informatica,azure developer,1
-2026-09,r:groningen,technische-informatica,cloud consultant,1
 2026-09,r:groningen,technische-informatica,devops engineer,1
 2026-09,r:groningen,technische-informatica,information security officer,1
-2026-09,r:groningen,technische-informatica,monitoring engineer,1
 2026-09,r:groningen,technische-informatica,netwerk security specialist,1
 2026-09,r:groningen,technische-informatica,technical information security officer tiso groningen,1
 2026-09,r:groot-amsterdam,all,.net c# developer,2
 2026-09,r:groot-amsterdam,all,.net developer,1
 2026-09,r:groot-amsterdam,all,.net full stack developer,1
-2026-09,r:groot-amsterdam,all,.net software engineer,1
 2026-09,r:groot-amsterdam,all,2 x interim solution architect,1
 2026-09,r:groot-amsterdam,all,agentic ai engineer,1
 2026-09,r:groot-amsterdam,all,ai application engineer langgraph agentic ai,1
@@ -5335,7 +5208,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,all,business analyst retail consumer services,1
 2026-09,r:groot-amsterdam,all,business data analyst,1
 2026-09,r:groot-amsterdam,all,cloud architect entra specialisation,1
-2026-09,r:groot-amsterdam,all,cloud consultant,1
 2026-09,r:groot-amsterdam,all,cloud orchestration engineer,1
 2026-09,r:groot-amsterdam,all,cloud security consultant,1
 2026-09,r:groot-amsterdam,all,commercial product owner exin,1
@@ -5412,7 +5284,7 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,all,lansa developer,1
 2026-09,r:groot-amsterdam,all,learning technologies advisor,1
 2026-09,r:groot-amsterdam,all,linux devops engineer,1
-2026-09,r:groot-amsterdam,all,machine learning engineer,2
+2026-09,r:groot-amsterdam,all,machine learning engineer,1
 2026-09,r:groot-amsterdam,all,maintenance support engineer,1
 2026-09,r:groot-amsterdam,all,manager cloud and connectivity,1
 2026-09,r:groot-amsterdam,all,manager sap finance advisory technology sap finance,1
@@ -5429,7 +5301,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,all,product manager data machine learning genai platform,1
 2026-09,r:groot-amsterdam,all,product owner,1
 2026-09,r:groot-amsterdam,all,product owner credit risk monitoring,1
-2026-09,r:groot-amsterdam,all,projectleider ict,1
 2026-09,r:groot-amsterdam,all,projectleider it,1
 2026-09,r:groot-amsterdam,all,purview security engineer,1
 2026-09,r:groot-amsterdam,all,python software engineer knowledge infrastructure,1
@@ -5525,7 +5396,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,business-it-management,it support applicatiebeheerder,1
 2026-09,r:groot-amsterdam,business-it-management,product owner,1
 2026-09,r:groot-amsterdam,business-it-management,product owner credit risk monitoring,1
-2026-09,r:groot-amsterdam,business-it-management,projectleider ict,1
 2026-09,r:groot-amsterdam,business-it-management,projectleider it,1
 2026-09,r:groot-amsterdam,business-it-management,salesforce business analyst functional consultant,1
 2026-09,r:groot-amsterdam,business-it-management,salesforce consultant,1
@@ -5539,7 +5409,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,informatica,.net c# developer,2
 2026-09,r:groot-amsterdam,informatica,.net developer,1
 2026-09,r:groot-amsterdam,informatica,.net full stack developer,1
-2026-09,r:groot-amsterdam,informatica,.net software engineer,1
 2026-09,r:groot-amsterdam,informatica,2 x interim solution architect,1
 2026-09,r:groot-amsterdam,informatica,agentic ai engineer,1
 2026-09,r:groot-amsterdam,informatica,ai application engineer langgraph agentic ai,1
@@ -5569,7 +5438,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,informatica,backend qa engineer,1
 2026-09,r:groot-amsterdam,informatica,backend software engineer,1
 2026-09,r:groot-amsterdam,informatica,cloud architect entra specialisation,1
-2026-09,r:groot-amsterdam,informatica,cloud consultant,1
 2026-09,r:groot-amsterdam,informatica,cloud orchestration engineer,1
 2026-09,r:groot-amsterdam,informatica,cloud security consultant,1
 2026-09,r:groot-amsterdam,informatica,consultant data engineer,1
@@ -5614,7 +5482,7 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,informatica,java solution architect,1
 2026-09,r:groot-amsterdam,informatica,lansa developer,1
 2026-09,r:groot-amsterdam,informatica,linux devops engineer,1
-2026-09,r:groot-amsterdam,informatica,machine learning engineer,2
+2026-09,r:groot-amsterdam,informatica,machine learning engineer,1
 2026-09,r:groot-amsterdam,informatica,mendix developer,1
 2026-09,r:groot-amsterdam,informatica,mid level backend engineer iam,1
 2026-09,r:groot-amsterdam,informatica,mobile engineer flutter,1
@@ -5681,7 +5549,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,technische-informatica,azure engineer,1
 2026-09,r:groot-amsterdam,technische-informatica,azure security engineer,1
 2026-09,r:groot-amsterdam,technische-informatica,cloud architect entra specialisation,1
-2026-09,r:groot-amsterdam,technische-informatica,cloud consultant,1
 2026-09,r:groot-amsterdam,technische-informatica,cloud orchestration engineer,1
 2026-09,r:groot-amsterdam,technische-informatica,cloud security consultant,1
 2026-09,r:groot-amsterdam,technische-informatica,critical environment industrial controls systems engineer,1
@@ -5719,7 +5586,6 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,technische-informatica,system middleware architect,1
 2026-09,r:groot-amsterdam,technische-informatica,trading systems engineer trading platform,1
 2026-09,r:groot-amsterdam,technische-informatica,werkplekbeheerder amsterdam,1
-2026-09,r:haaglanden,all,.net software engineer,1
 2026-09,r:haaglanden,all,2026 0125 solutions architect ns tue 29 sep,1
 2026-09,r:haaglanden,all,ai engineer,1
 2026-09,r:haaglanden,all,ai engineer machine learning pipelines and generative ai for nato with security clearance,1
@@ -5835,7 +5701,6 @@ month,geo,programme,title,n
 2026-09,r:haaglanden,business-it-management,technisch specialist automotive,1
 2026-09,r:haaglanden,business-it-management,technisch specialist elektrotechniek,1
 2026-09,r:haaglanden,business-it-management,traineeship business it den haag,1
-2026-09,r:haaglanden,informatica,.net software engineer,1
 2026-09,r:haaglanden,informatica,2026 0125 solutions architect ns tue 29 sep,1
 2026-09,r:haaglanden,informatica,ai engineer,1
 2026-09,r:haaglanden,informatica,ai engineer machine learning pipelines and generative ai for nato with security clearance,1
@@ -5951,7 +5816,6 @@ month,geo,programme,title,n
 2026-09,r:midden-gelderland,all,ifs pso consultant,1
 2026-09,r:midden-gelderland,all,it traineeship hbo wo,1
 2026-09,r:midden-gelderland,all,platform engineer,1
-2026-09,r:midden-gelderland,all,projectleider ict,1
 2026-09,r:midden-gelderland,all,risk compliance officer,1
 2026-09,r:midden-gelderland,all,servicedesk medewerker arnhem,1
 2026-09,r:midden-gelderland,all,software engineer,1
@@ -5961,7 +5825,6 @@ month,geo,programme,title,n
 2026-09,r:midden-gelderland,business-it-management,ifs functional consultant,1
 2026-09,r:midden-gelderland,business-it-management,ifs pso consultant,1
 2026-09,r:midden-gelderland,business-it-management,it traineeship hbo wo,1
-2026-09,r:midden-gelderland,business-it-management,projectleider ict,1
 2026-09,r:midden-gelderland,business-it-management,technisch beheerder,1
 2026-09,r:midden-gelderland,informatica,cloud data platform engineer shape the future of scalable azure infrastructure,1
 2026-09,r:midden-gelderland,informatica,frontend design systems developer,1
@@ -5998,7 +5861,6 @@ month,geo,programme,title,n
 2026-09,r:midden-holland,technische-informatica,systeembeheerder,1
 2026-09,r:midden-holland,technische-informatica,technical security officer,1
 2026-09,r:midden-utrecht,all,.net developer,1
-2026-09,r:midden-utrecht,all,.net software engineer,1
 2026-09,r:midden-utrecht,all,afas consultant,1
 2026-09,r:midden-utrecht,all,afstudeerstage hbo plc engineer elektrotechniek feb 2027,2
 2026-09,r:midden-utrecht,all,afstudeerstage hbo plc engineer werktuigbouwkunde feb 2027,2
@@ -6008,7 +5870,6 @@ month,geo,programme,title,n
 2026-09,r:midden-utrecht,all,aws backend engineer java spring boot axual kafka,1
 2026-09,r:midden-utrecht,all,back end developer,1
 2026-09,r:midden-utrecht,all,back end java developer,1
-2026-09,r:midden-utrecht,all,besturingstechnicus machinebouw,1
 2026-09,r:midden-utrecht,all,business analist configuratiespecialist,1
 2026-09,r:midden-utrecht,all,business analyst configuration specialist 260910 ek 001,1
 2026-09,r:midden-utrecht,all,business intelligence consultant bij creates,2
@@ -6121,7 +5982,6 @@ month,geo,programme,title,n
 2026-09,r:midden-utrecht,business-it-management,traineeship business analist,1
 2026-09,r:midden-utrecht,business-it-management,traineeship business it den haag,1
 2026-09,r:midden-utrecht,informatica,.net developer,1
-2026-09,r:midden-utrecht,informatica,.net software engineer,1
 2026-09,r:midden-utrecht,informatica,ai native shopify developer,1
 2026-09,r:midden-utrecht,informatica,ai software engineer 54k tot 67k saas,1
 2026-09,r:midden-utrecht,informatica,aws backend engineer java spring boot axual kafka,1
@@ -6178,7 +6038,6 @@ month,geo,programme,title,n
 2026-09,r:midden-utrecht,technische-informatica,afstudeerstage hbo plc engineer werktuigbouwkunde feb 2027,2
 2026-09,r:midden-utrecht,technische-informatica,automation engineer,1
 2026-09,r:midden-utrecht,technische-informatica,aws backend engineer java spring boot axual kafka,1
-2026-09,r:midden-utrecht,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,r:midden-utrecht,technische-informatica,cloud it solution architect,2
 2026-09,r:midden-utrecht,technische-informatica,cloud platform engineer,1
 2026-09,r:midden-utrecht,technische-informatica,dev ops engineer,1
@@ -6213,22 +6072,16 @@ month,geo,programme,title,n
 2026-09,r:noord-holland-noord,all,field software engineer,2
 2026-09,r:noord-holland-noord,all,it ot engineer,1
 2026-09,r:noord-holland-noord,all,java developers diverse branches,1
-2026-09,r:noord-holland-noord,all,monitoring engineer,1
-2026-09,r:noord-holland-noord,all,plc programmeur,1
 2026-09,r:noord-holland-noord,all,python ontwikkelaar,1
 2026-09,r:noord-holland-noord,all,software engineer machinebouw,2
-2026-09,r:noord-holland-noord,all,tweedelijns support engineer,2
 2026-09,r:noord-holland-noord,business-it-management,data analist bi,1
 2026-09,r:noord-holland-noord,business-it-management,data regisseur bi specialist,1
 2026-09,r:noord-holland-noord,informatica,field software engineer,2
-2026-09,r:noord-holland-noord,informatica,monitoring engineer,1
 2026-09,r:noord-holland-noord,informatica,python ontwikkelaar,1
 2026-09,r:noord-holland-noord,informatica,software engineer machinebouw,2
 2026-09,r:noord-holland-noord,technische-informatica,dormac import bv zoekt een robotics engineer,1
 2026-09,r:noord-holland-noord,technische-informatica,embedded engineer,1
 2026-09,r:noord-holland-noord,technische-informatica,it ot engineer,1
-2026-09,r:noord-holland-noord,technische-informatica,monitoring engineer,1
-2026-09,r:noord-holland-noord,technische-informatica,plc programmeur,1
 2026-09,r:noord-limburg,all,cybersecurity engineer,1
 2026-09,r:noord-limburg,all,data center technician nl venlo on site,1
 2026-09,r:noord-limburg,informatica,cybersecurity engineer,1
@@ -6309,8 +6162,6 @@ month,geo,programme,title,n
 2026-09,r:regio-zwolle,technische-informatica,azure developer,1
 2026-09,r:regio-zwolle,technische-informatica,cloud engineer,1
 2026-09,r:regio-zwolle,technische-informatica,technical information security officer tiso zwolle,1
-2026-09,r:rijk-van-nijmegen,all,.net software engineer,1
-2026-09,r:rijk-van-nijmegen,all,cloud consultant,1
 2026-09,r:rijk-van-nijmegen,all,data center technician netherlands nijmegen on site,1
 2026-09,r:rijk-van-nijmegen,all,functioneel beheerder gemeente,1
 2026-09,r:rijk-van-nijmegen,all,functioneel beheerder nijmegen 32 uur,1
@@ -6322,19 +6173,14 @@ month,geo,programme,title,n
 2026-09,r:rijk-van-nijmegen,business-it-management,functioneel beheerder gemeente,1
 2026-09,r:rijk-van-nijmegen,business-it-management,functioneel beheerder nijmegen 32 uur,1
 2026-09,r:rijk-van-nijmegen,business-it-management,microsoft 365 consultant,1
-2026-09,r:rijk-van-nijmegen,informatica,.net software engineer,1
-2026-09,r:rijk-van-nijmegen,informatica,cloud consultant,1
 2026-09,r:rijk-van-nijmegen,informatica,technical hardware engineer omgeving nijmegen,1
-2026-09,r:rijk-van-nijmegen,technische-informatica,cloud consultant,1
 2026-09,r:rijk-van-nijmegen,technische-informatica,system engineer,1
 2026-09,r:rijk-van-nijmegen,technische-informatica,werkplekbeheerder nijmegen,1
 2026-09,r:rijnmond,all,.net c# full stack developer in het spoordomein,1
 2026-09,r:rijnmond,all,.net developer,1
-2026-09,r:rijnmond,all,.net software engineer,1
 2026-09,r:rijnmond,all,automation engineer,1
 2026-09,r:rijnmond,all,automation engineer industriële automatisering voertuigen,1
 2026-09,r:rijnmond,all,backup storage infra specialist infrastructure,1
-2026-09,r:rijnmond,all,besturingstechnicus machinebouw,1
 2026-09,r:rijnmond,all,bi engineer,1
 2026-09,r:rijnmond,all,business consultant industriële automatisering,1
 2026-09,r:rijnmond,all,business data analyst sme operations,1
@@ -6369,7 +6215,6 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,all,information security officer,1
 2026-09,r:rijnmond,all,infrastructure specialist linux,1
 2026-09,r:rijnmond,all,it coördinator,1
-2026-09,r:rijnmond,all,machine learning engineer,1
 2026-09,r:rijnmond,all,mastership data science ai,1
 2026-09,r:rijnmond,all,mechatronics engineer,1
 2026-09,r:rijnmond,all,meewerkend voorman it servicedesk almere,1
@@ -6377,11 +6222,9 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,all,metrology application engineer,1
 2026-09,r:rijnmond,all,microsoft 365 consultant,1
 2026-09,r:rijnmond,all,mlops engineer,1
-2026-09,r:rijnmond,all,monitoring engineer,1
 2026-09,r:rijnmond,all,netgroep zoekt een systeembeheerder,1
 2026-09,r:rijnmond,all,outsystems developer energietransitie,1
 2026-09,r:rijnmond,all,platform engineer ai infrastructure,1
-2026-09,r:rijnmond,all,plc programmeur,1
 2026-09,r:rijnmond,all,plc software engineer,1
 2026-09,r:rijnmond,all,power bi ontwikkelaar,2
 2026-09,r:rijnmond,all,projectleider ict,1
@@ -6408,7 +6251,6 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,all,technisch specialist,1
 2026-09,r:rijnmond,all,traineeship business it den haag,1
 2026-09,r:rijnmond,all,traineeship product owner,1
-2026-09,r:rijnmond,all,tweedelijns support engineer,1
 2026-09,r:rijnmond,all,werkplekbeheerder almere,1
 2026-09,r:rijnmond,all,windows sql server infrastructure specialist,1
 2026-09,r:rijnmond,business-it-management,bi engineer,1
@@ -6429,7 +6271,6 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,business-it-management,traineeship product owner,1
 2026-09,r:rijnmond,informatica,.net c# full stack developer in het spoordomein,1
 2026-09,r:rijnmond,informatica,.net developer,1
-2026-09,r:rijnmond,informatica,.net software engineer,1
 2026-09,r:rijnmond,informatica,cloud consultant,1
 2026-09,r:rijnmond,informatica,cyber risk consultant,1
 2026-09,r:rijnmond,informatica,cyber security engineer,1
@@ -6453,12 +6294,10 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,informatica,gis developer infrastructure,1
 2026-09,r:rijnmond,informatica,iam consultant,1
 2026-09,r:rijnmond,informatica,information security officer,1
-2026-09,r:rijnmond,informatica,machine learning engineer,1
 2026-09,r:rijnmond,informatica,mastership data science ai,1
 2026-09,r:rijnmond,informatica,mendix developer infrastructure,2
 2026-09,r:rijnmond,informatica,metrology application engineer,1
 2026-09,r:rijnmond,informatica,mlops engineer,1
-2026-09,r:rijnmond,informatica,monitoring engineer,1
 2026-09,r:rijnmond,informatica,outsystems developer energietransitie,1
 2026-09,r:rijnmond,informatica,platform engineer ai infrastructure,1
 2026-09,r:rijnmond,informatica,plc software engineer,1
@@ -6477,7 +6316,6 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,technische-informatica,automation engineer,1
 2026-09,r:rijnmond,technische-informatica,automation engineer industriële automatisering voertuigen,1
 2026-09,r:rijnmond,technische-informatica,backup storage infra specialist infrastructure,1
-2026-09,r:rijnmond,technische-informatica,besturingstechnicus machinebouw,1
 2026-09,r:rijnmond,technische-informatica,business consultant industriële automatisering,1
 2026-09,r:rijnmond,technische-informatica,cloud consultant,1
 2026-09,r:rijnmond,technische-informatica,cyber risk consultant,1
@@ -6493,10 +6331,8 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,technische-informatica,information security officer,1
 2026-09,r:rijnmond,technische-informatica,infrastructure specialist linux,1
 2026-09,r:rijnmond,technische-informatica,mechatronics engineer,1
-2026-09,r:rijnmond,technische-informatica,monitoring engineer,1
 2026-09,r:rijnmond,technische-informatica,netgroep zoekt een systeembeheerder,1
 2026-09,r:rijnmond,technische-informatica,platform engineer ai infrastructure,1
-2026-09,r:rijnmond,technische-informatica,plc programmeur,1
 2026-09,r:rijnmond,technische-informatica,security engineer cisco fortinet,1
 2026-09,r:rijnmond,technische-informatica,security operations engineer fortinet,1
 2026-09,r:rijnmond,technische-informatica,sql server database administrator,1
@@ -6509,13 +6345,11 @@ month,geo,programme,title,n
 2026-09,r:rijnmond,technische-informatica,windows sql server infrastructure specialist,1
 2026-09,r:stedendriehoek,all,data center technician netherlands apeldoorn on site,1
 2026-09,r:stedendriehoek,all,frontend design systems developer,2
-2026-09,r:stedendriehoek,all,projectleider ict,1
 2026-09,r:stedendriehoek,all,software development test engineer,1
 2026-09,r:stedendriehoek,all,software engineer,3
 2026-09,r:stedendriehoek,all,software engineer ca gen,1
 2026-09,r:stedendriehoek,all,solution architect platform fiod,1
 2026-09,r:stedendriehoek,all,technisch applicatie ontwikkelaar,1
-2026-09,r:stedendriehoek,business-it-management,projectleider ict,1
 2026-09,r:stedendriehoek,informatica,frontend design systems developer,2
 2026-09,r:stedendriehoek,informatica,software development test engineer,1
 2026-09,r:stedendriehoek,informatica,software engineer,3
@@ -6527,7 +6361,6 @@ month,geo,programme,title,n
 2026-09,r:twente,all,data center technician netherlands enschede on site,1
 2026-09,r:twente,all,elektrotechnisch ingenieur industriële automatisering,1
 2026-09,r:twente,all,embedded software engineer,1
-2026-09,r:twente,all,hardware engineer industriële automatisering,1
 2026-09,r:twente,all,informatieanalist functioneel beheerder,1
 2026-09,r:twente,all,netwerk engineer,1
 2026-09,r:twente,all,netwerkarchitect,1
@@ -6544,7 +6377,6 @@ month,geo,programme,title,n
 2026-09,r:twente,informatica,software engineer c++ smu team,1
 2026-09,r:twente,technische-informatica,elektrotechnisch ingenieur industriële automatisering,1
 2026-09,r:twente,technische-informatica,embedded software engineer,1
-2026-09,r:twente,technische-informatica,hardware engineer industriële automatisering,1
 2026-09,r:twente,technische-informatica,netwerk engineer,1
 2026-09,r:twente,technische-informatica,netwerkarchitect,1
 2026-09,r:twente,technische-informatica,netwerkbeheerder,1
@@ -6583,7 +6415,6 @@ month,geo,programme,title,n
 2026-09,r:zaanstreek-waterland,all,data engineer compliancy insights platform,1
 2026-09,r:zaanstreek-waterland,all,data specialist,1
 2026-09,r:zaanstreek-waterland,all,frontend developer reactjs nextjs edge.os,1
-2026-09,r:zaanstreek-waterland,all,monitoring engineer,1
 2026-09,r:zaanstreek-waterland,all,react native engineer,1
 2026-09,r:zaanstreek-waterland,business-it-management,data analist,2
 2026-09,r:zaanstreek-waterland,informatica,afstudeerstage data science operations forecasting,1
@@ -6592,9 +6423,7 @@ month,geo,programme,title,n
 2026-09,r:zaanstreek-waterland,informatica,backend developer kotlin microservices azure,1
 2026-09,r:zaanstreek-waterland,informatica,data engineer compliancy insights platform,1
 2026-09,r:zaanstreek-waterland,informatica,frontend developer reactjs nextjs edge.os,1
-2026-09,r:zaanstreek-waterland,informatica,monitoring engineer,1
 2026-09,r:zaanstreek-waterland,informatica,react native engineer,1
-2026-09,r:zaanstreek-waterland,technische-informatica,monitoring engineer,1
 2026-09,r:zeeland,all,data center technician netherlands goes on site,1
 2026-09,r:zeeland,all,data center technician netherlands kloetinge on site,1
 2026-09,r:zuid-holland-centraal,all,hy scrum master consultancy zoetermeer 85k,1
@@ -6602,14 +6431,12 @@ month,geo,programme,title,n
 2026-09,r:zuid-holland-centraal,all,plc software engineer,2
 2026-09,r:zuid-holland-centraal,all,product owner onderzoek professionalisering evidence informed werken,1
 2026-09,r:zuid-holland-centraal,all,servicenow developer,1
-2026-09,r:zuid-holland-centraal,all,systeem ontwikkelaar,1
 2026-09,r:zuid-holland-centraal,all,technisch topdesk consultant,1
 2026-09,r:zuid-holland-centraal,business-it-management,hy scrum master consultancy zoetermeer 85k,1
 2026-09,r:zuid-holland-centraal,business-it-management,product owner onderzoek professionalisering evidence informed werken,1
 2026-09,r:zuid-holland-centraal,business-it-management,technisch topdesk consultant,1
 2026-09,r:zuid-holland-centraal,informatica,plc software engineer,2
 2026-09,r:zuid-holland-centraal,informatica,servicenow developer,1
-2026-09,r:zuid-holland-centraal,informatica,systeem ontwikkelaar,1
 2026-09,r:zuid-kennemerland-ijmond,all,ai platform engineer,1
 2026-09,r:zuid-kennemerland-ijmond,all,allround winkelmedewerker elektronica tester,1
 2026-09,r:zuid-kennemerland-ijmond,all,kubernetes engineer go operators,1
@@ -6635,7 +6462,6 @@ month,geo,programme,title,n
 2026-09,r:zuid-limburg,all,data center technician netherlands sittard on site,1
 2026-09,r:zuid-limburg,all,functioneel beheerder,1
 2026-09,r:zuid-limburg,all,java developer regio maastricht,1
-2026-09,r:zuid-limburg,all,machine learning engineer,1
 2026-09,r:zuid-limburg,all,manual functional tester pensions 6 months contract,1
 2026-09,r:zuid-limburg,all,product owner continuous quality assurance,1
 2026-09,r:zuid-limburg,all,pyspark databricks developer,1
@@ -6650,7 +6476,6 @@ month,geo,programme,title,n
 2026-09,r:zuid-limburg,business-it-management,technisch specialist printinfrastructuur,1
 2026-09,r:zuid-limburg,informatica,consultant data engineer,1
 2026-09,r:zuid-limburg,informatica,java developer regio maastricht,1
-2026-09,r:zuid-limburg,informatica,machine learning engineer,1
 2026-09,r:zuid-limburg,informatica,manual functional tester pensions 6 months contract,1
 2026-09,r:zuid-limburg,informatica,pyspark databricks developer,1
 2026-09,r:zuid-limburg,informatica,technisch applicatiebeheerder microsoft dynamics 365,1
@@ -6715,9 +6540,7 @@ month,geo,programme,title,n
 2026-09,r:zuidoost-brabant,all,machine learning engineer ml engineer roleplay sessions,1
 2026-09,r:zuidoost-brabant,all,mechatronisch systeem architect,1
 2026-09,r:zuidoost-brabant,all,middle c# unity developer,1
-2026-09,r:zuidoost-brabant,all,monitoring engineer,1
 2026-09,r:zuidoost-brabant,all,netwerk engineer cisco eindhoven,1
-2026-09,r:zuidoost-brabant,all,plc programmeur,1
 2026-09,r:zuidoost-brabant,all,product manager,1
 2026-09,r:zuidoost-brabant,all,product owner business analytics,1
 2026-09,r:zuidoost-brabant,all,project manager it,1
@@ -6833,7 +6656,6 @@ month,geo,programme,title,n
 2026-09,r:zuidoost-brabant,informatica,kubernetes platform engineer,1
 2026-09,r:zuidoost-brabant,informatica,machine learning engineer ml engineer roleplay sessions,1
 2026-09,r:zuidoost-brabant,informatica,middle c# unity developer,1
-2026-09,r:zuidoost-brabant,informatica,monitoring engineer,1
 2026-09,r:zuidoost-brabant,informatica,prompt engineer ai driven software development,1
 2026-09,r:zuidoost-brabant,informatica,qa engineer,1
 2026-09,r:zuidoost-brabant,informatica,qa game tester,1
@@ -6880,9 +6702,7 @@ month,geo,programme,title,n
 2026-09,r:zuidoost-brabant,technische-informatica,information security officer,1
 2026-09,r:zuidoost-brabant,technische-informatica,kubernetes platform engineer,1
 2026-09,r:zuidoost-brabant,technische-informatica,mechatronisch systeem architect,1
-2026-09,r:zuidoost-brabant,technische-informatica,monitoring engineer,1
 2026-09,r:zuidoost-brabant,technische-informatica,netwerk engineer cisco eindhoven,1
-2026-09,r:zuidoost-brabant,technische-informatica,plc programmeur,1
 2026-09,r:zuidoost-brabant,technische-informatica,remote presales systems engineer,1
 2026-09,r:zuidoost-brabant,technische-informatica,security engineer,2
 2026-09,r:zuidoost-brabant,technische-informatica,security engineer offensive security,1

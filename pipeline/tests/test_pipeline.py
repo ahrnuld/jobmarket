@@ -163,3 +163,54 @@ def test_fixture_run_end_to_end(conn, ref):
         "OR description LIKE '%@voorbeeld.invalid%' OR description LIKE '%Sanne de Vries%'"
     ).fetchone()[0]
     assert leaked == 0
+
+
+def test_spray_postings_count_once_and_only_nationally(conn, ref):
+    """An agency posts one role in many villages on one day: one vacancy, no region."""
+    from jobmarket.aggregate import compute
+
+    villages = [
+        ["Nederland", "Noord-Brabant", "Vught", "Cromvoirt"],
+        ["Nederland", "Noord-Holland", "Drechterland", "Westwoud"],
+        ["Nederland", "Zuid-Holland", "Schiedam"],
+        ["Nederland", "Groningen", "Groningen"],
+    ]
+    spray = [
+        VacancyRecord(
+            source_id="adzuna",
+            external_id=f"s{i}",
+            title="Junior Monitoring Engineer",
+            posted_at="2026-09-19",
+            employer="Hallo",
+            area=a,
+            description="Linux",
+            source_category="it-jobs",
+        )
+        for i, a in enumerate(villages)
+    ]
+    two_offices = [
+        rec(10, employer="Echt Bedrijf BV", posted="2026-09-10"),
+        VacancyRecord(
+            **{
+                **rec(11, employer="Echt Bedrijf BV", posted="2026-09-10").__dict__,
+                "area": ["Nederland", "Utrecht", "Utrecht"],
+            }
+        ),
+    ]
+    ingest(conn, "adzuna", spray + two_offices, ref)
+    process(conn, ref, [])
+    rows = conn.execute(
+        "SELECT employer, COUNT(*), SUM(multi_location) FROM vacancies "
+        "WHERE duplicate_of IS NULL GROUP BY employer ORDER BY employer"
+    ).fetchall()
+    assert [tuple(r) for r in rows] == [("Echt Bedrijf BV", 2, 0), ("Hallo", 1, 1)]
+    agg = compute(conn, sample=False, today=date(2026, 9, 20))
+    geos = {r["geo"] for r in agg.rows["vacancies"] if r["seniority"] == "junior"}
+    # The two real offices count in their regions; the spray posting only nationally.
+    junior_by_geo = {
+        r["geo"]: r["n"]
+        for r in agg.rows["vacancies"]
+        if r["seniority"] == "junior" and r["programme"] == "all"
+    }
+    assert junior_by_geo["nl"] == 3
+    assert "p:groningen" not in geos and "p:noord-brabant" not in geos

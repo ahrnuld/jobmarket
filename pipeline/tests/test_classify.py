@@ -70,6 +70,7 @@ def test_seniority(ref, title, description, expected):
         ("CNC Programmeur", set()),
         ("Senior Product Engineer", set()),
         ("IT Support Professional", set()),  # ICT, but no programme (it-support family)
+        ("Afstudeerstage IT Audit", {"business-it-management"}),
     ],
 )
 def test_programmes(ref, title, expected):

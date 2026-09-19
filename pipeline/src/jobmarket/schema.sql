@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS vacancies (
     province             TEXT,
     language             TEXT,               -- 'nl' | 'en' | 'unknown' (DR-06)
     duplicate_of         INTEGER REFERENCES vacancies(id),   -- DR-02
+    multi_location       INTEGER NOT NULL DEFAULT 0,  -- posted in 3+ places at once: national only
     is_ict               INTEGER,
     seniority            TEXT CHECK (seniority IN ('internship', 'junior', 'medior', 'senior', 'unknown')),
     classifier_version   TEXT,

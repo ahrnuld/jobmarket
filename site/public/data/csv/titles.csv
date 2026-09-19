@@ -2,7 +2,6 @@ month,geo,programme,title,n
 2026-08,nl,all,.net developer,2
 2026-08,nl,all,ai engineer,2
 2026-08,nl,all,back end developer,1
-2026-08,nl,all,betaalde opleiding tot security analist,3
 2026-08,nl,all,business analist,1
 2026-08,nl,all,business informatie analist,1
 2026-08,nl,all,cloud architect,2
@@ -17,26 +16,22 @@ month,geo,programme,title,n
 2026-08,nl,all,golang platform engineer,2
 2026-08,nl,all,plc software engineer,1
 2026-08,nl,all,projectleider it,1
-2026-08,nl,all,projectmanager ict cloud moderne werkplek,6
 2026-08,nl,all,software architect,1
 2026-08,nl,all,software developer,2
 2026-08,nl,all,software engineer,9
 2026-08,nl,all,solutions architect,1
-2026-08,nl,all,support engineer,3
+2026-08,nl,all,support engineer,1
 2026-08,nl,all,technisch beheerder,1
 2026-08,nl,all,test engineer,1
-2026-08,nl,all,tweedelijns support engineer,2
 2026-08,nl,all,ux designer,2
 2026-08,nl,business-it-management,business analist,1
 2026-08,nl,business-it-management,business informatie analist,1
 2026-08,nl,business-it-management,functioneel beheerder,2
 2026-08,nl,business-it-management,projectleider it,1
-2026-08,nl,business-it-management,projectmanager ict cloud moderne werkplek,6
 2026-08,nl,business-it-management,technisch beheerder,1
 2026-08,nl,informatica,.net developer,2
 2026-08,nl,informatica,ai engineer,2
 2026-08,nl,informatica,back end developer,1
-2026-08,nl,informatica,betaalde opleiding tot security analist,3
 2026-08,nl,informatica,cloud architect,2
 2026-08,nl,informatica,cloud engineer,2
 2026-08,nl,informatica,data engineer,3
@@ -53,20 +48,15 @@ month,geo,programme,title,n
 2026-08,nl,informatica,solutions architect,1
 2026-08,nl,informatica,technisch beheerder,1
 2026-08,nl,informatica,test engineer,1
-2026-08,nl,technische-informatica,betaalde opleiding tot security analist,3
 2026-08,nl,technische-informatica,cloud architect,2
 2026-08,nl,technische-informatica,cloud engineer,2
 2026-08,nl,technische-informatica,devops engineer,2
 2026-08,nl,technische-informatica,golang platform engineer,2
-2026-08,p:groningen,all,betaalde opleiding tot security analist,3
-2026-08,p:groningen,informatica,betaalde opleiding tot security analist,3
-2026-08,p:groningen,technische-informatica,betaalde opleiding tot security analist,3
 2026-08,p:noord-brabant,all,software engineer,4
 2026-08,p:noord-brabant,informatica,software engineer,4
 2026-08,p:noord-holland,all,cloud engineer,2
 2026-08,p:noord-holland,all,devops engineer,1
 2026-08,p:noord-holland,all,functioneel beheerder,1
-2026-08,p:noord-holland,all,support engineer,3
 2026-08,p:noord-holland,business-it-management,functioneel beheerder,1
 2026-08,p:noord-holland,informatica,cloud engineer,2
 2026-08,p:noord-holland,informatica,devops engineer,1
@@ -87,21 +77,18 @@ month,geo,programme,title,n
 2026-08,r:zuidoost-brabant,informatica,software engineer,4
 2026-09,nl,all,.net c# developer,4
 2026-09,nl,all,.net developer,8
-2026-09,nl,all,.net software engineer,8
 2026-09,nl,all,ai engineer,12
 2026-09,nl,all,ai platform engineer,3
 2026-09,nl,all,ai software engineer,3
 2026-09,nl,all,applicatiebeheerder,5
 2026-09,nl,all,automation engineer,4
 2026-09,nl,all,back end developer,4
-2026-09,nl,all,besturingstechnicus machinebouw,5
 2026-09,nl,all,bi engineer,3
 2026-09,nl,all,business analist,4
 2026-09,nl,all,business analyst,3
 2026-09,nl,all,business informatie analist,2
 2026-09,nl,all,business it traineeship regio groningen,4
 2026-09,nl,all,cloud architect,1
-2026-09,nl,all,cloud consultant,5
 2026-09,nl,all,cloud engineer,6
 2026-09,nl,all,cybersecurity consultant,4
 2026-09,nl,all,data analist,3
@@ -118,24 +105,20 @@ month,geo,programme,title,n
 2026-09,nl,all,fullstack developer,2
 2026-09,nl,all,functioneel beheerder,7
 2026-09,nl,all,golang platform engineer,2
-2026-09,nl,all,hardware engineer industriële automatisering,5
 2026-09,nl,all,information security officer,4
 2026-09,nl,all,it engineer,4
 2026-09,nl,all,java developer,3
 2026-09,nl,all,java engineer,3
 2026-09,nl,all,kubernetes engineer,3
-2026-09,nl,all,machine learning engineer,8
+2026-09,nl,all,machine learning engineer,6
 2026-09,nl,all,mendix developer,7
 2026-09,nl,all,microsoft 365 consultant,5
 2026-09,nl,all,mlops engineer,3
-2026-09,nl,all,monitoring engineer,8
 2026-09,nl,all,netwerk engineer,3
 2026-09,nl,all,php developer,6
 2026-09,nl,all,platform engineer,6
-2026-09,nl,all,plc programmeur,8
 2026-09,nl,all,plc software engineer,3
 2026-09,nl,all,product owner,4
-2026-09,nl,all,projectleider ict,4
 2026-09,nl,all,projectleider it,2
 2026-09,nl,all,qa engineer,6
 2026-09,nl,all,scrum master,5
@@ -150,7 +133,6 @@ month,geo,programme,title,n
 2026-09,nl,all,solution architect,4
 2026-09,nl,all,solutions architect,3
 2026-09,nl,all,support engineer,6
-2026-09,nl,all,systeem ontwikkelaar,5
 2026-09,nl,all,systeembeheerder,6
 2026-09,nl,all,system engineer,5
 2026-09,nl,all,tech,3
@@ -160,7 +142,6 @@ month,geo,programme,title,n
 2026-09,nl,all,test engineer,5
 2026-09,nl,all,test engineer publieke veiligheid,3
 2026-09,nl,all,traineeship business it den haag,4
-2026-09,nl,all,tweedelijns support engineer,4
 2026-09,nl,all,ux designer,2
 2026-09,nl,business-it-management,applicatiebeheerder,5
 2026-09,nl,business-it-management,bi engineer,3
@@ -172,7 +153,6 @@ month,geo,programme,title,n
 2026-09,nl,business-it-management,functioneel beheerder,7
 2026-09,nl,business-it-management,microsoft 365 consultant,5
 2026-09,nl,business-it-management,product owner,4
-2026-09,nl,business-it-management,projectleider ict,4
 2026-09,nl,business-it-management,projectleider it,2
 2026-09,nl,business-it-management,scrum master,5
 2026-09,nl,business-it-management,technisch applicatiebeheerder,4
@@ -181,14 +161,12 @@ month,geo,programme,title,n
 2026-09,nl,business-it-management,traineeship business it den haag,4
 2026-09,nl,informatica,.net c# developer,4
 2026-09,nl,informatica,.net developer,8
-2026-09,nl,informatica,.net software engineer,8
 2026-09,nl,informatica,ai engineer,12
 2026-09,nl,informatica,ai platform engineer,3
 2026-09,nl,informatica,ai software engineer,3
 2026-09,nl,informatica,applicatiebeheerder,5
 2026-09,nl,informatica,back end developer,4
 2026-09,nl,informatica,cloud architect,1
-2026-09,nl,informatica,cloud consultant,5
 2026-09,nl,informatica,cloud engineer,6
 2026-09,nl,informatica,cybersecurity consultant,4
 2026-09,nl,informatica,data engineer,15
@@ -206,10 +184,9 @@ month,geo,programme,title,n
 2026-09,nl,informatica,java developer,3
 2026-09,nl,informatica,java engineer,3
 2026-09,nl,informatica,kubernetes engineer,3
-2026-09,nl,informatica,machine learning engineer,8
+2026-09,nl,informatica,machine learning engineer,6
 2026-09,nl,informatica,mendix developer,7
 2026-09,nl,informatica,mlops engineer,3
-2026-09,nl,informatica,monitoring engineer,8
 2026-09,nl,informatica,php developer,6
 2026-09,nl,informatica,platform engineer,6
 2026-09,nl,informatica,plc software engineer,3
@@ -224,7 +201,6 @@ month,geo,programme,title,n
 2026-09,nl,informatica,software engineer industriële automatisering,4
 2026-09,nl,informatica,solution architect,4
 2026-09,nl,informatica,solutions architect,3
-2026-09,nl,informatica,systeem ontwikkelaar,5
 2026-09,nl,informatica,tech,3
 2026-09,nl,informatica,technisch applicatiebeheerder,4
 2026-09,nl,informatica,technisch beheerder,2
@@ -233,22 +209,17 @@ month,geo,programme,title,n
 2026-09,nl,informatica,test engineer publieke veiligheid,3
 2026-09,nl,technische-informatica,ai platform engineer,3
 2026-09,nl,technische-informatica,automation engineer,4
-2026-09,nl,technische-informatica,besturingstechnicus machinebouw,5
 2026-09,nl,technische-informatica,cloud architect,1
-2026-09,nl,technische-informatica,cloud consultant,5
 2026-09,nl,technische-informatica,cloud engineer,6
 2026-09,nl,technische-informatica,cybersecurity consultant,4
 2026-09,nl,technische-informatica,devops engineer,13
 2026-09,nl,technische-informatica,embedded software engineer,3
 2026-09,nl,technische-informatica,engineer infra,3
 2026-09,nl,technische-informatica,golang platform engineer,2
-2026-09,nl,technische-informatica,hardware engineer industriële automatisering,5
 2026-09,nl,technische-informatica,information security officer,4
 2026-09,nl,technische-informatica,kubernetes engineer,3
-2026-09,nl,technische-informatica,monitoring engineer,8
 2026-09,nl,technische-informatica,netwerk engineer,3
 2026-09,nl,technische-informatica,platform engineer,6
-2026-09,nl,technische-informatica,plc programmeur,8
 2026-09,nl,technische-informatica,security engineer,4
 2026-09,nl,technische-informatica,site reliability engineer,4
 2026-09,nl,technische-informatica,software engineer industriële automatisering,4
@@ -262,11 +233,8 @@ month,geo,programme,title,n
 2026-09,p:gelderland,informatica,software engineer,4
 2026-09,p:groningen,all,business it traineeship regio groningen,3
 2026-09,p:groningen,business-it-management,business it traineeship regio groningen,3
-2026-09,p:noord-brabant,all,monitoring engineer,3
 2026-09,p:noord-brabant,all,software engineer,5
-2026-09,p:noord-brabant,informatica,monitoring engineer,3
 2026-09,p:noord-brabant,informatica,software engineer,5
-2026-09,p:noord-brabant,technische-informatica,monitoring engineer,3
 2026-09,p:noord-holland,all,ai software engineer,3
 2026-09,p:noord-holland,all,cloud engineer,1
 2026-09,p:noord-holland,all,data engineer,5

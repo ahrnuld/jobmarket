@@ -155,7 +155,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
     vacancies = conn.execute(
         """
         SELECT id, substr(posted_at, 1, 7) AS month, posted_at, province, labour_market_region,
-               seniority, title_norm, salary_min, salary_max, salary_is_predicted
+               seniority, title_norm, salary_min, salary_max, salary_is_predicted, multi_location
         FROM vacancies
         WHERE is_ict = 1 AND duplicate_of IS NULL AND is_sample = ?
         """,
@@ -173,7 +173,8 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
     for v in vacancies:
         month = v["month"]
         posted.setdefault(month, []).append(v["posted_at"])
-        geos = _geos(v["province"], v["labour_market_region"])
+        # A posting spread over many places at once has no known workplace: national only.
+        geos = ["nl"] if v["multi_location"] else _geos(v["province"], v["labour_market_region"])
         progs = programmes.get(v["id"], [])
         prog_ids = ["all"] + [p for p, _ in progs]
         level = v["seniority"] or "unknown"

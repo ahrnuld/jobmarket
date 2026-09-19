@@ -149,7 +149,7 @@ role_families:
     name: { nl: IT-auditor, en: IT auditor }
     programmes: [business-it-management]
     title_patterns:
-      - '\b(it|ict)\s*(auditor|risk|compliance|internal controls?)\b'
+      - '\b(it|ict)\s*(audit\w*|risk|compliance|internal controls?)\b'
 
   # --- Technische Informatica --------------------------------------------------------------------
   - id: embedded-engineer
