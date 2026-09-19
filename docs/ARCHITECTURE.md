@@ -9,7 +9,7 @@ Adzuna / fixtures ─────┤
 CBS OData API ─────────┼─> pipeline (Python) ─> var/jobmarket.sqlite  (working store, not committed)
 data/manual/*.csv ─────┘        │
                                 ├─> data/aggregates/*.csv     (durable trend history, committed)
-                                └─> validate ─> site/src/data/published/*.json  (only if valid)
+                                └─> validate ─> site/public/data/*.json  (only if valid)
                                                       │
                                                       └─> Astro build ─> static HTML ─> host
 ```
@@ -45,7 +45,7 @@ YAML files. A methodology change is a reviewable diff plus a changelog entry, an
 over the site can adjust mappings without reading Python.
 
 **Publish only validated snapshots (NFR-07).** The pipeline writes the new JSON to a staging
-directory, validates it, and only then swaps it into `site/src/data/published/`. A failed
+directory, validates it, and only then swaps it into `site/public/data/`. A failed
 ingestion or a failed validation leaves the previous snapshot in place.
 
 **Admin without a public admin server.** FR-20 to FR-22 are provided as `jobmarket admin ...`

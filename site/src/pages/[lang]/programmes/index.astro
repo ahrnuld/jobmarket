@@ -1,0 +1,50 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { LANGS, path } from "../../../i18n";
+import { loadMeta, loadStats } from "../../../lib/data";
+import type { Lang } from "../../../lib/types";
+import { PROGRAMME_COLOR, makeCtx } from "../../../views/common";
+import { graduateCard } from "../../../views/stats";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const nl = lang === "nl";
+const families = (p: string) => meta.role_families.filter((f) => f.programmes.includes(p));
+---
+<Layout lang={lang} page="programmes" route="programmes"
+  title={nl ? "Opleidingen" : "Programmes"}
+  description={nl ? "Vacatures, skills en salarissen per hbo-ICT-opleiding." : "Vacancies, skills and salaries per HBO ICT programme."}>
+  <h1>{nl ? "Opleidingen" : "Programmes"}</h1>
+  <p class="lead">
+    {nl
+      ? "Per opleiding tellen we de vacatures voor functies waar die opleiding voor opleidt. Welke functies dat zijn staat hieronder; hoe we dat bepalen staat bij de methode."
+      : "For each programme we count vacancies for roles that programme prepares for. Which roles those are is listed below; how we decide is explained in the method."}
+  </p>
+  <div class="programme-cards">
+    {meta.programmes.map((p) => (
+      <a class="programme-card" href={path(lang, "programmes", p.id)} style={`--c:var(${PROGRAMME_COLOR[p.id]})`}>
+        <strong>{p.name[lang]}</strong>
+        <span>{p.summary[lang]}</span>
+      </a>
+    ))}
+  </div>
+  <Fragment set:html={graduateCard(ctx, loadStats(), meta.programmes.map((p) => p.id), 2)} />
+  <section class="prose">
+    <h2>{nl ? "Welke functies horen bij welke opleiding?" : "Which roles belong to which programme?"}</h2>
+    {meta.programmes.map((p) => (
+      <>
+        <h3>{p.name[lang]}</h3>
+        <p>{families(p.id).map((f) => f.name[lang]).join(", ")}</p>
+      </>
+    ))}
+    <p class="muted">
+      {nl
+        ? "Sommige functies passen bij twee opleidingen (bijvoorbeeld DevOps en security). Functies als servicedesk tellen mee als ICT-vacature, maar bij geen van de drie opleidingen."
+        : "Some roles fit two programmes (for example DevOps and security). Roles such as service desk count as ICT vacancies but belong to none of the three programmes."}
+    </p>
+  </section>
+</Layout>

@@ -1,0 +1,53 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import { loadGeo, loadMeta } from "../../lib/data";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../views/common";
+import { renderSkills } from "../../views/pages";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const initial = renderSkills(ctx, state, { [state.geo]: loadGeo(state.geo), nl: loadGeo("nl") });
+const nl = lang === "nl";
+---
+<Layout lang={lang} page="skills" route="skills"
+  title={nl ? "Gevraagde skills" : "Requested skills"}
+  description={nl ? "Welke skills worden het vaakst gevraagd in ICT-vacatures, per opleiding en niveau?" : "Which skills are requested most in ICT vacancies, per programme and level?"}>
+  <h1>{nl ? "Welke skills worden gevraagd?" : "Which skills are requested?"}</h1>
+  <p class="lead">
+    {nl
+      ? "Het aandeel vacatures dat een skill noemt. Kies een opleiding en niveau; het verschil met de vorige periode staat achter het percentage zodra er genoeg historie is."
+      : "The share of vacancies that mention a skill. Choose a programme and level; the change against the previous period follows the percentage once there is enough history."}
+  </p>
+  <p class="muted">
+    {nl
+      ? "Onze vacaturebron levert alleen het begin van een vacaturetekst (ongeveer 500 tekens). Skills die verderop staan zien we niet, dus de echte percentages liggen hoger. De volgorde is betrouwbaarder dan de exacte percentages."
+      : "Our vacancy source only provides the start of a posting (about 500 characters). Skills mentioned further down are not seen, so the true percentages are higher. The ranking is more reliable than the exact percentages."}
+    {" "}<a href={`${path(lang, "methodology")}#skills`}>{nl ? "Hoe we skills herkennen" : "How we recognise skills"}</a>
+  </p>
+  <FilterBar lang={lang} id="skills-filters" fields={["geo", "programme", "seniority", "period"]} />
+  <div id="skills-root" data-lang={lang} set:html={initial} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../scripts/controller";
+  import { SKILLS_KINDS, geosFor, renderSkills } from "../../views/pages";
+  import type { Lang } from "../../lib/types";
+
+  const root = document.getElementById("skills-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("skills-filters") as HTMLFormElement,
+    kinds: SKILLS_KINDS,
+    geos: geosFor,
+    render: renderSkills,
+  });
+</script>

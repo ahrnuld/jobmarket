@@ -1,0 +1,84 @@
+---
+import "../styles/global.css";
+import { fill, otherLang, path, t } from "../i18n";
+import { loadMeta } from "../lib/data";
+import { fmtDate } from "../lib/format";
+import type { Lang } from "../lib/types";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  page: "dashboard" | "programmes" | "skills" | "salaries" | "methodology" | "about";
+  /** Path of this page without the language prefix, e.g. "skills" or "programmes/informatica". */
+  route: string;
+}
+
+const { lang, title, description, page, route } = Astro.props;
+const tr = t(lang);
+const meta = loadMeta();
+const other = otherLang(lang);
+const nav = [
+  ["dashboard", ""],
+  ["programmes", "programmes"],
+  ["skills", "skills"],
+  ["salaries", "salaries"],
+  ["methodology", "methodology"],
+  ["about", "about"],
+] as const;
+const adzuna = meta.sources.find((s) => s.id === "adzuna");
+const fullTitle = page === "dashboard" ? tr.siteName : `${title} · ${tr.siteShort}`;
+const seriesStart = meta.vacancies.first_posted;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" hreflang={lang} href={new URL(path(lang, route), Astro.site)} />
+    <link rel="alternate" hreflang={other} href={new URL(path(other, route), Astro.site)} />
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{tr.skipToContent}</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={path(lang)}>{tr.siteShort}</a>
+        <nav class="nav" aria-label={lang === "nl" ? "Hoofdmenu" : "Main menu"}>
+          <ul>
+            {nav.map(([key, r]) => (
+              <li><a href={path(lang, r)} aria-current={page === key ? "page" : undefined}>{tr.nav[key]}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <a class="lang-switch" href={path(other, route)} hreflang={other} lang={other}>{tr.otherLanguage}</a>
+      </div>
+      {meta.dataset === "sample" && (
+        <div class="banner banner-warn" role="note"><div class="wrap"><p><strong>⚠</strong> {tr.banner.sampleVacancies}</p></div></div>
+      )}
+      {!meta.production && (
+        <div class="banner banner-info" role="note"><div class="wrap"><p>{tr.banner.preview} <a href={path(lang, "methodology")}>{tr.nav.methodology}</a></p></div></div>
+      )}
+    </header>
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        {adzuna && meta.vacancy_source === "adzuna" && (
+          <p>{tr.footer.dataBy}: <a href={adzuna.url}>{adzuna.attribution}</a> · CBS (CC BY 4.0), ESCO, HBO-Monitor, ROA, UWV — <a href={path(lang, "methodology")}>{tr.nav.methodology}</a></p>
+        )}
+        <p>{tr.footer.snapshot} {fmtDate(lang, meta.generated_at)}{seriesStart && ` · ${fill(tr.banner.seriesStart, { date: fmtDate(lang, seriesStart) })}`}</p>
+        <p>{tr.independent} {tr.footer.noTracking}</p>
+        <p><a href={`${path(lang, "about")}#report`}>{tr.footer.report}</a></p>
+      </div>
+    </footer>
+    <script>
+      import { initTooltips } from "../scripts/tooltip";
+      initTooltips();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+---
+// One row of filters above everything it scopes (dataviz interaction rule; FR-07).
+import { t } from "../i18n";
+import { loadMeta } from "../lib/data";
+import { PERIODS, SENIORITIES } from "../lib/model";
+import type { Lang } from "../lib/types";
+import { DEFAULT_STATE, type FilterState } from "../views/common";
+
+interface Props {
+  lang: Lang;
+  id: string;
+  fields: ("geo" | "period" | "seniority" | "programme")[];
+  defaults?: Partial<FilterState>;
+}
+const { lang, id, fields, defaults = {} } = Astro.props;
+const tr = t(lang);
+const meta = loadMeta();
+const state = { ...DEFAULT_STATE, ...defaults };
+const byLevel = (level: string) =>
+  meta.geos.filter((g) => g.level === level).sort((a, b) => a.name[lang].localeCompare(b.name[lang], lang));
+const regionLabel = lang === "nl"
+  ? (fields.includes("geo") && state.geo !== "nl" ? "Regio (naast heel Nederland)" : tr.filters.region)
+  : (fields.includes("geo") && state.geo !== "nl" ? "Region (next to the Netherlands)" : tr.filters.region);
+---
+<form class="filters" id={id} aria-label={tr.filters.label}>
+  {fields.includes("geo") && (
+    <label>{regionLabel}
+      <select name="geo">
+        <option value="nl" selected={state.geo === "nl"}>{meta.geos.find((g) => g.id === "nl")?.name[lang]}</option>
+        {(["province", "region"] as const).map((level) => (
+          <optgroup label={tr.levels[level]}>
+            {byLevel(level).map((g) => <option value={g.id} selected={state.geo === g.id}>{g.name[lang]}</option>)}
+          </optgroup>
+        ))}
+      </select>
+    </label>
+  )}
+  {fields.includes("programme") && (
+    <label>{tr.filters.programme}
+      <select name="programme">
+        <option value="all" selected={state.programme === "all"}>{tr.filters.allProgrammes}</option>
+        {meta.programmes.map((p) => <option value={p.id} selected={state.programme === p.id}>{p.name[lang]}</option>)}
+      </select>
+    </label>
+  )}
+  {fields.includes("seniority") && (
+    <label>{tr.filters.seniority}
+      <select name="seniority">
+        {SENIORITIES.map((s) => <option value={s} selected={state.seniority === s}>{tr.seniority[s]}</option>)}
+      </select>
+    </label>
+  )}
+  {fields.includes("period") && (
+    <label>{tr.filters.period}
+      <select name="period">
+        {PERIODS.map((p) => <option value={p} selected={state.period === p}>{tr.periods[p]}</option>)}
+      </select>
+    </label>
+  )}
+  <p class="filter-status" role="status" aria-live="polite" data-filter-status data-error-text={tr.filters.loadError}></p>
+</form>

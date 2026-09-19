@@ -56,7 +56,7 @@ def load_settings(repo_root: Path | None = None) -> Settings:
         corrections_file=data / "corrections.yaml",
         changelog_file=data / "changelog.yaml",
         # The static site reads only from here; written atomically after validation (NFR-07).
-        publish_dir=root / "site" / "src" / "data" / "published",
+        publish_dir=root / "site" / "public" / "data",
         snapshots_dir=root / "var" / "snapshots",
         adzuna_app_id=os.environ.get("ADZUNA_APP_ID", ""),
         adzuna_app_key=os.environ.get("ADZUNA_APP_KEY", ""),

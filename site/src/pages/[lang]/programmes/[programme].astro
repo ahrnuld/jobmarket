@@ -1,0 +1,58 @@
+---
+import FilterBar from "../../../components/FilterBar.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { LANGS, path } from "../../../i18n";
+import { loadGeo, loadMeta, loadStats } from "../../../lib/data";
+import type { Lang } from "../../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../../views/common";
+import { renderProgramme } from "../../../views/pages";
+import { graduateCard } from "../../../views/stats";
+
+export function getStaticPaths() {
+  const meta = loadMeta();
+  return LANGS.flatMap((lang) => meta.programmes.map((p) => ({ params: { lang, programme: p.id } })));
+}
+const lang = Astro.params.lang as Lang;
+const id = Astro.params.programme as string;
+const meta = loadMeta();
+const programme = meta.programmes.find((p) => p.id === id)!;
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const initial = renderProgramme(id)(ctx, state, { [state.geo]: loadGeo(state.geo), nl: loadGeo("nl") });
+const nl = lang === "nl";
+const locations = programme.locations.join(nl ? " en " : " and ");
+---
+<Layout lang={lang} page="programmes" route={`programmes/${id}`}
+  title={programme.name[lang]}
+  description={nl
+    ? `${programme.name[lang]}: vacatures, meest gevraagde skills, typische functies en salarissen.`
+    : `${programme.name[lang]}: vacancies, most requested skills, typical roles and salaries.`}>
+  <p><a href={path(lang, "programmes")}>← {nl ? "Alle opleidingen" : "All programmes"}</a></p>
+  <h1>{programme.name[lang]}</h1>
+  <p class="lead">{programme.summary[lang]} {nl ? `In deze regio te volgen in ${locations}.` : `Offered in this region in ${locations}.`}</p>
+  <p class="muted">
+    {nl
+      ? "Deze site is onafhankelijk en niet van een hogeschool. De opleidingsnaam gebruiken we alleen om vacatures te groeperen."
+      : "This site is independent and not run by any university. The programme name is only used to group vacancies."}
+  </p>
+  <Fragment set:html={graduateCard(ctx, loadStats(), [id], 2)} />
+  <h2>{nl ? "Vacatures die bij deze opleiding passen" : "Vacancies that fit this programme"}</h2>
+  <FilterBar lang={lang} id="programme-filters" fields={["geo", "seniority", "period"]} />
+  <div id="programme-root" data-lang={lang} data-programme={id} set:html={initial} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../../scripts/controller";
+  import { PROGRAMME_KINDS, geosFor, renderProgramme } from "../../../views/pages";
+  import type { Lang } from "../../../lib/types";
+
+  const root = document.getElementById("programme-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("programme-filters") as HTMLFormElement,
+    kinds: PROGRAMME_KINDS,
+    geos: geosFor,
+    render: renderProgramme(root.dataset.programme!),
+  });
+</script>

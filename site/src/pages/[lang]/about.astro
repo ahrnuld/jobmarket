@@ -1,0 +1,114 @@
+---
+// TR-07 (owner, funding, no paid placement), LR-08 (independence), LR-04 (privacy),
+// TR-08 (error report form).
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import type { Lang } from "../../lib/types";
+import { siteConfig } from "../../site-config";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const nl = lang === "nl";
+const owner = siteConfig.ownerName ?? (nl ? "[naam eigenaar – nog in te vullen]" : "[owner name – to be filled in]");
+const target = siteConfig.reportTarget;
+---
+<Layout lang={lang} page="about" route="about"
+  title={nl ? "Over deze site" : "About this site"}
+  description={nl ? "Wie deze site maakt, hoe hij betaald wordt en hoe je een fout meldt." : "Who makes this site, how it is funded and how to report an error."}>
+  <div class="prose">
+    <h1>{nl ? "Over deze site" : "About this site"}</h1>
+
+    <h2>{nl ? "Wie maakt dit?" : "Who makes this?"}</h2>
+    <p>
+      {nl
+        ? `Deze site is gemaakt, betaald en onderhouden door ${owner}, als privépersoon. Het is een onafhankelijk initiatief: het is niet van, en niet namens, een hogeschool, en geen hogeschool heeft de inhoud goedgekeurd. Namen van opleidingen en plaatsen gebruiken we alleen om vacatures te groeperen.`
+        : `This site is made, paid for and maintained by ${owner}, as a private individual. It is an independent initiative: it is not by, or on behalf of, any university of applied sciences, and no university has approved its content. Programme and place names are only used to group vacancies.`}
+    </p>
+    <p>
+      {nl
+        ? "Geen werkgever, recruiter of vacaturesite betaalt voor een plek of vermelding op deze site. We noemen of rangschikken geen individuele werkgevers."
+        : "No employer, recruiter or job site pays for placement or mention on this site. We do not name or rank individual employers."}
+    </p>
+    {siteConfig.contactEmail && <p>{nl ? "Contact" : "Contact"}: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a></p>}
+    {siteConfig.repositoryUrl && <p><a href={siteConfig.repositoryUrl}>{nl ? "Broncode" : "Source code"}</a></p>}
+
+    <h2>{nl ? "Voor wie?" : "Who is it for?"}</h2>
+    <p>
+      {nl
+        ? "Voor hbo-ICT-studenten en aankomende studenten die willen weten welke skills, functies en regio's kansen bieden, en voor studieloopbaanbegeleiders, curriculumcommissies en stagebureaus die dat onderbouwd willen bespreken. Het is geen vacaturebank en geen persoonlijk loopbaanadvies."
+        : "For HBO ICT students and prospective students who want to know which skills, roles and regions offer opportunities, and for study career coaches, curriculum committees and internship offices who want to discuss that with evidence. It is not a job board and not personal career advice."}
+    </p>
+
+    <h2>{nl ? "Privacy" : "Privacy"}</h2>
+    <p>
+      {nl
+        ? "Deze site gebruikt geen cookies, geen trackers en slaat niets over bezoekers op. Er zijn geen accounts. Persoonsgegevens in vacatureteksten (zoals namen en telefoonnummers van recruiters) halen we eruit voordat we iets opslaan, en we publiceren alleen tellingen."
+        : "This site uses no cookies, no trackers and stores nothing about visitors. There are no accounts. Personal data in vacancy texts (such as recruiters' names and phone numbers) is removed before anything is stored, and we only publish counts."}
+    </p>
+
+    <h2 id="report">{nl ? "Fout gezien?" : "Spotted an error?"}</h2>
+    <p>
+      {nl
+        ? "Klopt een cijfer niet, of staat een functie bij de verkeerde opleiding? Laat het weten. Zet geen persoonsgegevens in je melding."
+        : "Is a figure wrong, or is a role listed under the wrong programme? Let us know. Do not include personal data in your report."}
+    </p>
+    <form id="report-form" class="report-form" data-target={target ? JSON.stringify(target) : ""} data-lang={lang}>
+      <p>
+        <label for="report-kind">{nl ? "Wat is er mis?" : "What is wrong?"}</label><br />
+        <select id="report-kind" name="kind">
+          <option value="figure">{nl ? "Een cijfer klopt niet" : "A figure is wrong"}</option>
+          <option value="mapping">{nl ? "Verkeerde indeling (opleiding, niveau of skill)" : "Wrong classification (programme, level or skill)"}</option>
+          <option value="text">{nl ? "Tekst of uitleg" : "Text or explanation"}</option>
+          <option value="other">{nl ? "Anders" : "Other"}</option>
+        </select>
+      </p>
+      <p>
+        <label for="report-page">{nl ? "Op welke pagina? (link)" : "On which page? (link)"}</label><br />
+        <input id="report-page" name="page" type="url" inputmode="url" style="width:100%" />
+      </p>
+      <p>
+        <label for="report-text">{nl ? "Beschrijving" : "Description"}</label><br />
+        <textarea id="report-text" name="text" rows="5" required style="width:100%"></textarea>
+      </p>
+      {target ? (
+        <button type="submit">{target.type === "github"
+          ? (nl ? "Verder op GitHub" : "Continue on GitHub")
+          : (nl ? "Open in je mailprogramma" : "Open in your mail program")}</button>
+      ) : (
+        <p class="muted" role="note">{nl ? "Het meldformulier is nog niet actief." : "The report form is not active yet."}</p>
+      )}
+      <p class="muted">
+        {target?.type === "github"
+          ? (nl ? "Je melding wordt een openbaar issue op GitHub; daarvoor heb je een GitHub-account nodig." : "Your report becomes a public issue on GitHub; you need a GitHub account for that.")
+          : target?.type === "email"
+            ? (nl ? "Je mailprogramma opent met je melding; er wordt niets via deze site verstuurd of bewaard." : "Your mail program opens with your report; nothing is sent or stored through this site.")
+            : ""}
+      </p>
+    </form>
+    <p><a href={path(lang, "methodology")}>{nl ? "Hoe komen de cijfers tot stand?" : "How are the figures made?"}</a></p>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById("report-form") as HTMLFormElement | null;
+  if (form) {
+    const page = form.elements.namedItem("page") as HTMLInputElement;
+    if (!page.value && document.referrer.startsWith(location.origin)) page.value = document.referrer;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const raw = form.dataset.target;
+      if (!raw) return;
+      const target = JSON.parse(raw) as { type: "github"; repo: string } | { type: "email"; address: string };
+      const fd = new FormData(form);
+      const kindLabel = (form.elements.namedItem("kind") as HTMLSelectElement).selectedOptions[0].text;
+      const title = `[${fd.get("kind")}] ${String(fd.get("text")).slice(0, 60)}`;
+      const body = `${kindLabel}\n\nPage: ${fd.get("page") || "-"}\n\n${fd.get("text")}`;
+      const url = target.type === "github"
+        ? `https://github.com/${target.repo}/issues/new?${new URLSearchParams({ title, body, labels: "report" })}`
+        : `mailto:${target.address}?${new URLSearchParams({ subject: title, body }).toString().replace(/\+/g, "%20")}`;
+      window.open(url, "_blank", "noopener");
+    });
+  }
+</script>

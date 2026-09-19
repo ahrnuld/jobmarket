@@ -1,0 +1,77 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import { loadGeo, loadMeta, loadStats } from "../../lib/data";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, PROGRAMME_COLOR, makeCtx } from "../../views/common";
+import { renderDashboard } from "../../views/dashboard";
+import { statLines } from "../../views/stats";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const stats = loadStats();
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const initial = renderDashboard(ctx, state, { [state.geo]: loadGeo(state.geo), nl: loadGeo("nl") });
+const nl = lang === "nl";
+const cbs = statLines(ctx, stats, "cbs_open_vacancies_ict_sector_region", "region", [
+  { key: "noord-holland", label: "Noord-Holland", colorVar: "--series-1" },
+  { key: "NL", label: nl ? "Nederland" : "Netherlands", colorVar: "--series-2" },
+], 10, 3);
+---
+<Layout lang={lang} page="dashboard" route=""
+  title={nl ? "Overzicht" : "Overview"}
+  description={nl
+    ? "Hoeveel ICT-vacatures zijn er, voor welk niveau en welke opleiding? Actuele cijfers voor hbo-ICT-studenten, met open bronnen en methode."
+    : "How many ICT vacancies are there, for which level and programme? Current figures for HBO ICT students, with open sources and method."}>
+  <h1>{nl ? "De ICT-arbeidsmarkt, bekeken als hbo-student" : "The ICT job market, seen as an HBO student"}</h1>
+  <p class="lead">
+    {nl
+      ? "Hoeveel ICT-vacatures er zijn, hoeveel daarvan voor stagiairs en starters, en bij welke opleiding ze passen. Met Noord-Holland naast heel Nederland, en bij elk cijfer de bron."
+      : "How many ICT vacancies there are, how many of them for interns and starters, and which programme they fit. With Noord-Holland next to the whole country, and the source under every figure."}
+  </p>
+
+  <h2 id="programmes">{nl ? "Kies je opleiding" : "Choose your programme"}</h2>
+  <div class="programme-cards">
+    {meta.programmes.map((p) => (
+      <a class="programme-card" href={path(lang, "programmes", p.id)} style={`--c:var(${PROGRAMME_COLOR[p.id]})`}>
+        <strong>{p.name[lang]}</strong>
+        <span>{p.summary[lang]}</span>
+      </a>
+    ))}
+  </div>
+
+  <h2>{nl ? "Vacatures" : "Vacancies"}</h2>
+  <FilterBar lang={lang} id="dashboard-filters" fields={["geo", "seniority", "period"]} />
+  <div id="dashboard-root" data-lang={lang} set:html={initial} />
+
+  <h2>{nl ? "Ter vergelijking: de officiële statistiek" : "For comparison: official statistics"}</h2>
+  <p class="prose">
+    {nl
+      ? "CBS telt het aantal openstaande vacatures bij bedrijven in de ICT-sector op een peilmoment, via een enquête. Dat is iets anders dan de nieuwe ICT-vacatures hierboven, die we zelf tellen in online vacatures uit alle sectoren. Beide zijn onvolledig; samen geven ze een beter beeld."
+      : "CBS counts open vacancies at companies in the ICT sector at a point in time, using a survey. That differs from the new ICT vacancies above, which we count ourselves in online postings from all sectors. Both are incomplete; together they give a better picture."}
+    {" "}<a href={`${path(lang, "methodology")}#comparison`}>{nl ? "Meer over het verschil" : "More on the difference"}</a>
+  </p>
+  <Fragment set:html={cbs} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../scripts/controller";
+  import { DASHBOARD_KINDS, renderDashboard } from "../../views/dashboard";
+  import type { Lang } from "../../lib/types";
+
+  const root = document.getElementById("dashboard-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("dashboard-filters") as HTMLFormElement,
+    kinds: DASHBOARD_KINDS,
+    geos: (s) => (s.geo === "nl" ? ["nl"] : [s.geo, "nl"]),
+    render: renderDashboard,
+  });
+</script>

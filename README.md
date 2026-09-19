@@ -34,6 +34,29 @@ Published statistics (CBS via its API; HBO-Monitor, ROA and UWV from `data/manua
 .\.venv\Scripts\jobmarket.exe stats
 ```
 
+Then build the monthly history, validate and publish to `site/public/data/` (only if valid):
+
+```powershell
+.\.venv\Scripts\jobmarket.exe aggregate
+.\.venv\Scripts\jobmarket.exe publish
+```
+
+`jobmarket run` does all of the above in one go (the weekly job).
+
+## The website
+
+Static site built with Astro from `site/public/data/`:
+
+```powershell
+cd site
+npm install
+npm run dev      # http://localhost:4321/nl/
+npm run build    # static output in site/dist/
+npm test         # unit tests of the calculations
+```
+
+Owner-specific settings (name, error-report target) are in `site/src/site-config.ts`.
+
 Without credentials, use synthetic data in a separate database:
 
 ```powershell
@@ -49,6 +72,6 @@ Built step by step:
 1. [x] Repository skeleton, data model, reference data (programmes, seniority, skills + ESCO, regions)
 2. [x] Vacancy pipeline: Adzuna client and fixtures, PII scrubbing, deduplication, classification
 3. [x] Statistics: CBS API, HBO-Monitor / ROA / UWV manual tables
-4. [ ] Aggregation, validation, publishing, and the static site (FR-01 to FR-07)
+4. [x] Aggregation, validation, publishing, and the static site (FR-01 to FR-07)
 5. [ ] Trends, programme comparison, NL/EN, CSV downloads (FR-08 to FR-11)
 6. [ ] Admin tooling, accuracy measurement, scheduling, handover guide

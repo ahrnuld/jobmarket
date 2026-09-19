@@ -1,0 +1,62 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import { loadGeo, loadMeta, loadStats } from "../../lib/data";
+import { fmtPct } from "../../lib/format";
+import { countVacancies, salaryStats, share } from "../../lib/model";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../views/common";
+import { renderSalaries } from "../../views/pages";
+import { graduateCard } from "../../views/stats";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+const state = DEFAULT_STATE;
+const national = loadGeo("nl");
+const initial = renderSalaries(ctx, state, { [state.geo]: loadGeo(state.geo), nl: national });
+const nl = lang === "nl";
+const allMonths = meta.vacancies.months.map((_, i) => i);
+const withSalary = fmtPct(lang, share(salaryStats(national.salaries, allMonths).n, countVacancies(national.vacancies, allMonths)));
+---
+<Layout lang={lang} page="salaries" route="salaries"
+  title={nl ? "Salarissen" : "Salaries"}
+  description={nl ? "Startsalarissen van afgestudeerden en salarissen in ICT-vacatures, met aantallen." : "Graduate starting salaries and salaries in ICT vacancies, with sample sizes."}>
+  <h1>{nl ? "Wat verdien je als starter?" : "What do starters earn?"}</h1>
+  <p class="lead">
+    {nl
+      ? "Twee bronnen die elkaar aanvullen: wat afgestudeerden ongeveer een jaar later verdienen (enquête onder alumni), en wat vacatures zelf als salaris noemen."
+      : "Two complementary sources: what graduates earn about a year later (alumni survey), and what vacancies themselves state as salary."}
+  </p>
+  <Fragment set:html={graduateCard(ctx, loadStats(), meta.programmes.map((p) => p.id), 2)} />
+
+  <h2>{nl ? "Salaris in vacatures" : "Salary in vacancies"}</h2>
+  <p class="prose muted">
+    {nl
+      ? `${withSalary} van de ICT-vacatures noemt een bruikbaar salaris. Vacatures zonder salaris betalen misschien anders, dus zie dit als een indicatie. Uurlonen en dagtarieven laten we weg, omdat niet vast te stellen is waar ze over gaan.`
+      : `${withSalary} of ICT vacancies state a usable salary. Vacancies without one may pay differently, so treat this as an indication. Hourly and day rates are left out, because what they refer to cannot be established.`}
+    {" "}<a href={`${path(lang, "methodology")}#salary`}>{nl ? "Meer over salarissen" : "More on salaries"}</a>
+  </p>
+  <FilterBar lang={lang} id="salary-filters" fields={["geo", "programme", "period"]} />
+  <div id="salary-root" data-lang={lang} set:html={initial} />
+</Layout>
+
+<script>
+  import { initFilteredView } from "../../scripts/controller";
+  import { SALARY_KINDS, geosFor, renderSalaries } from "../../views/pages";
+  import type { Lang } from "../../lib/types";
+
+  const root = document.getElementById("salary-root")!;
+  initFilteredView({
+    lang: root.dataset.lang as Lang,
+    root,
+    form: document.getElementById("salary-filters") as HTMLFormElement,
+    kinds: SALARY_KINDS,
+    geos: geosFor,
+    render: renderSalaries,
+  });
+</script>

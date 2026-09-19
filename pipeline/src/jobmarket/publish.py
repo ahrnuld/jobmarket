@@ -1,6 +1,6 @@
 """Build the published data set for the static site, validate it, and swap it in (NFR-07).
 
-Output layout (site/src/data/published/):
+Output layout (site/public/data/; read by the site build and fetched by the browser for filters):
     meta.json            sources, reference data, months, changelog, validation warnings
     stats.json           CBS / HBO-Monitor / ROA / UWV observations with provenance
     geo/<geo>/<kind>.json  monthly aggregates for one geography (nl, p-<province>, r-<region>);

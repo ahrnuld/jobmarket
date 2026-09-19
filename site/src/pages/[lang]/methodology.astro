@@ -1,0 +1,285 @@
+---
+// FR-06 / TR-01..TR-06: how the figures are made, in plain language, with known limitations,
+// accuracy and the changelog. Numbers on this page come from the published metadata.
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path } from "../../i18n";
+import { loadMeta } from "../../lib/data";
+import { fmtDate, fmtInt, fmtPct } from "../../lib/format";
+import type { Lang } from "../../lib/types";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const nl = lang === "nl";
+const sources = meta.sources.filter((s) => s.used && s.id !== "fixture");
+const min = meta.min_sample_size;
+const acc = meta.accuracy;
+const escoLinked = meta.skills.filter((s) => s.esco_uri).length;
+const collected: Record<string, string> = nl
+  ? { adzuna: "API, wekelijks", cbs: "open data-API, wekelijks gecontroleerd", hbo_monitor: "overgenomen uit publicatie",
+      roa: "overgenomen uit publicatie", uwv: "overgenomen uit publicatie", esco: "API, bij het opstellen van de skillslijst" }
+  : { adzuna: "API, weekly", cbs: "open data API, checked weekly", hbo_monitor: "copied from publication",
+      roa: "copied from publication", uwv: "copied from publication", esco: "API, when compiling the skills list" };
+const toc = nl
+  ? [["summary", "In het kort"], ["sources", "Bronnen"], ["collection", "Verzamelen"], ["dedup", "Dubbele vacatures"],
+     ["ict", "Wat telt als ICT-vacature"], ["seniority", "Niveau"], ["programmes", "Opleidingen"], ["skills", "Skills"],
+     ["salary", "Salaris"], ["regions", "Regio's"], ["sample-size", "Kleine aantallen"], ["comparison", "Vergelijking met CBS"],
+     ["limitations", "Bekende beperkingen"], ["accuracy", "Nauwkeurigheid"], ["changelog", "Wijzigingen"]]
+  : [["summary", "In short"], ["sources", "Sources"], ["collection", "Collection"], ["dedup", "Duplicate vacancies"],
+     ["ict", "What counts as an ICT vacancy"], ["seniority", "Level"], ["programmes", "Programmes"], ["skills", "Skills"],
+     ["salary", "Salary"], ["regions", "Regions"], ["sample-size", "Small numbers"], ["comparison", "Comparison with CBS"],
+     ["limitations", "Known limitations"], ["accuracy", "Accuracy"], ["changelog", "Changes"]];
+---
+<Layout lang={lang} page="methodology" route="methodology"
+  title={nl ? "Methode" : "Method"}
+  description={nl ? "Hoe de cijfers op deze site tot stand komen, en wat hun beperkingen zijn." : "How the figures on this site are made, and what their limitations are."}>
+  <div class="prose">
+    <h1>{nl ? "Hoe komen de cijfers tot stand?" : "How are the figures made?"}</h1>
+    <p class="lead">
+      {nl
+        ? "Open zijn over de methode is het belangrijkste doel van deze site. Hier staat wat we doen, waarom, en waar de cijfers tekortschieten."
+        : "Being open about the method is the main aim of this site. This page explains what we do, why, and where the figures fall short."}
+    </p>
+    <nav aria-label={nl ? "Op deze pagina" : "On this page"}>
+      <ul>{toc.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul>
+    </nav>
+
+    <h2 id="summary">{nl ? "In het kort" : "In short"}</h2>
+    <ul>
+      {nl ? (
+        <>
+          <li>We halen elke week nieuwe online vacatures op via Adzuna, een vacaturezoekmachine met een openbare API.</li>
+          <li>We verwijderen persoonsgegevens, halen dubbele vacatures eruit en bepalen per vacature of het een ICT-functie is, voor welk niveau, bij welke opleiding hij past en welke skills hij noemt.</li>
+          <li>We publiceren alleen tellingen per maand, nooit de vacatures zelf.</li>
+          <li>Officiële cijfers van CBS, HBO-Monitor, ROA en UWV staan ernaast ter vergelijking.</li>
+          <li>Onder elk cijfer staan de bron, de datum en het aantal records. Cijfers op minder dan {min} records zijn gemarkeerd als indicatief.</li>
+        </>
+      ) : (
+        <>
+          <li>Every week we collect new online vacancies through Adzuna, a job search engine with a public API.</li>
+          <li>We remove personal data, drop duplicate vacancies and decide for each vacancy whether it is an ICT role, for which level, which programme it fits and which skills it mentions.</li>
+          <li>We only publish monthly counts, never the vacancies themselves.</li>
+          <li>Official figures from CBS, HBO-Monitor, ROA and UWV are shown alongside for comparison.</li>
+          <li>Every figure shows its source, date and number of records. Figures based on fewer than {min} records are marked as indicative.</li>
+        </>
+      )}
+    </ul>
+
+    <h2 id="sources">{nl ? "Bronnen" : "Sources"}</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr>
+          <th scope="col">{nl ? "Bron" : "Source"}</th>
+          <th scope="col">{nl ? "Licentie" : "Licence"}</th>
+          <th scope="col">{nl ? "Hoe opgehaald" : "How collected"}</th>
+          <th scope="col">{nl ? "Laatst ingelezen" : "Last loaded"}</th>
+          <th scope="col">{nl ? "Voorwaarden gecontroleerd" : "Terms checked"}</th>
+        </tr></thead>
+        <tbody>
+          {sources.map((s) => (
+            <tr>
+              <th scope="row"><a href={s.url}>{s.name}</a></th>
+              <td>{s.licence_url ? <a href={s.licence_url}>{s.licence}</a> : s.licence}</td>
+              <td>{collected[s.id] ?? "–"}</td>
+              <td>{s.last_success_at ? fmtDate(lang, s.last_success_at) : "–"}</td>
+              <td>{s.terms_checked_on ? fmtDate(lang, s.terms_checked_on) : (nl ? "nog niet" : "not yet")}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="collection">{nl ? "Verzamelen" : "Collection"}</h2>
+    {nl ? (
+      <>
+        <p>Adzuna verzamelt vacatures van duizenden Nederlandse vacaturesites en werkgevers. Wij vragen elke week de vacatures van de afgelopen 8 dagen op: alles in Adzuna's categorie IT, plus een zoekopdracht op ICT-woorden (zoals developer, devops, PLC, informatieanalist) in alle andere categorieën, omdat veel ICT-vacatures daar terechtkomen.</p>
+        <p>Per vacature krijgen we de titel, werkgever, plaats, datum, het salaris als dat vermeld is, en <strong>alleen het begin van de tekst (ongeveer 500 tekens)</strong>.</p>
+        <p>Voordat we iets opslaan, halen we e-mailadressen, telefoonnummers en namen van contactpersonen uit de tekst. Vacatureteksten bewaren we niet langer dan de licentie toestaat; daarna blijven alleen de tellingen over. We halen niets van sites die dat verbieden, zoals LinkedIn of Indeed.</p>
+      </>
+    ) : (
+      <>
+        <p>Adzuna collects vacancies from thousands of Dutch job sites and employers. Every week we request the vacancies of the past 8 days: everything in Adzuna's IT category, plus a search for ICT words (such as developer, devops, PLC, information analyst) in all other categories, because many ICT vacancies end up there.</p>
+        <p>For each vacancy we receive the title, employer, place, date, the salary if stated, and <strong>only the start of the text (about 500 characters)</strong>.</p>
+        <p>Before storing anything we remove e-mail addresses, phone numbers and names of contact persons. Vacancy texts are kept no longer than the licence allows; after that only the counts remain. We do not collect anything from sites that forbid it, such as LinkedIn or Indeed.</p>
+      </>
+    )}
+
+    <h2 id="dedup">{nl ? "Dubbele vacatures" : "Duplicate vacancies"}</h2>
+    <p>
+      {nl
+        ? "Dezelfde vacature verschijnt vaak meerdere keren, bijvoorbeeld via verschillende sites of doordat een recruiter hem opnieuw plaatst. We tellen een vacature één keer als titel, werkgever en plaats gelijk zijn en de plaatsingen binnen 30 dagen van elkaar liggen. Bij de titel negeren we hoofdletters, leestekens en toevoegingen als (m/v/x). Staat een vacature na 30 dagen nog open, dan telt hij in de volgende maand opnieuw mee."
+        : "The same vacancy often appears several times, for example on different sites or because a recruiter reposts it. We count a vacancy once if title, employer and place are the same and the postings are within 30 days of each other. For titles we ignore capitals, punctuation and additions such as (m/f/x). A vacancy still open after 30 days counts again in the next month."}
+    </p>
+
+    <h2 id="ict">{nl ? "Wat telt als ICT-vacature?" : "What counts as an ICT vacancy?"}</h2>
+    <p>
+      {nl
+        ? "Een vacature telt als ICT-vacature als de functietitel past bij een van onze functiefamilies (zie Opleidingen), of als Adzuna hem in de categorie IT heeft geplaatst én de tekst een technische skill noemt. Titels als monteur, werkvoorbereider, accountmanager of recruiter tellen via die tweede route nooit mee, ook niet als ze in de categorie IT staan."
+        : "A vacancy counts as an ICT vacancy if the job title matches one of our role families (see Programmes), or if Adzuna placed it in the IT category and the text mentions a technical skill. Titles such as technician, work planner, account manager or recruiter never count through that second route, even when they are in the IT category."}
+    </p>
+
+    <h2 id="seniority">{nl ? "Niveau" : "Level"}</h2>
+    {nl ? (
+      <>
+        <p>We delen elke vacature in als stage, junior, medior, senior of onbekend:</p>
+        <ol>
+          <li>Eerst kijken we naar de titel: woorden als stage, afstudeerstage, intern, junior, starter, trainee, medior, senior of lead.</li>
+          <li>Noemt de titel meerdere niveaus (bijvoorbeeld "Junior/Medior developer"), dan kiezen we het laagste: de vacature staat daarvoor open.</li>
+          <li>Staat er niets in de titel, dan zoeken we in de tekst naar zulke woorden, en daarna naar het gevraagde aantal jaren ervaring: 0–2 jaar is junior, 3–5 medior, 6 of meer senior.</li>
+          <li>Vinden we niets, dan is het niveau onbekend.</li>
+        </ol>
+        <p><strong>Stage + junior</strong> is de optelling van stage en junior: de vacatures die zeker voor studenten en starters bedoeld zijn. Omdat we maar het begin van de tekst zien, is het niveau van veel vacatures onbekend. Een deel daarvan staat ook open voor starters.</p>
+      </>
+    ) : (
+      <>
+        <p>We classify each vacancy as internship, junior, medior, senior or unknown:</p>
+        <ol>
+          <li>First we look at the title: words such as internship, graduation project, intern, junior, starter, trainee, medior, senior or lead.</li>
+          <li>If the title names several levels (for example "Junior/Medior developer"), we choose the lowest: the vacancy is open to that level.</li>
+          <li>If the title says nothing, we search the text for such words, and then for the required years of experience: 0–2 years is junior, 3–5 medior, 6 or more senior.</li>
+          <li>If we find nothing, the level is unknown.</li>
+        </ol>
+        <p><strong>Internship + junior</strong> is internship and junior combined: the vacancies certainly meant for students and starters. Because we only see the start of the text, the level of many vacancies is unknown. Some of those are also open to starters.</p>
+      </>
+    )}
+
+    <h2 id="programmes">{nl ? "Opleidingen" : "Programmes"}</h2>
+    <p>
+      {nl
+        ? "We koppelen vacatures aan opleidingen via functiefamilies: groepen functietitels waarvoor een opleiding opleidt. Een vacature kan bij meer dan één opleiding passen, of bij geen. Dit is onze eigen indeling, niet die van een hogeschool."
+        : "We link vacancies to programmes through role families: groups of job titles a programme prepares for. A vacancy can fit more than one programme, or none. This is our own classification, not that of any university."}
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col">{nl ? "Functiefamilie" : "Role family"}</th>{meta.programmes.map((p) => <th scope="col">{p.name[lang]}</th>)}</tr></thead>
+        <tbody>
+          {meta.role_families.map((f) => (
+            <tr>
+              <th scope="row">{f.name[lang]}</th>
+              {meta.programmes.map((p) => <td>{f.programmes.includes(p.id) ? "✓" : ""}<span class="visually-hidden">{f.programmes.includes(p.id) ? (nl ? "ja" : "yes") : (nl ? "nee" : "no")}</span></td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="skills">Skills</h2>
+    <p>
+      {nl
+        ? `We herkennen ${meta.skills.length} skills aan vaste zoekpatronen in het Nederlands en Engels, in de titel en het begin van de tekst. ${escoLinked} daarvan zijn gekoppeld aan de Europese ESCO-classificatie van vaardigheden, zodat ze vergelijkbaar zijn met andere bronnen. Voor nieuwere tools (zoals Docker, Kubernetes of Go) heeft ESCO geen eigen begrip; die koppelen we aan een breder begrip of niet.`
+        : `We recognise ${meta.skills.length} skills with fixed search patterns in Dutch and English, in the title and the start of the text. ${escoLinked} of them are linked to the European ESCO skills classification, so they can be compared with other sources. ESCO has no concept of its own for newer tools (such as Docker, Kubernetes or Go); those are linked to a broader concept or not at all.`}
+    </p>
+    <p>
+      {nl
+        ? "Het percentage bij een skill is het aandeel vacatures dat de skill noemt. Omdat we maar ongeveer 500 tekens per vacature zien, ligt het echte aandeel hoger; de volgorde is betrouwbaarder dan de percentages."
+        : "The percentage next to a skill is the share of vacancies that mention it. Because we only see about 500 characters per vacancy, the true share is higher; the ranking is more reliable than the percentages."}
+    </p>
+    <details class="table-view">
+      <summary>{nl ? "Alle skills en hun ESCO-koppeling" : "All skills and their ESCO link"}</summary>
+      <table>
+        <thead><tr><th scope="col">Skill</th><th scope="col">ESCO</th></tr></thead>
+        <tbody>
+          {meta.skills.map((s) => (
+            <tr><th scope="row">{s.label}</th><td>{s.esco_uri ? <a href={s.esco_uri}>{s.esco_label}</a> : "–"}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </details>
+
+    <h2 id="salary">{nl ? "Salaris" : "Salary"}</h2>
+    <p>
+      {nl
+        ? "Veel vacatures noemen geen salaris, en vacatures die dat wel doen zijn niet altijd representatief. Vacatures zeggen er ook niet bij of een bedrag per jaar, maand, dag of uur is. Bedragen vanaf € 12.000 lezen we als jaarsalaris, bedragen tussen € 1.000 en € 12.000 als maandsalaris; lagere bedragen (dag- of uurtarieven) en bedragen boven € 250.000 laten we weg. Salarissen die Adzuna zelf schat, gebruiken we niet. We tonen bruto per maand: het jaarbedrag gedeeld door 12, afgerond op € 50. Medianen zijn nauwkeurig tot op ongeveer € 100 per maand."
+        : "Many vacancies state no salary, and those that do are not always representative. Postings also do not say whether an amount is per year, month, day or hour. Amounts from €12,000 are read as annual salary, amounts between €1,000 and €12,000 as monthly salary; lower amounts (day or hour rates) and amounts above €250,000 are left out. Salaries estimated by Adzuna itself are not used. We show gross per month: the annual amount divided by 12, rounded to €50. Medians are accurate to about €100 per month."}
+    </p>
+    <p>
+      {nl
+        ? "De startsalarissen van afgestudeerden komen uit de HBO-Monitor, een jaarlijkse enquête onder alumni, en staan los van de vacaturecijfers."
+        : "Graduate starting salaries come from the HBO-Monitor, an annual alumni survey, and are separate from the vacancy figures."}
+    </p>
+
+    <h2 id="regions">{nl ? "Regio's" : "Regions"}</h2>
+    <p>
+      {nl
+        ? "We gebruiken de plaats die Adzuna meegeeft om een vacature aan een gemeente, arbeidsmarktregio en provincie te koppelen. Vacatures met alleen 'Nederland' als plaats (vaak thuiswerk of meerdere locaties) tellen mee in het landelijke cijfer, maar in geen enkele regio."
+        : "We use the place Adzuna provides to link a vacancy to a municipality, labour market region and province. Vacancies with only 'Netherlands' as place (often remote work or several locations) count in the national figure, but in no region."}
+    </p>
+
+    <h2 id="sample-size">{nl ? "Kleine aantallen" : "Small numbers"}</h2>
+    <p>
+      {nl
+        ? `Een percentage of salaris op basis van een handvol vacatures kan toevallig zijn. Cijfers op minder dan ${min} records markeren we als indicatief (◔). Kies bij kleine regio's liever de provincie of heel Nederland, of een langere periode.`
+        : `A percentage or salary based on a handful of vacancies can be chance. Figures based on fewer than ${min} records are marked as indicative (◔). For small regions, prefer the province or the whole country, or a longer period.`}
+    </p>
+
+    <h2 id="comparison">{nl ? "Vergelijking met CBS" : "Comparison with CBS"}</h2>
+    <p>
+      {nl
+        ? "CBS schat met een enquête onder bedrijven hoeveel vacatures er op een moment openstaan, per sector. De sector 'Informatie en communicatie' bevat ook niet-ICT-functies bij ICT-bedrijven, en mist ICT-functies bij bijvoorbeeld banken en overheid. Wij tellen nieuwe online vacatures voor ICT-functies in alle sectoren. De aantallen zijn dus niet gelijk en hoeven dat ook niet te zijn. Vergelijk vooral de richting van beide reeksen: gaan ze allebei omhoog of omlaag?"
+        : "CBS estimates, through a survey of companies, how many vacancies are open at a given moment, per sector. The 'Information and communication' sector also includes non-ICT roles at ICT companies, and misses ICT roles at, for example, banks and government. We count new online vacancies for ICT roles in all sectors. The numbers are therefore not equal and need not be. Compare the direction of both series instead: are they both rising or falling?"}
+    </p>
+
+    <h2 id="limitations">{nl ? "Bekende beperkingen" : "Known limitations"}</h2>
+    <ul>
+      {(nl ? [
+        "Een vacature is geen aanname. Sommige vacatures worden nooit vervuld, andere zijn een doorlopende werving (spookvacatures).",
+        "Recruitmentbureaus plaatsen dezelfde functie soms vaak en met net andere titels. Ontdubbeling vangt dat niet altijd.",
+        "We zien maar ongeveer 500 tekens per vacature. Skills en ervaringseisen verderop in de tekst missen we, en van veel vacatures is het niveau onbekend.",
+        "Veel vacatures noemen geen salaris.",
+        "We hebben één vacaturebron. Adzuna dekt veel, maar niet alles: vacatures die alleen op LinkedIn of in een netwerk rondgaan zien we niet.",
+        "De indeling in ICT, niveau, opleiding en skills gebeurt met regels en maakt fouten. Zie Nauwkeurigheid.",
+        "De vacaturereeks begint bij onze eerste ophaaldatum; er bestaat geen openbare historische vacaturedataset. Trends over jaren worden pas later zichtbaar.",
+        "In kleine regio's zijn de aantallen laag; kijk dan naar de provincie of heel Nederland.",
+        "Prognoses (ROA) zijn scenario's met onzekerheid, geen voorspelling van jouw kansen.",
+      ] : [
+        "A vacancy is not a hire. Some vacancies are never filled, others are ongoing recruitment (ghost vacancies).",
+        "Recruitment agencies sometimes post the same role often and with slightly different titles. Deduplication does not always catch that.",
+        "We only see about 500 characters per vacancy. We miss skills and experience requirements further down, and the level of many vacancies is unknown.",
+        "Many vacancies state no salary.",
+        "We have one vacancy source. Adzuna covers a lot, but not everything: vacancies shared only on LinkedIn or through networks are not seen.",
+        "Classifying ICT, level, programme and skills is rule-based and makes mistakes. See Accuracy.",
+        "The vacancy series starts at our first collection date; no public historical vacancy dataset exists. Trends over years only become visible later.",
+        "Numbers in small regions are low; look at the province or the whole country instead.",
+        "Forecasts (ROA) are scenarios with uncertainty, not a prediction of your chances.",
+      ]).map((x) => <li>{x}</li>)}
+    </ul>
+
+    <h2 id="accuracy">{nl ? "Nauwkeurigheid" : "Accuracy"}</h2>
+    {acc ? (
+      <>
+        <p>{nl ? `Gemeten op ${fmtDate(lang, acc.measured_on)} op een handmatig gelabelde steekproef van ${fmtInt(lang, acc.n)} vacatures:` : `Measured on ${fmtDate(lang, acc.measured_on)} on a manually labelled sample of ${fmtInt(lang, acc.n)} vacancies:`}</p>
+        <ul>
+          {Object.entries(acc).filter(([k, v]) => typeof v === "number" && k !== "n").map(([k, v]) => (
+            <li>{k}: {fmtPct(lang, v as number)}</li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <p>
+        {nl
+          ? "Nog niet gemeten. We gaan 200 vacatures met de hand beoordelen (is het ICT, welk niveau, welke opleiding) en vergelijken met de automatische indeling. De uitkomst komt hier te staan, per versie van de methode."
+          : "Not measured yet. We will assess 200 vacancies by hand (is it ICT, which level, which programme) and compare them with the automatic classification. The result will be shown here, per version of the method."}
+      </p>
+    )}
+
+    <h2 id="changelog">{nl ? "Wijzigingen in de methode" : "Changes to the method"}</h2>
+    <p class="muted">
+      {nl
+        ? "Een wijziging in de methode kan een breuk in een trendreeks veroorzaken. Die staan hier, met de datum."
+        : "A change to the method can cause a break in a trend series. Those are listed here, with the date."}
+    </p>
+    {meta.changelog.map((e) => (
+      <article>
+        <h3>{fmtDate(lang, e.date)} · {e.title[lang]} <span class="muted">(v{e.version})</span></h3>
+        <p>{e.body[lang]}</p>
+        {e.series_break?.length > 0 && <p class="muted">{nl ? "Breuk in reeks" : "Series break"}: {e.series_break.join(", ")}</p>}
+      </article>
+    ))}
+    <p class="muted">
+      {nl ? "Versie classificatie" : "Classifier version"}: {meta.classifier_version} · {nl ? "gegevensset" : "data set"} {meta.snapshot_id}
+    </p>
+    <p><a href={`${path(lang, "about")}#report`}>{nl ? "Zie je een fout of een verkeerde indeling? Meld het." : "See an error or a wrong classification? Report it."}</a></p>
+  </div>
+</Layout>
