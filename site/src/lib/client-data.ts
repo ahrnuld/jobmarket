@@ -19,7 +19,11 @@ function getJson<T>(url: string): Promise<T> {
 
 export const fetchMeta = () => getJson<Meta>("/data/meta.json");
 export const fetchStats = () => getJson<Stats>("/data/stats.json");
-export const fetchMap = () => getJson<MapData>("/data/map.json");
+export const fetchMap = (): Promise<MapData> =>
+  getJson<MapData>("/data/map.json").catch((e) => {
+    if (String(e).startsWith("Error: 404")) return { corops: [], rows: [] };
+    throw e;
+  });
 
 export async function fetchGeo(geoId: string, kinds: (keyof GeoData)[]): Promise<GeoData> {
   const file = geoId.replace(":", "-");

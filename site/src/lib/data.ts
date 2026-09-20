@@ -25,7 +25,13 @@ export function loadStats(): Stats {
 }
 
 export function loadMap(): MapData {
-  return readJson<MapData>("map.json");
+  // A snapshot published before the map existed has no map.json; the page then shows an empty
+  // map rather than failing the build (the same rule as a geography without files).
+  try {
+    return readJson<MapData>("map.json");
+  } catch {
+    return { corops: [], rows: [] };
+  }
 }
 
 const KINDS = ["vacancies", "skills", "families", "titles", "salaries"] as const;

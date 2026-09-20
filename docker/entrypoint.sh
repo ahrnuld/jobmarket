@@ -15,6 +15,11 @@ seed /app/data/aggregates /app/seed/aggregates
 seed /app/site/public/data /app/seed/published
 mkdir -p /app/var /srv/www
 
+# Republish from the aggregate history first: a data volume written by an older release can
+# miss files this version expects. A rejected publish keeps the previous snapshot (NFR-07).
+jobmarket init-db || true
+jobmarket publish || echo "[entrypoint] publish failed; keeping the published snapshot"
+
 # Every (re)deploy rebuilds the site from the latest published data with the new code.
 /app/docker/build-site.sh
 

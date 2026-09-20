@@ -18,7 +18,11 @@ const ctx = makeCtx(lang, meta);
 // The map covers the whole country, so it has no region filter of its own.
 const state = { ...DEFAULT_STATE, geo: "nl" };
 const win = timeWindow(meta.vacancies.months, state.period);
-const view = buildMapView(state, loadMap(), loadGeo("nl").vacancies, win);
+const map = loadMap();
+const view = buildMapView(state, map, loadGeo("nl").vacancies, win);
+// The published snapshot can predate the map (an older pipeline run); the page then draws the
+// areas empty and says why, instead of showing zeroes as if they were counts.
+const awaitingData = map.corops.length === 0;
 const geometry = buildGeometry();
 const nl = lang === "nl";
 const mapLabel = nl
@@ -35,6 +39,13 @@ const mapLabel = nl
       : "The number of vacancies per COROP area: the regional division CBS uses for labour market figures. Pick a programme to see where the work is."}
   </p>
   <FilterBar lang={lang} id="map-filters" fields={["programme", "seniority", "period"]} />
+  {awaitingData && (
+    <p class="empty">
+      {nl
+        ? "De kaartgegevens zijn nog niet gepubliceerd. Ze verschijnen bij de eerstvolgende update van de cijfers."
+        : "The map data has not been published yet. It appears with the next update of the figures."}
+    </p>
+  )}
   <figure class="mapfig">
     <svg class="map" viewBox={geometry.viewBox} role="img" aria-label={mapLabel} xmlns="http://www.w3.org/2000/svg">
       {geometry.shapes.map((s) => {
