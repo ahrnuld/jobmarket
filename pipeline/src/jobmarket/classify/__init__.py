@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from jobmarket.reference import Reference
 
 # Bump when rules in code change. Reference-data changes are tracked in git and the changelog.
-CLASSIFIER_VERSION = "2026.09.1"
+CLASSIFIER_VERSION = "2026.09.2"
 
 # "0-2 jaar werkervaring", "3+ years of experience", "minimaal 5 jaar relevante ervaring"
 EXPERIENCE_YEARS = re.compile(
@@ -21,6 +21,23 @@ EXPERIENCE_YEARS = re.compile(
     re.IGNORECASE,
 )
 LEVEL_ORDER = ["junior", "medior", "senior"]
+
+# Vacancy titles are often plural ("Software Engineers - diverse branches", "Java Developers",
+# "Business Analisten"), while the role family and exclusion patterns are written in the
+# singular. Only these role nouns lose their plural ending, including as the tail of a compound
+# ("systeembeheerders", "accountmanagers"), so a word that merely ends in -s or -en ("devops",
+# "business", "data", "binnen") is left alone.
+ROLE_NOUNS = [
+    "developer", "engineer", "consultant", "designer", "manager", "tester", "administrator",
+    "scientist", "analyst", "architect", "specialist", "ontwikkelaar", "programmeur",
+    "beheerder", "adviseur", "analist", "monteur", "medewerker",
+]
+_PLURAL_RE = re.compile(rf"\b(\w*?(?:{'|'.join(ROLE_NOUNS)}))(?:s|en)\b")
+
+
+def singularise(title_norm: str) -> str:
+    """Title with plural role nouns in the singular, so one pattern covers both forms."""
+    return _PLURAL_RE.sub(lambda m: m.group(1), title_norm)
 
 
 @dataclass
@@ -58,7 +75,8 @@ def classify_seniority(title_norm: str, description: str | None, ref: Reference)
 
 
 def matching_families(title_norm: str, ref: Reference) -> list[str]:
-    return [f.id for f in ref.role_families if any(p.search(title_norm) for p in f.title_patterns)]
+    title = singularise(title_norm)
+    return [f.id for f in ref.role_families if any(p.search(title) for p in f.title_patterns)]
 
 
 def classify_programmes(title_norm: str, ref: Reference) -> dict[str, str]:
@@ -89,7 +107,7 @@ def classify(
     # at least one technical skill, and the title is not an excluded non-ICT role (the IT
     # category also holds e.g. electricians and sales jobs at software companies).
     has_signal = any(ref.skills[s].ict_signal for s in skills)
-    excluded = any(p.search(title_norm) for p in ref.exclude_title_patterns)
+    excluded = any(p.search(singularise(title_norm)) for p in ref.exclude_title_patterns)
     is_ict = bool(families) or (source_category == "it-jobs" and has_signal and not excluded)
     return Classification(
         is_ict=is_ict,

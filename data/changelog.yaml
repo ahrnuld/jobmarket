@@ -6,6 +6,27 @@
 
 entries:
   - date: "2026-09-20"
+    version: "0.3.0"
+    title:
+      nl: Meervoudige functietitels tellen mee; officiele verdeling per provincie erbij
+      en: Plural job titles now count; official spread per province added
+    body:
+      nl: >-
+        Advertenties met een meervoudige titel ("Software Engineers", "Business Analisten")
+        werden niet aan een opleiding gekoppeld en soms helemaal niet als ICT-vacature herkend,
+        omdat de regels in het enkelvoud staan. Meervoudsvormen van functiewoorden tellen nu
+        mee. Verder halen we de CBS-cijfers over openstaande vacatures in de sector Informatie
+        en communicatie voor alle twaalf provincies op, zodat onze verdeling naast de officiele
+        verdeling staat, en beschrijft de methode hoe compleet de kaart is.
+      en: >-
+        Ads with a plural title ("Software Engineers", "Business Analisten") were not linked to
+        a programme, and sometimes not recognised as an ICT vacancy at all, because the rules
+        are written in the singular. Plural forms of role nouns now count. We also collect the
+        CBS figures on open vacancies in the Information and communication sector for all twelve
+        provinces, so our spread sits next to the official one, and the method describes how
+        complete the map is.
+    series_break: []
+  - date: "2026-09-20"
     version: "0.2.0"
     title:
       nl: Regio-indeling van het CBS en een kaart per COROP-gebied

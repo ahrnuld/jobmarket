@@ -6,6 +6,13 @@
 #   decides afterwards what counts as ICT.
 # - Descriptions are truncated to ~500 characters by the API.
 # - Per 8 days: ~630 ads in it-jobs, ~1,900 via the keyword search (about 55 API calls a week).
+#
+# Coverage probe of 2026-09-20: the national queries already find what the API has per
+# region. Of the 17 IT ads within 20 km of Alkmaar over 30 days, 15 were already in the
+# database (the other two were posted after the last run). Adding `where=<place>` queries
+# per region would therefore spend call budget without adding vacancies; the thin regional
+# numbers are the API's coverage, not ours. Adzuna's own count per 30 days and 20 km:
+#   Amsterdam 276 | Haarlem 264 | Eindhoven 67 | Alkmaar 17 | Hoorn 12 | Leeuwarden 8.
 
 adzuna:
   country: nl

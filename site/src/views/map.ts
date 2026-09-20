@@ -6,12 +6,13 @@
 // numbers, the classes and the table, at build time and again in the browser after a filter
 // change, so both always show the same figures.
 
-import { table } from "../lib/charts";
-import { escapeHtml as esc, fmtInt, fmtPct } from "../lib/format";
+import { barList, table } from "../lib/charts";
+import { escapeHtml as esc, fmtInt, fmtPct, fmtPeriod } from "../lib/format";
 import { countVacancies, isIndicative, share, type Window } from "../lib/model";
-import type { CoropInfo, MapData, VacancyRow } from "../lib/types";
+import type { CoropInfo, MapData, Observation, Stats, VacancyRow } from "../lib/types";
 import {
-  type Ctx, type FilterState, programmeName, provenance, seniorityName, vacancyUpdated, windowLabel,
+  card, type Ctx, type FilterState, programmeName, provenance, seniorityName, vacancyUpdated,
+  windowLabel,
 } from "./common";
 
 export interface AreaCount extends CoropInfo {
@@ -97,7 +98,9 @@ export function legend(ctx: Ctx, view: MapView): string {
   const ranges = classRanges(view.breaks);
   const items = ranges.map((r, i) =>
     `<li><span class="map-key map-c${shade(i + 1, ranges.length)}" aria-hidden="true"></span>${esc(label(r))}</li>`);
-  items.push(`<li><span class="map-key map-c0" aria-hidden="true"></span>${esc(lang === "nl" ? "geen" : "none")}</li>`);
+  // "none found", not "none": an empty area means our source published nothing there.
+  items.push(`<li><span class="map-key map-c0" aria-hidden="true"></span>`
+    + `${esc(lang === "nl" ? "niets gevonden" : "none found")}</li>`);
   const title = lang === "nl" ? "Vacatures per gebied" : "Vacancies per area";
   return `<div class="map-legend"><p class="map-legend-title">${esc(title)}</p>`
     + `<ul aria-label="${esc(title)}">${items.join("")}</ul></div>`;
@@ -155,4 +158,41 @@ export function paint(ctx: Ctx, svg: SVGSVGElement, view: MapView): void {
     const title = path.querySelector("title");
     if (title) title.textContent = areaTitle(ctx, area);
   }
+}
+
+
+/** The official regional picture next to our own counts (FR-05, TR-04: how representative?). */
+export function officialCard(ctx: Ctx, stats: Stats): string {
+  const { lang, tr } = ctx;
+  const nl = lang === "nl";
+  const series = stats.series["cbs_open_vacancies_ict_sector_region"];
+  const all = stats.observations.filter((o) => o.series === "cbs_open_vacancies_ict_sector_region");
+  if (!series || !all.length) return "";
+  const period = [...all].sort((a, b) => (a.start < b.start ? -1 : 1)).at(-1)!.period;
+  const inPeriod = all.filter((o) => o.period === period && o.region !== "NL" && o.value !== null);
+  if (!inPeriod.length) return "";
+  const name = (id: string) => ctx.meta.geos.find((g) => g.id === `p:${id}`)?.name[lang] ?? id;
+  const sorted = [...inPeriod].sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
+  const unit = nl ? "openstaande vacatures" : "open vacancies";
+  const items = sorted.map((o) => ({
+    label: name(o.region),
+    value: o.value ?? 0,
+    valueText: fmtInt(lang, o.value ?? 0),
+    tip: `${name(o.region)}: ${fmtInt(lang, o.value ?? 0)} ${unit} (${fmtPeriod(lang, period)})`,
+  }));
+  const published = (list: Observation[]) =>
+    list.map((o) => o.published ?? o.retrieved).sort().at(-1) ?? null;
+  return card(ctx, {
+    title: nl ? "Ter vergelijking: de officiële verdeling over de provincies"
+              : "For comparison: the official spread across the provinces",
+    subtitle: nl
+      ? `CBS telt op een peilmoment (${fmtPeriod(lang, period)}) de openstaande vacatures bij bedrijven in de sector Informatie en communicatie. Dat is een andere telling dan onze advertenties hierboven — een voorraad in plaats van nieuwe advertenties, en alleen ICT-bedrijven — maar het laat zien waar het ICT-werk zit volgens de officiële statistiek.`
+      : `CBS counts the vacancies open at a point in time (${fmtPeriod(lang, period)}) at companies in the Information and communication sector. That is a different count from our ads above — a stock rather than new ads, and ICT companies only — but it shows where the ICT work is according to official statistics.`,
+    body: barList(items, series.title[lang], tr.chart.noData),
+    provenance: provenance(ctx, { sourceIds: [series.source], updated: published(inPeriod),
+                                  extra: series.table ? `${nl ? "tabel" : "table"} ${series.table}` : undefined }),
+    table: table(series.title[lang], [nl ? "Provincie" : "Province", unit],
+                 sorted.map((o) => [name(o.region), fmtInt(lang, o.value ?? 0)])),
+    headingLevel: 2,
+  });
 }

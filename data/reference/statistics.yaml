@@ -35,10 +35,23 @@ cbs:
     frequency: quarter
     filters: { BedrijfstakkenBranchesSBI2008: "391600" }
     region_dimension: RegioS
-    regions: { NL01: NL, PV27: noord-holland }
+    regions:
+      NL01: NL
+      PV20: groningen
+      PV21: friesland
+      PV22: drenthe
+      PV23: overijssel
+      PV24: flevoland
+      PV25: gelderland
+      PV26: utrecht
+      PV27: noord-holland
+      PV28: zuid-holland
+      PV29: zeeland
+      PV30: noord-brabant
+      PV31: limburg
     title:
-      nl: Openstaande vacatures in de sector Informatie en communicatie, Nederland en Noord-Holland
-      en: Open vacancies in the Information and communication sector, Netherlands and Noord-Holland
+      nl: Openstaande vacatures in de sector Informatie en communicatie, per provincie
+      en: Open vacancies in the Information and communication sector, per province
 
   - series_id: cbs_new_vacancies_ict_occupations
     table: 85081NED

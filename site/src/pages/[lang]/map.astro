@@ -2,12 +2,12 @@
 import FilterBar from "../../components/FilterBar.astro";
 import Layout from "../../layouts/Layout.astro";
 import { LANGS, path, t } from "../../i18n";
-import { loadGeo, loadMap, loadMeta } from "../../lib/data";
+import { loadGeo, loadMap, loadMeta, loadStats } from "../../lib/data";
 import { buildGeometry } from "../../lib/map";
 import { window as timeWindow } from "../../lib/model";
 import type { Lang } from "../../lib/types";
 import { DEFAULT_STATE, makeCtx } from "../../views/common";
-import { areaTitle, buildMapView, details, legend } from "../../views/map";
+import { areaTitle, buildMapView, details, legend, officialCard } from "../../views/map";
 
 export function getStaticPaths() {
   return LANGS.map((lang) => ({ params: { lang } }));
@@ -24,6 +24,7 @@ const view = buildMapView(state, map, loadGeo("nl").vacancies, win);
 // areas empty and says why, instead of showing zeroes as if they were counts.
 const awaitingData = map.corops.length === 0;
 const geometry = buildGeometry();
+const official = officialCard(ctx, loadStats());
 const nl = lang === "nl";
 const mapLabel = nl
   ? "Kaart van Nederland met het aantal vacatures per COROP-gebied; de cijfers staan in de tabel onder de kaart."
@@ -60,6 +61,13 @@ const mapLabel = nl
     <figcaption id="map-legend" set:html={legend(ctx, view)} />
   </figure>
   <div id="map-details" data-lang={lang} set:html={details(ctx, state, view, win)} />
+  <p class="prose">
+    {nl
+      ? "Dit zijn de vacatures die onze bron publiceerde, geen telling van alle openstaande vacatures. Buiten de Randstad staan er per maand maar een handvol advertenties in een gebied; kies dan een langere periode of kijk naar de provincie. Hoe goed onze verdeling met de officiële cijfers overeenkomt, staat in de "
+      : "These are the vacancies our source published, not a count of all open vacancies. Outside the Randstad an area holds only a handful of ads per month; choose a longer period or look at the province instead. How well our spread matches the official figures is described in the "}
+    <a href={`${path(lang, "methodology")}#coverage`}>{nl ? "methode" : "method"}</a>.
+  </p>
+  <Fragment set:html={official} />
   <p class="muted">
     {nl
       ? "Een COROP-gebied bundelt gemeenten rond een centrale kern. Voor cijfers per arbeidsmarktregio of provincie: gebruik het regiofilter op de "

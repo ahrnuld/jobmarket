@@ -25,11 +25,11 @@ const collected: Record<string, string> = nl
 const toc = nl
   ? [["summary", "In het kort"], ["sources", "Bronnen"], ["collection", "Verzamelen"], ["dedup", "Dubbele vacatures"],
      ["ict", "Wat telt als ICT-vacature"], ["seniority", "Niveau"], ["programmes", "Opleidingen"], ["skills", "Skills"],
-     ["salary", "Salaris"], ["trends", "Trends"], ["regions", "Regio's"], ["sample-size", "Kleine aantallen"], ["comparison", "Vergelijking met CBS"],
+     ["salary", "Salaris"], ["trends", "Trends"], ["regions", "Regio's"], ["coverage", "Hoe compleet is de kaart?"], ["sample-size", "Kleine aantallen"], ["comparison", "Vergelijking met CBS"],
      ["limitations", "Bekende beperkingen"], ["accuracy", "Nauwkeurigheid"], ["changelog", "Wijzigingen"]]
   : [["summary", "In short"], ["sources", "Sources"], ["collection", "Collection"], ["dedup", "Duplicate vacancies"],
      ["ict", "What counts as an ICT vacancy"], ["seniority", "Level"], ["programmes", "Programmes"], ["skills", "Skills"],
-     ["salary", "Salary"], ["trends", "Trends"], ["regions", "Regions"], ["sample-size", "Small numbers"], ["comparison", "Comparison with CBS"],
+     ["salary", "Salary"], ["trends", "Trends"], ["regions", "Regions"], ["coverage", "How complete is the map?"], ["sample-size", "Small numbers"], ["comparison", "Comparison with CBS"],
      ["limitations", "Known limitations"], ["accuracy", "Accuracy"], ["changelog", "Changes"]];
 ---
 <Layout lang={lang} page="methodology" route="methodology"
@@ -224,6 +224,28 @@ const toc = nl
         : "We use the place Adzuna provides to link a vacancy to a municipality, and through it to a COROP area, labour market region and province. The municipality list comes from CBS and includes municipalities abolished since 2010, because vacancies still use those names. Vacancies with only 'Netherlands' as place (often remote work or several locations) count in the national figure, but in no region and not on the map. The map uses COROP areas: 40 areas CBS uses for labour market figures, large enough to still show something per programme."}
     </p>
 
+    <h2 id="coverage">{nl ? "Hoe compleet is de kaart?" : "How complete is the map?"}</h2>
+    <p>
+      {nl
+        ? "De kaart telt advertenties die onze bron publiceerde, niet alle openstaande vacatures. Vacatures die alleen op de site van de werkgever, op LinkedIn of via een netwerk rondgaan, zitten er niet in, en ongeveer een kwart van de advertenties noemt geen plaats. In een groot gebied als Groot-Amsterdam gaat het om honderden advertenties per jaar, in een klein gebied om een handvol per maand. Een gebied zonder kleur betekent dus: hier vonden wij niets, niet: hier is geen ICT-werk."
+        : "The map counts ads our source published, not all open vacancies. Vacancies shared only on the employer's own site, on LinkedIn or through a network are not in it, and about a quarter of the ads name no place. A large area such as Groot-Amsterdam holds hundreds of ads a year, a small area a handful a month. An area without colour therefore means: we found nothing here, not: there is no ICT work here."}
+    </p>
+    <p>
+      {nl
+        ? "We toetsen dat op twee manieren. Ten eerste vergelijken we onze verdeling over de provincies met de officiële CBS-cijfers voor de sector Informatie en communicatie. Die komen redelijk overeen: Noord-Holland is bij ons 28% van de advertenties tegen 32% van de openstaande vacatures bij het CBS, Zuid-Holland 21% tegen 18%, Gelderland 6% tegen 7%. Noord-Brabant telt bij ons zwaarder (20% tegen 11%) en Flevoland lichter (0,7% tegen 1,8%). De kaart geeft de verhoudingen dus redelijk goed weer; de aantallen zijn een steekproef."
+        : "We check that in two ways. First, we compare our spread across the provinces with the official CBS figures for the Information and communication sector. They agree reasonably well: Noord-Holland is 28% of our ads against 32% of the open vacancies at CBS, Zuid-Holland 21% against 18%, Gelderland 6% against 7%. Noord-Brabant weighs heavier with us (20% against 11%) and Flevoland lighter (0.7% against 1.8%). So the map shows the proportions reasonably well; the numbers are a sample."}
+    </p>
+    <p>
+      {nl
+        ? "Ten tweede controleren we kleine gebieden rechtstreeks bij de bron. Voor Alkmaar en omgeving vroegen we op 20 september 2026 alle IT-advertenties op binnen 20 km van Alkmaar over de voorgaande 30 dagen: 17 stuks, waarvan wij er 15 al hadden (de andere twee waren na onze laatste ophaalronde geplaatst). Van die 17 bleven er na ontdubbeling en classificatie een paar over: de rest waren niet-ICT-functies in de IT-rubriek van de bron, of dezelfde uitzendadvertentie in een reeks dorpen tegelijk. Onze telling klopt dus met wat de bron heeft — de bron heeft simpelweg weinig voor deze regio."
+        : "Second, we check small areas directly against the source. For Alkmaar en omgeving we asked on 20 September 2026 for all IT ads within 20 km of Alkmaar over the previous 30 days: 17, of which we already held 15 (the other two were posted after our last collection round). Of those 17 only a few survived deduplication and classification: the rest were non-ICT roles in the source's IT category, or the same agency ad posted across a string of villages at once. Our count therefore matches what the source has — the source simply has little for this region."}
+    </p>
+    <p>
+      {nl
+        ? "Wat dat betekent voor gebruik: kijk in een klein gebied naar een langere periode, of naar de provincie en het landelijke cijfer. Een uitsplitsing per opleiding is daar pas bruikbaar als de reeks een jaar of langer beslaat. Als we een tweede vacaturebron vinden waarvan de voorwaarden hergebruik toestaan, voegen we die toe; dat staat in de wijzigingen."
+        : "What that means in use: in a small area, look at a longer period, or at the province and the national figure. A breakdown per programme only becomes usable there once the series spans a year or more. If we find a second vacancy source whose terms allow reuse, we will add it; that will appear in the list of changes."}
+    </p>
+
     <h2 id="sample-size">{nl ? "Kleine aantallen" : "Small numbers"}</h2>
     <p>
       {nl
@@ -248,7 +270,7 @@ const toc = nl
         "We hebben één vacaturebron. Adzuna dekt veel, maar niet alles: vacatures die alleen op LinkedIn of in een netwerk rondgaan zien we niet.",
         "De indeling in ICT, niveau, opleiding en skills gebeurt met regels en maakt fouten. Zie Nauwkeurigheid.",
         "De vacaturereeks begint bij onze eerste ophaaldatum; er bestaat geen openbare historische vacaturedataset. Trends over jaren worden pas later zichtbaar.",
-        "In kleine regio's zijn de aantallen laag; kijk dan naar de provincie of heel Nederland.",
+        "In kleine regio's zijn de aantallen laag; kijk dan naar de provincie of heel Nederland. Buiten de Randstad publiceert onze bron duidelijk minder advertenties dan er vacatures zijn (zie Hoe compleet is de kaart?).",
         "Prognoses (ROA) zijn scenario's met onzekerheid, geen voorspelling van jouw kansen.",
       ] : [
         "A vacancy is not a hire. Some vacancies are never filled, others are ongoing recruitment (ghost vacancies).",
@@ -258,7 +280,7 @@ const toc = nl
         "We have one vacancy source. Adzuna covers a lot, but not everything: vacancies shared only on LinkedIn or through networks are not seen.",
         "Classifying ICT, level, programme and skills is rule-based and makes mistakes. See Accuracy.",
         "The vacancy series starts at our first collection date; no public historical vacancy dataset exists. Trends over years only become visible later.",
-        "Numbers in small regions are low; look at the province or the whole country instead.",
+        "Numbers in small regions are low; look at the province or the whole country instead. Outside the Randstad our source publishes clearly fewer ads than there are vacancies (see How complete is the map?).",
         "Forecasts (ROA) are scenarios with uncertainty, not a prediction of your chances.",
       ]).map((x) => <li>{x}</li>)}
     </ul>

@@ -251,7 +251,7 @@ month,geo,programme,family,n
 2026-08,r:zuidoost-brabant,technische-informatica,devops-cloud-engineer,1
 2026-08,r:zuidoost-brabant,technische-informatica,embedded-engineer,1
 2026-08,r:zuidoost-brabant,technische-informatica,security-specialist,3
-2026-09,nl,all,business-functional-analyst,68
+2026-09,nl,all,business-functional-analyst,69
 2026-09,nl,all,data-ai-engineer,120
 2026-09,nl,all,data-bi-analyst,35
 2026-09,nl,all,devops-cloud-engineer,139
@@ -263,13 +263,13 @@ month,geo,programme,family,n
 2026-09,nl,all,it-consultant,31
 2026-09,nl,all,network-infrastructure-engineer,88
 2026-09,nl,all,product-project-role,68
-2026-09,nl,all,security-specialist,76
+2026-09,nl,all,security-specialist,77
 2026-09,nl,all,software-architect,54
-2026-09,nl,all,software-developer,409
+2026-09,nl,all,software-developer,412
 2026-09,nl,all,software-tester,61
 2026-09,nl,all,technical-application-manager,49
 2026-09,nl,all,web-mobile-developer,12
-2026-09,nl,business-it-management,business-functional-analyst,68
+2026-09,nl,business-it-management,business-functional-analyst,69
 2026-09,nl,business-it-management,data-bi-analyst,35
 2026-09,nl,business-it-management,functional-application-manager,26
 2026-09,nl,business-it-management,it-auditor,2
@@ -279,9 +279,9 @@ month,geo,programme,family,n
 2026-09,nl,informatica,data-ai-engineer,120
 2026-09,nl,informatica,devops-cloud-engineer,88
 2026-09,nl,informatica,game-developer,1
-2026-09,nl,informatica,security-specialist,75
+2026-09,nl,informatica,security-specialist,76
 2026-09,nl,informatica,software-architect,54
-2026-09,nl,informatica,software-developer,409
+2026-09,nl,informatica,software-developer,412
 2026-09,nl,informatica,software-tester,61
 2026-09,nl,informatica,technical-application-manager,48
 2026-09,nl,informatica,web-mobile-developer,12
@@ -289,7 +289,7 @@ month,geo,programme,family,n
 2026-09,nl,technische-informatica,embedded-engineer,6
 2026-09,nl,technische-informatica,industrial-automation,65
 2026-09,nl,technische-informatica,network-infrastructure-engineer,88
-2026-09,nl,technische-informatica,security-specialist,76
+2026-09,nl,technische-informatica,security-specialist,77
 2026-09,p:drenthe,all,devops-cloud-engineer,1
 2026-09,p:drenthe,all,industrial-automation,1
 2026-09,p:drenthe,all,product-project-role,1
@@ -401,7 +401,7 @@ month,geo,programme,family,n
 2026-09,p:limburg,technische-informatica,industrial-automation,2
 2026-09,p:limburg,technische-informatica,network-infrastructure-engineer,1
 2026-09,p:limburg,technische-informatica,security-specialist,5
-2026-09,p:noord-brabant,all,business-functional-analyst,7
+2026-09,p:noord-brabant,all,business-functional-analyst,8
 2026-09,p:noord-brabant,all,data-ai-engineer,13
 2026-09,p:noord-brabant,all,data-bi-analyst,3
 2026-09,p:noord-brabant,all,devops-cloud-engineer,15
@@ -418,7 +418,7 @@ month,geo,programme,family,n
 2026-09,p:noord-brabant,all,software-tester,16
 2026-09,p:noord-brabant,all,technical-application-manager,12
 2026-09,p:noord-brabant,all,web-mobile-developer,1
-2026-09,p:noord-brabant,business-it-management,business-functional-analyst,7
+2026-09,p:noord-brabant,business-it-management,business-functional-analyst,8
 2026-09,p:noord-brabant,business-it-management,data-bi-analyst,3
 2026-09,p:noord-brabant,business-it-management,functional-application-manager,2
 2026-09,p:noord-brabant,business-it-management,it-consultant,4
@@ -451,7 +451,7 @@ month,geo,programme,family,n
 2026-09,p:noord-holland,all,product-project-role,13
 2026-09,p:noord-holland,all,security-specialist,12
 2026-09,p:noord-holland,all,software-architect,13
-2026-09,p:noord-holland,all,software-developer,102
+2026-09,p:noord-holland,all,software-developer,105
 2026-09,p:noord-holland,all,software-tester,6
 2026-09,p:noord-holland,all,technical-application-manager,5
 2026-09,p:noord-holland,all,web-mobile-developer,8
@@ -466,7 +466,7 @@ month,geo,programme,family,n
 2026-09,p:noord-holland,informatica,devops-cloud-engineer,21
 2026-09,p:noord-holland,informatica,security-specialist,12
 2026-09,p:noord-holland,informatica,software-architect,13
-2026-09,p:noord-holland,informatica,software-developer,102
+2026-09,p:noord-holland,informatica,software-developer,105
 2026-09,p:noord-holland,informatica,software-tester,6
 2026-09,p:noord-holland,informatica,technical-application-manager,5
 2026-09,p:noord-holland,informatica,web-mobile-developer,8
@@ -549,7 +549,7 @@ month,geo,programme,family,n
 2026-09,p:zuid-holland,all,it-consultant,5
 2026-09,p:zuid-holland,all,network-infrastructure-engineer,26
 2026-09,p:zuid-holland,all,product-project-role,14
-2026-09,p:zuid-holland,all,security-specialist,19
+2026-09,p:zuid-holland,all,security-specialist,20
 2026-09,p:zuid-holland,all,software-architect,11
 2026-09,p:zuid-holland,all,software-developer,47
 2026-09,p:zuid-holland,all,software-tester,10
@@ -564,7 +564,7 @@ month,geo,programme,family,n
 2026-09,p:zuid-holland,business-it-management,technical-application-manager,9
 2026-09,p:zuid-holland,informatica,data-ai-engineer,15
 2026-09,p:zuid-holland,informatica,devops-cloud-engineer,12
-2026-09,p:zuid-holland,informatica,security-specialist,19
+2026-09,p:zuid-holland,informatica,security-specialist,20
 2026-09,p:zuid-holland,informatica,software-architect,11
 2026-09,p:zuid-holland,informatica,software-developer,47
 2026-09,p:zuid-holland,informatica,software-tester,10
@@ -573,7 +573,7 @@ month,geo,programme,family,n
 2026-09,p:zuid-holland,technische-informatica,devops-cloud-engineer,16
 2026-09,p:zuid-holland,technische-informatica,industrial-automation,12
 2026-09,p:zuid-holland,technische-informatica,network-infrastructure-engineer,26
-2026-09,p:zuid-holland,technische-informatica,security-specialist,19
+2026-09,p:zuid-holland,technische-informatica,security-specialist,20
 2026-09,r:amersfoort,all,data-ai-engineer,4
 2026-09,r:amersfoort,all,devops-cloud-engineer,5
 2026-09,r:amersfoort,all,industrial-automation,2
@@ -701,7 +701,7 @@ month,geo,programme,family,n
 2026-09,r:groot-amsterdam,all,product-project-role,13
 2026-09,r:groot-amsterdam,all,security-specialist,9
 2026-09,r:groot-amsterdam,all,software-architect,12
-2026-09,r:groot-amsterdam,all,software-developer,81
+2026-09,r:groot-amsterdam,all,software-developer,82
 2026-09,r:groot-amsterdam,all,software-tester,5
 2026-09,r:groot-amsterdam,all,technical-application-manager,3
 2026-09,r:groot-amsterdam,all,web-mobile-developer,7
@@ -716,7 +716,7 @@ month,geo,programme,family,n
 2026-09,r:groot-amsterdam,informatica,devops-cloud-engineer,17
 2026-09,r:groot-amsterdam,informatica,security-specialist,9
 2026-09,r:groot-amsterdam,informatica,software-architect,12
-2026-09,r:groot-amsterdam,informatica,software-developer,81
+2026-09,r:groot-amsterdam,informatica,software-developer,82
 2026-09,r:groot-amsterdam,informatica,software-tester,5
 2026-09,r:groot-amsterdam,informatica,technical-application-manager,3
 2026-09,r:groot-amsterdam,informatica,web-mobile-developer,7
@@ -850,9 +850,9 @@ month,geo,programme,family,n
 2026-09,r:noord-holland-noord,all,data-bi-analyst,2
 2026-09,r:noord-holland-noord,all,embedded-engineer,1
 2026-09,r:noord-holland-noord,all,industrial-automation,2
-2026-09,r:noord-holland-noord,all,software-developer,5
+2026-09,r:noord-holland-noord,all,software-developer,7
 2026-09,r:noord-holland-noord,business-it-management,data-bi-analyst,2
-2026-09,r:noord-holland-noord,informatica,software-developer,5
+2026-09,r:noord-holland-noord,informatica,software-developer,7
 2026-09,r:noord-holland-noord,technische-informatica,embedded-engineer,1
 2026-09,r:noord-holland-noord,technische-informatica,industrial-automation,2
 2026-09,r:noord-limburg,all,industrial-automation,1
@@ -865,7 +865,7 @@ month,geo,programme,family,n
 2026-09,r:noord-limburg,informatica,technical-application-manager,1
 2026-09,r:noord-limburg,technische-informatica,industrial-automation,1
 2026-09,r:noord-limburg,technische-informatica,security-specialist,2
-2026-09,r:noordoost-brabant,all,business-functional-analyst,2
+2026-09,r:noordoost-brabant,all,business-functional-analyst,3
 2026-09,r:noordoost-brabant,all,data-ai-engineer,2
 2026-09,r:noordoost-brabant,all,data-bi-analyst,1
 2026-09,r:noordoost-brabant,all,devops-cloud-engineer,4
@@ -878,7 +878,7 @@ month,geo,programme,family,n
 2026-09,r:noordoost-brabant,all,software-developer,9
 2026-09,r:noordoost-brabant,all,software-tester,5
 2026-09,r:noordoost-brabant,all,technical-application-manager,1
-2026-09,r:noordoost-brabant,business-it-management,business-functional-analyst,2
+2026-09,r:noordoost-brabant,business-it-management,business-functional-analyst,3
 2026-09,r:noordoost-brabant,business-it-management,data-bi-analyst,1
 2026-09,r:noordoost-brabant,business-it-management,functional-application-manager,1
 2026-09,r:noordoost-brabant,business-it-management,product-project-role,3
@@ -928,7 +928,7 @@ month,geo,programme,family,n
 2026-09,r:rijnmond,all,it-consultant,2
 2026-09,r:rijnmond,all,network-infrastructure-engineer,11
 2026-09,r:rijnmond,all,product-project-role,5
-2026-09,r:rijnmond,all,security-specialist,12
+2026-09,r:rijnmond,all,security-specialist,13
 2026-09,r:rijnmond,all,software-architect,4
 2026-09,r:rijnmond,all,software-developer,16
 2026-09,r:rijnmond,all,software-tester,2
@@ -941,7 +941,7 @@ month,geo,programme,family,n
 2026-09,r:rijnmond,business-it-management,technical-application-manager,3
 2026-09,r:rijnmond,informatica,data-ai-engineer,9
 2026-09,r:rijnmond,informatica,devops-cloud-engineer,8
-2026-09,r:rijnmond,informatica,security-specialist,12
+2026-09,r:rijnmond,informatica,security-specialist,13
 2026-09,r:rijnmond,informatica,software-architect,4
 2026-09,r:rijnmond,informatica,software-developer,16
 2026-09,r:rijnmond,informatica,software-tester,2
@@ -950,7 +950,7 @@ month,geo,programme,family,n
 2026-09,r:rijnmond,technische-informatica,devops-cloud-engineer,9
 2026-09,r:rijnmond,technische-informatica,industrial-automation,4
 2026-09,r:rijnmond,technische-informatica,network-infrastructure-engineer,11
-2026-09,r:rijnmond,technische-informatica,security-specialist,12
+2026-09,r:rijnmond,technische-informatica,security-specialist,13
 2026-09,r:rivierenland,all,network-infrastructure-engineer,1
 2026-09,r:rivierenland,all,software-developer,1
 2026-09,r:rivierenland,all,software-tester,2

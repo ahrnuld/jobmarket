@@ -71,6 +71,11 @@ def test_seniority(ref, title, description, expected):
         ("Senior Product Engineer", set()),
         ("IT Support Professional", set()),  # ICT, but no programme (it-support family)
         ("Afstudeerstage IT Audit", {"business-it-management"}),
+        # Agencies advertise several openings in one ad; the patterns are written singular.
+        ("Software Engineers - diverse branches", {"informatica"}),
+        ("Java Developers", {"informatica"}),
+        ("Business Analisten", {"business-it-management"}),
+        ("Mechanical Engineers", set()),
     ],
 )
 def test_programmes(ref, title, expected):
@@ -106,6 +111,7 @@ def test_ict_requires_role_family_or_it_category_with_tech_skill(ref):
     # Sales and marketing jobs at software companies sit in the IT category and name tools
     assert not is_ict("EMEA Account Executive", "Sell our Azure platform.", "it-jobs")
     assert not is_ict("TikTok Creator", "Werken met AI tools en Python.", "it-jobs")
+    assert not is_ict("Accountmanagers", "Kennis van Python.", "it-jobs")  # plural exclusion
 
 
 def test_generic_words_are_not_skills(ref):
