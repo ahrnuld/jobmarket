@@ -299,14 +299,16 @@ def cmd_history_repair(args: argparse.Namespace) -> int:
     """Take months from a shipped history where the working history holds less detail."""
     from pathlib import Path
 
-    from jobmarket.aggregate import repair_from_seed
+    from jobmarket.aggregate import repair_from_seed, stored_per_month
 
     settings = load_settings()
     seed = Path(args.source)
     if not seed.is_dir():
         print(f"No history to repair from: {seed} does not exist", file=sys.stderr)
         return 1
-    replaced = repair_from_seed(seed, _history_dir(settings, args.dataset))
+    with open_db(settings.db_path) as conn:
+        stored = stored_per_month(conn, sample=args.dataset == "sample")
+    replaced = repair_from_seed(seed, _history_dir(settings, args.dataset), stored)
     if replaced:
         print(
             "Replaced months from "

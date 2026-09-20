@@ -211,6 +211,20 @@ def _geos(province: str | None, region: str | None) -> list[str]:
     return geos
 
 
+def stored_per_month(
+    conn: sqlite3.Connection, sample: bool, start: str | None = None
+) -> dict[str, int]:
+    """Vacancies per month in the database, whether they count as ICT or not."""
+    return dict(
+        conn.execute(
+            """SELECT substr(posted_at, 1, 7) AS month, COUNT(*) FROM vacancies
+               WHERE duplicate_of IS NULL AND is_sample = ? AND (? IS NULL OR posted_at >= ?)
+               GROUP BY 1""",
+            (int(sample), start, start),
+        )
+    )
+
+
 def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -> Aggregates:
     today = today or date.today()
     start = coverage_start(conn, sample)
@@ -235,14 +249,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
     for r in conn.execute("SELECT vacancy_id, skill_id FROM vacancy_skills"):
         skills.setdefault(r[0], []).append(r[1])
 
-    stored = dict(
-        conn.execute(
-            """SELECT substr(posted_at, 1, 7) AS month, COUNT(*) FROM vacancies
-               WHERE duplicate_of IS NULL AND is_sample = ? AND (? IS NULL OR posted_at >= ?)
-               GROUP BY 1""",
-            (int(sample), start, start),
-        )
-    )
+    stored = stored_per_month(conn, sample, start)
     counts = {name: Counter() for name in TABLES if name != "months"}
     posted: dict[str, list[str]] = {}
     for v in vacancies:
@@ -394,18 +401,26 @@ def merge_into_history(history_dir: Path, agg: Aggregates, force: bool = False) 
     return MergeResult(written, protected)
 
 
-def repair_from_seed(seed_dir: Path, history_dir: Path) -> dict[str, int]:
-    """Replace months in the history whose version in `seed_dir` holds more rows.
+def repair_from_seed(
+    seed_dir: Path, history_dir: Path, stored: dict[str, int] | None = None
+) -> dict[str, int]:
+    """Take a month from `seed_dir` when the database cannot compute that month itself.
 
-    A release can add a breakdown the older history does not have (COROP areas, for example).
-    The database can only recompute months it still covers, so on a server whose database was
-    started later those months would keep their old shape forever. The history committed in the
-    repository, shipped inside the image, does have them. Row count is the test: for the same
-    month more rows means more detail, and a server that has collected more than the repository
-    keeps its own version.
+    A release can change what a month looks like: a breakdown added (COROP areas), or a
+    mapping corrected, which can lower the figures. The database can only recompute the months
+    it still holds the vacancies for, so on a server whose database started later those months
+    would keep their old shape forever. The history committed in the repository, shipped inside
+    the image, has the current shape.
+
+    The test is therefore not which version has more rows — a correction may well have fewer —
+    but whether this database still holds at least as many vacancies of that month as the
+    shipped history was computed from. If it holds fewer, it cannot do better, so the shipped
+    month wins. `stored` is that count per month (see stored_per_month); without it, and for a
+    history written before the count was recorded, the number of rows decides as before.
 
     Returns the number of months replaced per table.
     """
+    seed_stored = _stored_per_month(read_history(seed_dir, "months"))
     replaced: dict[str, int] = {}
     for name, cols in TABLES.items():
         seed = read_history(seed_dir, name)
@@ -417,7 +432,13 @@ def repair_from_seed(seed_dir: Path, history_dir: Path) -> dict[str, int]:
         for rows, target in ((seed, seed_months), (current, current_months)):
             for r in rows:
                 target.setdefault(r["month"], []).append(r)
-        take = [m for m, rows in seed_months.items() if len(rows) > len(current_months.get(m, []))]
+
+        def better(month: str, rows: list[dict], have: dict = current_months) -> bool:
+            if stored is not None and month in seed_stored:
+                return stored.get(month, 0) < seed_stored[month]
+            return len(rows) > len(have.get(month, []))
+
+        take = [m for m, rows in seed_months.items() if better(m, rows)]
         if not take:
             continue
         merged = [r for r in current if r["month"] not in take]

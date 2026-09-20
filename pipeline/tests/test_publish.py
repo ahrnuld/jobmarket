@@ -456,6 +456,31 @@ def test_repair_takes_the_richer_month_from_the_shipped_history(tmp_path):
     assert {r["geo"] for r in september} == {"nl", "p:utrecht"}
 
 
+def test_repair_takes_a_correction_that_removes_rows(tmp_path):
+    """A mapping fixed in a release lowers the figures; the server cannot compute that itself."""
+    seed, history = tmp_path / "seed", tmp_path / "history"
+    # The shipped history was computed from 500 vacancies and, after the correction, holds
+    # fewer rows than the version the server still has.
+    _write(seed / "vacancies.csv", "2026-08,nl,all,all,10\n")
+    (seed / "months.csv").write_text(
+        "month,first_posted,last_posted,stored,partial,computed_at,classifier_version\n"
+        "2026-08,2026-08-01,2026-08-31,500,0,2026-09-20T10:00:00+00:00,2026.09.3\n",
+        encoding="utf-8",
+    )
+    _write(
+        history / "vacancies.csv",
+        "2026-08,nl,all,all,25\n2026-08,c:utrecht,all,all,9\n2026-08,p:utrecht,all,all,6\n",
+    )
+
+    # This database holds only part of that month, so it cannot do better than the shipped one.
+    assert repair_from_seed(seed, history, stored={"2026-08": 120})["vacancies"] == 1
+    assert _national(history) == {"2026-08": "10"}
+
+    # A database that holds the whole month keeps its own version: aggregate recomputes it.
+    _write(history / "vacancies.csv", "2026-08,nl,all,all,25\n")
+    assert repair_from_seed(seed, history, stored={"2026-08": 500}) == {}
+
+
 def test_repair_leaves_a_complete_history_alone(tmp_path):
     seed, history = tmp_path / "seed", tmp_path / "history"
     _write(seed / "vacancies.csv", "2026-08,nl,all,all,10\n")

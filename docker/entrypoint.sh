@@ -20,10 +20,11 @@ mkdir -p /app/var /srv/www
 # and can miss files this version expects. No source is contacted here, so it costs no API
 # calls. A rejected publish keeps the previous snapshot (NFR-07).
 jobmarket init-db || true
-# Months the database no longer covers cannot be recomputed; where the history in the image
-# holds more detail for such a month (a release that adds a breakdown), take that version.
-jobmarket history repair --source /app/seed/aggregates || true
 jobmarket process || echo "[entrypoint] process failed (see the error above)"
+# Months this database cannot compute itself (it holds fewer vacancies of them than the history
+# in the image was computed from) are taken from that history: a release can add a breakdown or
+# correct a mapping, and the figures of such a month change without this database changing.
+jobmarket history repair --source /app/seed/aggregates || true
 jobmarket aggregate || echo "[entrypoint] aggregate failed (see the error above)"
 jobmarket publish || echo "[entrypoint] publish failed (see the error above)"
 
