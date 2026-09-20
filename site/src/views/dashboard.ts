@@ -2,7 +2,9 @@
 
 import { barList, columns, table } from "../lib/charts";
 import { fmtInt, fmtPct } from "../lib/format";
-import { byProgramme, countVacancies, isIndicative, monthly, share, window } from "../lib/model";
+import {
+  byProgramme, countVacancies, isIndicative, knownLevel, monthly, share, window,
+} from "../lib/model";
 import type { GeoData } from "../lib/types";
 import { path } from "../i18n";
 import {
@@ -29,6 +31,7 @@ function panel(ctx: Ctx, state: FilterState, geoId: string, data: GeoData): stri
   const all = countVacancies(rows, win.months, "all", "all");
   const entry = countVacancies(rows, win.months, "all", "entry");
   const unknown = countVacancies(rows, win.months, "all", "unknown");
+  const stated = knownLevel(rows, win.months);
   const min = meta.min_sample_size;
   const indicative = isIndicative(total, min) ? [indicativeBadge(ctx)] : [];
   const levelNote = state.seniority === "all" ? "" : ` · ${seniorityName(ctx, state.seniority)}`;
@@ -36,8 +39,11 @@ function panel(ctx: Ctx, state: FilterState, geoId: string, data: GeoData): stri
   const tiles = [
     tile({ label: `${lang === "nl" ? "ICT-vacatures" : "ICT vacancies"}${levelNote}`, value: fmtInt(lang, total),
            sub: `${windowLabel(ctx, win)} · ${changeText(ctx, total, prev)}`, badges: indicative }),
-    tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, all)),
-           sub: `${fmtInt(lang, entry)} ${lang === "nl" ? "van" : "of"} ${fmtInt(lang, all)} ${tr.chart.vacancies}` }),
+    tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, stated)),
+           sub: lang === "nl"
+             ? `${fmtInt(lang, entry)} van de ${fmtInt(lang, stated)} vacatures die een niveau noemen`
+             : `${fmtInt(lang, entry)} of the ${fmtInt(lang, stated)} vacancies that state a level`,
+           badges: isIndicative(stated, min) ? [indicativeBadge(ctx)] : [] }),
     tile({ label: tr.seniority.unknown, value: fmtPct(lang, share(unknown, all)),
            sub: lang === "nl" ? "Niveau staat niet in de titel of het begin van de tekst"
                               : "Level not stated in the title or the start of the text" }),

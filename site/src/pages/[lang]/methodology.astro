@@ -96,14 +96,14 @@ const toc = nl
       <>
         <p>Adzuna verzamelt vacatures van duizenden Nederlandse vacaturesites en werkgevers. Wij vragen elke dag de vacatures van de afgelopen twee dagen op: alles in Adzuna's categorie IT, plus een zoekopdracht op ICT-woorden (zoals developer, devops, PLC, informatieanalist) in alle andere categorieën, omdat veel ICT-vacatures daar terechtkomen.</p>
         <p>Per vacature krijgen we de titel, werkgever, plaats, datum, het salaris als dat vermeld is, en <strong>alleen het begin van de tekst (ongeveer 500 tekens)</strong>.</p>
-        <p>Elke dag ophalen is nodig omdat een vacature soms maar een paar dagen online staat. Verder terugkijken dan de start van onze reeks kan niet: de bron levert alleen vacatures die nu nog online staan. Van de advertenties van een maand oud staat nog ongeveer 30% online, van een half jaar oud nog ongeveer 5%. Een inhaalslag naar het verleden zou dus een daling laten zien die er nooit was; wat we zo ophalen gebruiken we alleen om de indeelregels te controleren, nooit om te tellen.</p>
+        <p>Maanden die al voorbij waren toen we begonnen met dagelijks ophalen, blijven gemarkeerd als onvolledig: we hebben daarvan alleen de advertenties die op dat moment nog online stonden. Ze tellen niet mee in trends. Elke dag ophalen is nodig omdat een vacature soms maar een paar dagen online staat. Verder terugkijken dan de start van onze reeks kan niet: de bron levert alleen vacatures die nu nog online staan. Van de advertenties van een maand oud staat nog ongeveer 30% online, van een half jaar oud nog ongeveer 5%. Een inhaalslag naar het verleden zou dus een daling laten zien die er nooit was; wat we zo ophalen gebruiken we alleen om de indeelregels te controleren, nooit om te tellen.</p>
         <p>Voordat we iets opslaan, halen we e-mailadressen, telefoonnummers en namen van contactpersonen uit de tekst. Vacatureteksten bewaren we niet langer dan de licentie toestaat; daarna blijven alleen de tellingen over. We halen niets van sites die dat verbieden, zoals LinkedIn of Indeed.</p>
       </>
     ) : (
       <>
         <p>Adzuna collects vacancies from thousands of Dutch job sites and employers. Every day we request the vacancies of the past two days: everything in Adzuna's IT category, plus a search for ICT words (such as developer, devops, PLC, information analyst) in all other categories, because many ICT vacancies end up there.</p>
         <p>For each vacancy we receive the title, employer, place, date, the salary if stated, and <strong>only the start of the text (about 500 characters)</strong>.</p>
-        <p>Collecting daily is necessary because a vacancy is sometimes online for only a few days. Looking further back than the start of our series is not possible: the source only serves vacancies that are still online. Of the ads from a month ago about 30% are still listed, of those from six months ago about 5%. Reaching into the past would therefore show a decline that never happened; what we collect that way is used only to check the classification rules, never to count.</p>
+        <p>Months that were already over when the daily collection started stay marked as incomplete: of those we only have the ads that were still online at that moment. They are left out of trends. Collecting daily is necessary because a vacancy is sometimes online for only a few days. Looking further back than the start of our series is not possible: the source only serves vacancies that are still online. Of the ads from a month ago about 30% are still listed, of those from six months ago about 5%. Reaching into the past would therefore show a decline that never happened; what we collect that way is used only to check the classification rules, never to count.</p>
         <p>Before storing anything we remove e-mail addresses, phone numbers and names of contact persons. Vacancy texts are kept no longer than the licence allows; after that only the counts remain. We do not collect anything from sites that forbid it, such as LinkedIn or Indeed.</p>
       </>
     )}
@@ -137,7 +137,7 @@ const toc = nl
           <li>Staat er niets in de titel, dan zoeken we in de tekst naar zulke woorden, en daarna naar het gevraagde aantal jaren ervaring: 0–2 jaar is junior, 3–5 medior, 6 of meer senior.</li>
           <li>Vinden we niets, dan is het niveau onbekend.</li>
         </ol>
-        <p><strong>Stage + junior</strong> is de optelling van stage en junior: de vacatures die zeker voor studenten en starters bedoeld zijn. Omdat we maar het begin van de tekst zien, is het niveau van veel vacatures onbekend. Een deel daarvan staat ook open voor starters.</p>
+        <p><strong>Stage + junior</strong> is de optelling van stage en junior: de vacatures die zeker voor studenten en starters bedoeld zijn. Omdat we maar het begin van de tekst zien, noemt ongeveer twee derde van de vacatures geen niveau. Het percentage stage + junior rekenen we daarom af tegen de vacatures die wél een niveau noemen, niet tegen alle vacatures — anders zou het percentage vooral zeggen hoe vaak een niveau ontbreekt. Hoeveel vacatures geen niveau noemen, staat als apart cijfer op het overzicht. Een deel daarvan staat ook open voor starters.</p>
       </>
     ) : (
       <>
@@ -148,7 +148,7 @@ const toc = nl
           <li>If the title says nothing, we search the text for such words, and then for the required years of experience: 0–2 years is junior, 3–5 medior, 6 or more senior.</li>
           <li>If we find nothing, the level is unknown.</li>
         </ol>
-        <p><strong>Internship + junior</strong> is internship and junior combined: the vacancies certainly meant for students and starters. Because we only see the start of the text, the level of many vacancies is unknown. Some of those are also open to starters.</p>
+        <p><strong>Internship + junior</strong> is internship and junior combined: the vacancies certainly meant for students and starters. Because we only see the start of the text, about two thirds of the vacancies state no level. We therefore express the internship + junior share against the vacancies that do state a level, not against all of them — otherwise the percentage would mostly say how often a level is missing. How many vacancies state no level is shown as a separate figure on the overview. Some of those are open to starters too.</p>
       </>
     )}
 

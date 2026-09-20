@@ -45,6 +45,14 @@ export function countVacancies(rows: VacancyRow[], months: number[], programme =
   return total;
 }
 
+/**
+ * Vacancies whose level is known. Most postings do not state one (the source gives us only the
+ * first ~500 characters), so a share of *all* vacancies would silently multiply every level
+ * share by the share that does state a level.
+ */
+export const knownLevel = (rows: VacancyRow[], months: number[], programme = "all") =>
+  countVacancies(rows, months, programme, "all") - countVacancies(rows, months, programme, "unknown");
+
 export function monthly(rows: VacancyRow[], months: number[], programme = "all",
                         seniority: string = "all"): Map<number, number> {
   const out = new Map<number, number>(months.map((m) => [m, 0]));

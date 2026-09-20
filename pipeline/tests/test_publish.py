@@ -10,6 +10,7 @@ from jobmarket.aggregate import (
     annual_salary,
     compute,
     display_title,
+    flow_start,
     merge_into_history,
     read_history,
     repair_from_seed,
@@ -194,6 +195,68 @@ def test_fresh_database_does_not_overwrite_complete_history(conn, ref, tmp_path)
         if r["geo"] == "nl" and r["programme"] == "all" and r["seniority"] == "all"
     }
     assert after == {"2026-09": "30", "2026-10": "4"}  # September kept, October added
+
+
+def _ad(i: int, posted: str) -> VacancyRecord:
+    return VacancyRecord(
+        source_id="adzuna",
+        external_id=str(i),
+        title="Java Developer",
+        posted_at=posted,
+        employer=f"E{i}",
+        area=["Nederland"],
+        description="Java",
+        source_category="it-jobs",
+    )
+
+
+def _national(history) -> dict[str, str]:
+    return {
+        r["month"]: r["n"]
+        for r in read_history(history, "vacancies")
+        if r["geo"] == "nl" and r["programme"] == "all" and r["seniority"] == "all"
+    }
+
+
+def test_a_month_keeps_growing_while_it_is_collected(conn, ref, tmp_path):
+    """The database gains days as the month runs; the history must follow it."""
+    history = tmp_path / "agg"
+    ingest(conn, "adzuna", [_ad(i, f"2026-10-{i:02d}") for i in range(1, 6)], ref,
+           covers_from="2026-10-01")
+    process(conn, ref, [])
+    merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 6)))
+    assert _national(history) == {"2026-10": "5"}
+
+    # A week later the same database holds more of the same month.
+    ingest(conn, "adzuna", [_ad(i, f"2026-10-{i:02d}") for i in range(6, 13)], ref,
+           covers_from="2026-10-05")
+    process(conn, ref, [])
+    result = merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 13)))
+    assert result.protected == []
+    assert _national(history) == {"2026-10": "12"}
+
+
+def test_months_the_daily_collection_missed_stay_marked_incomplete(conn, ref, tmp_path):
+    """A 30-day first fetch only sees what is still listed, so those months are not counts."""
+    conn.execute(
+        "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from, backfill) "
+        "VALUES ('adzuna', '2026-10-05T05:00:00+00:00', 'success', '2026-09-05', 0)"
+    )  # a 30-day window: reaches into the past
+    conn.execute(
+        "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from, backfill) "
+        "VALUES ('adzuna', '2026-10-06T05:00:00+00:00', 'success', '2026-10-04', 0)"
+    )  # a two-day window: from here on we see the flow
+    assert flow_start(conn) == "2026-10-04"
+
+    ingest(conn, "adzuna", [_ad(i, d) for i, d in enumerate(["2026-09-10", "2026-10-02",
+                                                             "2026-11-03"])], ref,
+           covers_from="2026-09-05")
+    process(conn, ref, [])
+    agg = compute(conn, sample=False, today=date(2026, 11, 20))
+    partial = {r["month"]: r["partial"] for r in agg.rows["months"]}
+    assert partial["2026-09"] == 1  # only a fraction of that month was still listed
+    assert partial["2026-10"] == 1  # the collection started on the 4th
+    assert partial["2026-11"] == 1  # the current month is still running
 
 
 def test_publish_writes_snapshot(loaded, ref, settings):

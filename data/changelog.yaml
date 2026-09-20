@@ -6,6 +6,32 @@
 
 entries:
   - date: "2026-09-20"
+    version: "0.5.0"
+    title:
+      nl: Percentage stage + junior eerlijker berekend; onvolledige maanden gemarkeerd
+      en: A fairer internship + junior percentage, and incomplete months marked
+    body:
+      nl: >-
+        Het percentage stage + junior werd afgezet tegen alle vacatures, terwijl ongeveer twee
+        derde van de vacatures geen niveau noemt. Daardoor leek het aandeel starters veel
+        kleiner dan het is: 5% in plaats van 13% van de vacatures die wel een niveau noemen.
+        We rekenen nu af tegen die laatste groep; hoeveel vacatures geen niveau noemen staat er
+        als apart cijfer naast. Verder markeren we maanden die al voorbij waren toen we met
+        dagelijks ophalen begonnen als onvolledig, omdat we daarvan alleen de advertenties
+        hebben die toen nog online stonden; ze tellen niet mee in trends. Een lopende maand
+        wordt nu wel elke dag bijgewerkt: eerder kon die blijven staan op de stand van de
+        eerste dag.
+      en: >-
+        The internship + junior percentage was expressed against all vacancies, while about two
+        thirds of them state no level. That made the share of starter roles look far smaller
+        than it is: 5% instead of 13% of the vacancies that do state a level. We now express it
+        against that group, with the number of vacancies without a level beside it. We also
+        mark months that were already over when the daily collection started as incomplete,
+        because we only have the ads that were still online then; they are left out of trends.
+        A running month is now updated every day: it could previously stay frozen at the count
+        of its first day.
+    series_break: [seniority]
+  - date: "2026-09-20"
     version: "0.4.0"
     title:
       nl: Elke dag vacatures ophalen in plaats van elke week

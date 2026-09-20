@@ -151,6 +151,33 @@ def coverage_start(conn: sqlite3.Connection, sample: bool) -> str | None:
     return row[0] if row else None
 
 
+# A run that asks for more days than this reaches into the past, where the source only still
+# lists a fraction of what was posted; the months it touches are not a measurement of the flow.
+FLOW_WINDOW_DAYS = 8
+
+
+def flow_start(conn: sqlite3.Connection) -> str | None:
+    """First day covered by a run with a short window, i.e. from when counting is meaningful.
+
+    The source only serves vacancies that are still listed, so a run that reaches back 30 days
+    sees a fraction of what was posted in the first of those days. Only the runs that ask for a
+    few days at a time measure the flow of new vacancies; months that began before the first of
+    those runs are marked incomplete, so no trend uses them.
+    """
+    rows = conn.execute(
+        """SELECT covers_from, substr(started_at, 1, 10) AS ran_on FROM ingestion_runs
+           WHERE source_id = 'adzuna' AND status = 'success' AND backfill = 0
+                 AND covers_from IS NOT NULL"""
+    ).fetchall()
+    windows = [
+        r["covers_from"]
+        for r in rows
+        if (date.fromisoformat(r["ran_on"]) - date.fromisoformat(r["covers_from"])).days
+        <= FLOW_WINDOW_DAYS
+    ]
+    return min(windows) if windows else None
+
+
 def _geos(province: str | None, region: str | None) -> list[str]:
     geos = ["nl"]
     if province:
@@ -231,14 +258,19 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
 
     all_posted = sorted(p for ps in posted.values() for p in ps)
     series_start = all_posted[0] if all_posted else None
+    flow = flow_start(conn) if not sample else None
     now = utc_now()
     rows["months"] = []
     for month in sorted(posted):
         first, last = min(posted[month]), max(posted[month])
-        # Partial: the month the series starts in (unless it starts on the 1st) or the
-        # current month, which is still running.
-        partial = (month == series_start[:7] and not series_start.endswith("-01")) or (
-            month == today.isoformat()[:7]
+        # Partial: the month the series starts in (unless it starts on the 1st), the current
+        # month, which is still running, and every month the daily collection did not cover
+        # from its first day: what we hold of those is what was still listed when we first
+        # asked, not what was posted.
+        partial = (
+            (month == series_start[:7] and not series_start.endswith("-01"))
+            or (month == today.isoformat()[:7])
+            or (flow is not None and (month < flow[:7] or (month == flow[:7] and flow[8:] != "01")))
         )
         rows["months"].append(
             {
@@ -264,27 +296,32 @@ def read_history(history_dir: Path, name: str) -> list[dict]:
 @dataclass
 class MergeResult:
     written: dict[str, int]
-    # Months the database holds only partly while the history already has them: the history
-    # version is kept rather than overwritten with fewer vacancies.
+    # Months where recomputing would lose vacancies the history already has: the history
+    # version is kept. Happens on a database that does not (yet) hold the whole month.
     protected: list[str]
+
+
+def _month_totals(rows: list[dict]) -> dict[str, int]:
+    """Vacancies per month in an aggregate table, nationally and over all levels."""
+    totals: dict[str, int] = {}
+    for r in rows:
+        if r["geo"] == "nl" and r["programme"] == "all" and r["seniority"] == "all":
+            totals[r["month"]] = totals.get(r["month"], 0) + int(r["n"])
+    return totals
 
 
 def merge_into_history(history_dir: Path, agg: Aggregates) -> MergeResult:
     """Replace recomputed months in the history CSVs; keep all other months.
 
-    A month is not replaced when the history has postings from before the database's coverage
-    start. Otherwise a fresh or restored database (e.g. on a new server) would overwrite a
-    complete month of history with the few days it has fetched so far.
+    A month is only replaced when the recomputation finds at least as many vacancies as the
+    history holds for it. A fresh or restored database (e.g. on a new server) therefore cannot
+    overwrite a complete month with the few days it has fetched so far, while a database that
+    keeps collecting does update the running month every day.
     """
     history_dir.mkdir(parents=True, exist_ok=True)
-    # Protect a month when the history holds postings from before the database's coverage
-    # start: those postings are not in the database, so recomputing would lose them.
-    history_first = {r["month"]: r["first_posted"] for r in read_history(history_dir, "months")}
-    protected = sorted(
-        m
-        for m in agg.months
-        if m in history_first and agg.coverage_start and history_first[m] < agg.coverage_start
-    )
+    have = _month_totals(read_history(history_dir, "vacancies"))
+    fresh = _month_totals([{k: str(v) for k, v in r.items()} for r in agg.rows["vacancies"]])
+    protected = sorted(m for m in agg.months if fresh.get(m, 0) < have.get(m, 0))
     recomputed = set(agg.months) - set(protected)
     written = {}
     for name, cols in TABLES.items():

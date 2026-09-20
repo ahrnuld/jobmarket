@@ -3,7 +3,10 @@
 
 import { barList, lineChart, ranges, table } from "../lib/charts";
 import { escapeHtml as esc, fmtEuro, fmtInt, fmtPct } from "../lib/format";
-import { countVacancies, isIndicative, monthly, salaryStats, share, topFamilies, topSkills, window } from "../lib/model";
+import {
+  countVacancies, isIndicative, knownLevel, monthly, salaryStats, share, topFamilies, topSkills,
+  window,
+} from "../lib/model";
 import type { GeoData, Stats } from "../lib/types";
 import { monthlyFromAnnual, salaryLevelName } from "./blocks";
 import {
@@ -34,12 +37,15 @@ export function renderCompare(ctx: Ctx, state: FilterState, data: Record<string,
     const n = countVacancies(d.vacancies, win.months, p);
     const prev = win.previous ? countVacancies(d.vacancies, win.previous, p) : null;
     const entry = countVacancies(d.vacancies, win.months, p, "entry");
+    const stated = knownLevel(d.vacancies, win.months, p);
     const change = prev ? `${n >= prev ? "+" : ""}${fmtPct(lang, (n - prev) / prev)} ${tr.chart.vsPrevious}` : tr.chart.noPrevious;
     return `<div>${head(p)}<div class="tiles">`
       + tile({ label: lang === "nl" ? "Vacatures" : "Vacancies", value: fmtInt(lang, n),
                sub: `${fmtPct(lang, share(n, ict))} ${lang === "nl" ? "van alle ICT-vacatures" : "of all ICT vacancies"} · ${change}`,
                badges: isIndicative(n, min) ? [indicativeBadge(ctx)] : [] })
-      + tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, n)), sub: `${fmtInt(lang, entry)} ${tr.chart.vacancies}` })
+      + tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, stated)),
+               sub: lang === "nl" ? `${fmtInt(lang, entry)} van de ${fmtInt(lang, stated)} met een niveau`
+                                  : `${fmtInt(lang, entry)} of the ${fmtInt(lang, stated)} that state a level` })
       + `</div></div>`;
   });
   out.push(card(ctx, { headingLevel: 2,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { barList, niceMax } from "./charts";
-import { countVacancies, salaryStats, topSkills, window } from "./model";
+import { countVacancies, knownLevel, salaryStats, topSkills, window } from "./model";
 import type { MonthInfo, SalaryRow, SkillRow, VacancyRow } from "./types";
 
 const months: MonthInfo[] = ["2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"]
@@ -25,6 +25,19 @@ const vac: VacancyRow[] = [
   [3, "all", "all", 200], [4, "all", "all", 200], [5, "all", "all", 200],
   [3, "informatica", "all", 120], [3, "all", "junior", 20],
 ];
+
+describe("knownLevel", () => {
+  it("counts only the vacancies that state a level", () => {
+    const rows: VacancyRow[] = [
+      [0, "all", "all", 100], [0, "all", "unknown", 64], [0, "all", "entry", 12],
+      [0, "informatica", "all", 50], [0, "informatica", "unknown", 30],
+    ];
+    expect(knownLevel(rows, [0])).toBe(36);
+    expect(knownLevel(rows, [0], "informatica")).toBe(20);
+    // The point of it: a share of all vacancies would understate entry level by two thirds.
+    expect(12 / knownLevel(rows, [0])).toBeCloseTo(0.333, 2);
+  });
+});
 
 describe("counts", () => {
   it("sums only the requested programme and level", () => {

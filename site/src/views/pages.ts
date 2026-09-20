@@ -2,7 +2,7 @@
 // next to the national figure (FR-07), like the overview.
 
 import { fmtInt, fmtPct } from "../lib/format";
-import { countVacancies, isIndicative, share, window } from "../lib/model";
+import { countVacancies, isIndicative, knownLevel, share, window } from "../lib/model";
 import type { GeoData } from "../lib/types";
 import { rolesCard, salaryCard, skillsCard } from "./blocks";
 import { type Ctx, type FilterState, geoName, indicativeBadge, tile, windowLabel } from "./common";
@@ -29,13 +29,16 @@ export function renderProgramme(programme: string) {
       const n = countVacancies(d.vacancies, win.months, programme, state.seniority);
       const all = countVacancies(d.vacancies, win.months, programme, "all");
       const entry = countVacancies(d.vacancies, win.months, programme, "entry");
+      const stated = knownLevel(d.vacancies, win.months, programme);
       const ictAll = countVacancies(d.vacancies, win.months, "all", "all");
       const tiles = `<div class="tiles">`
         + tile({ label: lang === "nl" ? "Passende vacatures" : "Matching vacancies", value: fmtInt(lang, n),
                  sub: `${windowLabel(ctx, win)} · ${fmtPct(lang, share(all, ictAll))} ${lang === "nl" ? "van alle ICT-vacatures" : "of all ICT vacancies"}`,
                  badges: isIndicative(n, meta.min_sample_size) ? [indicativeBadge(ctx)] : [] })
-        + tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, all)),
-                 sub: `${fmtInt(lang, entry)} ${lang === "nl" ? "van" : "of"} ${fmtInt(lang, all)}` })
+        + tile({ label: tr.seniority.entry, value: fmtPct(lang, share(entry, stated)),
+                 sub: lang === "nl"
+                   ? `${fmtInt(lang, entry)} van de ${fmtInt(lang, stated)} met een niveau in de tekst`
+                   : `${fmtInt(lang, entry)} of the ${fmtInt(lang, stated)} that state a level` })
         + `</div>`;
       return tiles
         + skillsCard(ctx, d, win, g, programme, state.seniority, 15)
