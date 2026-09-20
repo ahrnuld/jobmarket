@@ -34,6 +34,17 @@ Set these in the resource's **Environment Variables** screen (mark the Adzuna ke
 | `JOBMARKET_INGEST_DAYS` | `30` for the first run (see below), then empty. Empty means the default window of 2 days |
 | `SCHEDULER` | `on` (default). Use `off` if you prefer Coolify's **Scheduled Tasks**: add a daily task on the `worker` service with command `/app/docker/weekly.sh` |
 
+## Checking the state
+
+```bash
+docker exec -it <worker> jobmarket status
+```
+
+Shows what the database holds (vacancies, how many are in a COROP area, which runs happened),
+what the aggregate history holds (months, and whether it has rows per COROP area), and which
+files the published snapshot has. Every deploy re-derives those from the stored vacancies before
+republishing, so a volume written by an older release is brought up to date with the code.
+
 ## Call budget
 
 Adzuna's plan allows 25 calls a minute, 250 a day, 1,000 a week and 2,500 a month. The worker

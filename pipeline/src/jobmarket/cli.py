@@ -251,6 +251,56 @@ def cmd_budget(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_status(args: argparse.Namespace) -> int:
+    """What the working store and the aggregate history hold right now (FR-20)."""
+    from jobmarket.aggregate import coverage_start, read_history
+
+    settings = load_settings()
+    print(f"database     {settings.db_path}")
+    with open_db(settings.db_path) as conn:
+        counts = conn.execute(
+            """SELECT COUNT(*), SUM(is_ict = 1 AND duplicate_of IS NULL),
+                      SUM(is_ict = 1 AND duplicate_of IS NULL AND corop IS NOT NULL),
+                      MIN(posted_at), MAX(posted_at)
+               FROM vacancies WHERE is_sample = 0"""
+        ).fetchone()
+        total, ict, located, first, last = (c or 0 for c in counts)
+        print(f"vacancies    {total} stored, {ict} unique ICT, {located} of those in a COROP area")
+        print(f"posted       {first or '-'} .. {last or '-'}")
+        print(f"coverage     from {coverage_start(conn, sample=False) or '-'}")
+        print("runs")
+        for r in conn.execute(
+            """SELECT source_id, started_at, status, records_fetched, records_new, backfill, error
+               FROM ingestion_runs ORDER BY id DESC LIMIT 5"""
+        ):
+            note = " (backfill)" if r["backfill"] else ""
+            error = f" — {r['error'][:60]}" if r["error"] else ""
+            print(
+                f"  {r['started_at']} {r['source_id']:<14} {r['status']:<8} "
+                f"fetched {r['records_fetched']:>5} new {r['records_new']:>5}{note}{error}"
+            )
+
+    print(f"history      {settings.history_dir}")
+    rows = read_history(settings.history_dir, "vacancies")
+    months = sorted({r["month"] for r in rows})
+    corop_rows = sum(1 for r in rows if r["geo"].startswith("c:"))
+    print(
+        f"  {len(rows)} rows over {len(months)} months "
+        f"({months[0] if months else '-'} .. {months[-1] if months else '-'})"
+    )
+    print(f"  {corop_rows} rows per COROP area (0 means the map has nothing to show)")
+
+    published = settings.publish_dir
+    print(f"published    {published}")
+    for name in ("meta.json", "stats.json", "map.json"):
+        path = published / name
+        print(
+            f"  {name:<12} {'present' if path.is_file() else 'MISSING'}"
+            + (f", {path.stat().st_size:,} bytes" if path.is_file() else "")
+        )
+    return 0
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     """The scheduled job: ingest, statistics, process, aggregate, publish."""
     import os
@@ -299,6 +349,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("budget", help="show how many API calls the plan limits still allow")
     p.set_defaults(func=cmd_budget)
+
+    p = sub.add_parser("status", help="what the database, the history and the snapshot hold")
+    p.set_defaults(func=cmd_status)
 
     p = sub.add_parser("process", help="normalise, deduplicate and classify stored vacancies")
     p.set_defaults(func=cmd_process)

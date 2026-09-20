@@ -15,9 +15,13 @@ seed /app/data/aggregates /app/seed/aggregates
 seed /app/site/public/data /app/seed/published
 mkdir -p /app/var /srv/www
 
-# Republish from the aggregate history first: a data volume written by an older release can
-# miss files this version expects. A rejected publish keeps the previous snapshot (NFR-07).
+# Re-derive everything this release computes from the stored vacancies, then republish: a
+# volume written by an older release holds classifications and aggregates from the old rules,
+# and can miss files this version expects. No source is contacted here, so it costs no API
+# calls. A rejected publish keeps the previous snapshot (NFR-07).
 jobmarket init-db || true
+jobmarket process || echo "[entrypoint] process failed (see the error above)"
+jobmarket aggregate || echo "[entrypoint] aggregate failed (see the error above)"
 jobmarket publish || echo "[entrypoint] publish failed (see the error above)"
 
 # If the volume still lacks files this release needs, the snapshot in it is older than the code.
