@@ -6,6 +6,30 @@
 
 entries:
   - date: "2026-09-20"
+    version: "0.6.0"
+    title:
+      nl: "Tweede vacaturebron: EURES (UWV) naast Adzuna"
+      en: "A second vacancy source: EURES (UWV) next to Adzuna"
+    body:
+      nl: >-
+        Naast Adzuna halen we nu ook vacatures uit EURES, het vacatureportaal van de Europese
+        Commissie, waar de Nederlandse vacatures van UWV vandaan komen. Dat levert ongeveer
+        driemaal zoveel ICT-vacatures per dag, de volledige vacaturetekst in plaats van de
+        eerste 500 tekens, en per vacature een gebied, waardoor bijna alle EURES-vacatures op
+        de kaart staan. Een vacature die in beide bronnen staat, tellen we één keer. Omdat het
+        totaal hierdoor stijgt zonder dat de arbeidsmarkt veranderde, zijn de maanden van vóór
+        deze uitbreiding niet met latere maanden te vergelijken; ze staan als onvolledig
+        gemarkeerd en tellen niet mee in trends.
+      en: >-
+        Besides Adzuna we now also collect vacancies from EURES, the European Commission's job
+        portal, whose Dutch vacancies come from UWV. That yields about three times as many ICT
+        vacancies a day, the full vacancy text instead of the first 500 characters, and an area
+        per vacancy, so nearly every EURES vacancy appears on the map. A vacancy present in
+        both sources is counted once. Because the total rises without the job market changing,
+        the months before this addition cannot be compared with later ones; they are marked
+        incomplete and are left out of trends.
+    series_break: [vacancies, skills, salaries, regions]
+  - date: "2026-09-20"
     version: "0.5.0"
     title:
       nl: Percentage stage + junior eerlijker berekend; onvolledige maanden gemarkeerd

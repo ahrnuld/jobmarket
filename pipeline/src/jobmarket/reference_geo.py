@@ -12,6 +12,7 @@ is committed, so a build never depends on the CBS API being up.
 from __future__ import annotations
 
 import csv
+import io
 import json
 import re
 import unicodedata
@@ -212,6 +213,47 @@ def write_csv(path: Path, rows: list[MunicipalityRow]) -> None:
                     r.province,
                 ]
             )
+
+
+# The Dutch NUTS 3 regions are the COROP areas, but their codes are renumbered with every
+# revision of NUTS (Oost-Groningen was NL111 in 2021 and is NL114 in 2024), and sources do not
+# say which revision they use — EURES serves 2024 codes. Eurostat publishes a list per revision;
+# we keep the codes of several, newest first, so an older code still resolves.
+NUTS_CSV = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/csv/NUTS_AT_{year}.csv"
+NUTS_REVISIONS = ["2024", "2021", "2016"]
+NUTS3_COLUMNS = ["nuts3_code", "name", "corop_code"]
+
+
+def fetch_nuts3(country: str = "NL", revisions: list[str] | None = None) -> list[tuple[str, str]]:
+    """(code, name) per NUTS 3 region of one country, over several revisions of NUTS.
+
+    A code that two revisions give to different areas keeps the meaning of the newest one.
+    """
+    out: dict[str, str] = {}
+    for year in revisions or NUTS_REVISIONS:
+        with urllib.request.urlopen(NUTS_CSV.format(year=year), timeout=120) as resp:
+            text = resp.read().decode("utf-8-sig")
+        for r in csv.DictReader(io.StringIO(text)):
+            if r["CNTR_CODE"] != country or len(r["NUTS_ID"]) != 5:
+                continue
+            out.setdefault(r["NUTS_ID"], r["NAME_LATN"].replace("’", "'"))
+    if not out:
+        raise ValueError(f"No NUTS 3 regions found for {country}")
+    return sorted(out.items())
+
+
+def write_nuts3_csv(path: Path, regions: list[tuple[str, str]], corop_codes: dict[str, str]) -> int:
+    """Write the crosswalk, joining on the area name. Returns the rows written."""
+    unknown = [name for _, name in regions if normalise_name(name) not in corop_codes]
+    if unknown:
+        raise ValueError(f"NUTS 3 regions without a COROP area: {unknown}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as fh:
+        writer = csv.writer(fh, lineterminator="\n")
+        writer.writerow(NUTS3_COLUMNS)
+        for code, name in regions:
+            writer.writerow([code, name, corop_codes[normalise_name(name)]])
+    return len(regions)
 
 
 def slug(name: str) -> str:

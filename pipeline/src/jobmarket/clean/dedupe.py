@@ -11,8 +11,10 @@ and employer appear in SPRAY_MIN_PLACES or more places within SPRAY_WINDOW_DAYS,
 count as one vacancy, flagged multi_location: its real workplace is unknown, so it counts only
 in the national figures. Two places stay two vacancies (a company with two offices).
 
-Postings without an employer are only compared with other postings without an employer, and
-never merged across places. Sample (fixture) and real records are never compared.
+One source may name the employer where another does not (EURES carries no employer field),
+so a posting without an employer also matches one with the same title and place that does have
+one: the same vacancy found twice must not count twice. Sample (fixture) and real records are
+never compared.
 """
 
 from __future__ import annotations
@@ -40,6 +42,18 @@ def deduplicate(conn: sqlite3.Connection) -> int:
         key = (r["is_sample"], r["title_norm"], r["employer_norm"], r["location_norm"])
         posted = date.fromisoformat(r["posted_at"])
         original = originals.get(key)
+        if original is None and not r["employer_norm"]:
+            # No employer: the same title in the same place from any employer is the same
+            # vacancy reaching us through a second source.
+            original = next(
+                (
+                    o
+                    for (sample, title, _employer, location), o in originals.items()
+                    if (sample, title, location)
+                    == (r["is_sample"], r["title_norm"], r["location_norm"])
+                ),
+                None,
+            )
         if original and (posted - original[1]).days <= WINDOW_DAYS:
             duplicate_of[r["id"]] = original[0]
         else:

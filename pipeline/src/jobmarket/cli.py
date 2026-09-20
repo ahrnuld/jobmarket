@@ -42,7 +42,13 @@ def cmd_reference_check(args: argparse.Namespace) -> int:
 
 def cmd_update_regions(args: argparse.Namespace) -> int:
     """Rebuild data/reference/municipalities.csv from the CBS area classifications."""
-    from jobmarket.reference_geo import build, write_csv
+    from jobmarket.reference_geo import (
+        build,
+        fetch_nuts3,
+        normalise_name,
+        write_csv,
+        write_nuts3_csv,
+    )
 
     settings = load_settings()
     rows = build()
@@ -50,6 +56,23 @@ def cmd_update_regions(args: argparse.Namespace) -> int:
     write_csv(path, rows)
     corops = {r.corop for r in rows}
     print(f"Wrote {len(rows)} municipality names and {len(corops)} COROP areas to {path}")
+
+    # The Dutch NUTS 3 regions are those same COROP areas; EURES locates a vacancy by NUTS 3.
+    codes = {normalise_name(r.corop): r.corop_code for r in rows}
+    nuts3_path = settings.reference_dir / "nuts3.csv"
+    written = write_nuts3_csv(nuts3_path, fetch_nuts3(), codes)
+    print(f"Wrote {written} NUTS 3 codes to {nuts3_path}")
+    return 0
+
+
+def cmd_update_occupations(args: argparse.Namespace) -> int:
+    """Rebuild the list of ESCO occupations that count as ICT (used to ask EURES)."""
+    from jobmarket.occupations import ISCO_GROUPS, fetch_ict_occupations, write_yaml
+
+    settings = load_settings()
+    path = settings.reference_dir / "esco_occupations.yaml"
+    n = write_yaml(path, fetch_ict_occupations())
+    print(f"Wrote {n} ESCO occupations from ISCO groups {', '.join(ISCO_GROUPS)} to {path}")
     return 0
 
 
@@ -91,6 +114,21 @@ def _records_for(source: str, args: argparse.Namespace, settings, conn):
         config = AdzunaConfig.from_settings(settings, cfg)
         client = AdzunaClient(config, budget=_adzuna_budget(conn, config))
         return client.fetch(days=args.days), client
+    if source == "eures":
+        import yaml
+
+        from jobmarket.occupations import load_occupation_uris
+        from jobmarket.sources.eures import EuresClient, EuresConfig
+
+        cfg = yaml.safe_load((settings.reference_dir / "ingestion.yaml").read_text("utf-8"))
+        uris = load_occupation_uris(settings.reference_dir / "esco_occupations.yaml")
+        client = EuresClient(EuresConfig.from_settings(cfg, uris))
+        # Vacancies we already have cost no detail call.
+        known = {
+            r[0]
+            for r in conn.execute("SELECT external_id FROM vacancies WHERE source_id = 'eures'")
+        }
+        return client.fetch(days=args.days, known=known), client
     raise SystemExit(f"Unknown source {source!r}")
 
 
@@ -112,9 +150,10 @@ def cmd_ingest(args: argparse.Namespace) -> int:
             conn, args.source, records, ref, covers_from=covers_from, backfill=args.backfill
         )
         budget_used = None
-        if client is not None and client.budget is not None:
-            client.budget.commit()  # also count the calls of a failed run
-            budget_used = client.budget.describe()  # while the database is still open
+        budget = getattr(client, "budget", None)
+        if budget is not None:
+            budget.commit()  # also count the calls of a failed run
+            budget_used = budget.describe()  # while the database is still open
         if client is not None and client.stats.budget_exhausted:
             # Results come newest first: the oldest days are missing, so claim no coverage.
             conn.execute(
@@ -123,7 +162,12 @@ def cmd_ingest(args: argparse.Namespace) -> int:
     print(f"Run {result.run_id} [{result.status}]: fetched {result.fetched}, new {result.new}")
     if client is not None:
         s = client.stats
-        print(f"API calls: {s.calls}; per query: {s.per_query}")
+        detail = (
+            f"per query: {s.per_query}"
+            if hasattr(s, "per_query")
+            else f"listed {s.listed}, details fetched {s.details}"
+        )
+        print(f"API calls: {s.calls}; {detail}")
         if budget_used:
             print(f"Call budget used — {budget_used}")
         if s.budget_exhausted:
@@ -264,8 +308,12 @@ def cmd_history_repair(args: argparse.Namespace) -> int:
         return 1
     replaced = repair_from_seed(seed, _history_dir(settings, args.dataset))
     if replaced:
-        print("Replaced months from " + str(seed) + ": "
-              + ", ".join(f"{n} in {name}.csv" for name, n in sorted(replaced.items())))
+        print(
+            "Replaced months from "
+            + str(seed)
+            + ": "
+            + ", ".join(f"{n} in {name}.csv" for name, n in sorted(replaced.items()))
+        )
     else:
         print(f"Nothing to repair: the history is at least as complete as {seed}")
     return 0
@@ -325,12 +373,18 @@ def cmd_run(args: argparse.Namespace) -> int:
     """The scheduled job: ingest, statistics, process, aggregate, publish."""
     import os
 
-    ingest_step = ["ingest", "--source", "adzuna" if args.dataset == "real" else "fixture"]
-    if args.dataset == "real" and os.environ.get("JOBMARKET_INGEST_DAYS"):
+    days = os.environ.get("JOBMARKET_INGEST_DAYS")
+    if args.dataset == "real":
         # e.g. 30 for the first run on a new server, to close the gap since the last run
-        ingest_step += ["--days", os.environ["JOBMARKET_INGEST_DAYS"]]
+        extra = ["--days", days] if days else []
+        ingest_steps = [
+            ["ingest", "--source", "adzuna", *extra],
+            ["ingest", "--source", "eures", *extra],
+        ]
+    else:
+        ingest_steps = [["ingest", "--source", "fixture"]]
     steps = [
-        ingest_step,
+        *ingest_steps,
         ["stats"],
         ["process"],
         ["aggregate", "--dataset", args.dataset],
@@ -355,8 +409,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_init_db)
 
     p = sub.add_parser("ingest", help="fetch vacancies from a source into the database")
-    p.add_argument("--source", choices=["adzuna", "fixture"], required=True)
-    p.add_argument("--days", type=int, help="adzuna: days of history (default from ingestion.yaml)")
+    p.add_argument("--source", choices=["adzuna", "eures", "fixture"], required=True)
+    p.add_argument(
+        "--days", type=int, help="adzuna/eures: days of history (default from ingestion.yaml)"
+    )
     p.add_argument("--count", type=int, default=6000, help="fixture: number of vacancies")
     p.add_argument("--months", type=int, default=24, help="fixture: months of history")
     p.add_argument(
@@ -413,6 +469,10 @@ def build_parser() -> argparse.ArgumentParser:
         "update-regions", help="rebuild municipalities.csv from the CBS area classifications"
     )
     p.set_defaults(func=cmd_update_regions)
+    p = ref.add_parser(
+        "update-occupations", help="rebuild the ESCO occupations that count as ICT (for EURES)"
+    )
+    p.set_defaults(func=cmd_update_occupations)
     p = ref.add_parser("resolve-esco", help="look up ESCO links for skills")
     p.add_argument("--refresh", action="store_true", help="re-resolve unchecked links")
     p.set_defaults(func=cmd_resolve_esco)

@@ -55,3 +55,22 @@ adzuna:
           backend frontend embedded firmware iot plc scada netwerkbeheerder systeembeheerder
           informatieanalist applicatiebeheerder cybersecurity tester scrum python java
           javascript kubernetes
+
+# EURES publishes what the national employment services collect; for the Netherlands that is
+# UWV. No key, no plan limits, but it is the portal's own API, so we keep the pace polite and
+# cap a run. Measured on 2026-09-20: 6,034 ICT vacancies listed, ~574 changed a day, of which
+# roughly a third are new. A daily run therefore costs ~12 search calls plus one detail call
+# per new vacancy (~200), about four minutes.
+#
+# Which vacancies count as ICT is the source's own ESCO classification, from the ISCO groups in
+# data/reference/esco_occupations.yaml (`jobmarket reference update-occupations`).
+eures:
+  country: nl
+  results_per_page: 50
+  min_seconds_between_calls: 1
+  # A day needs ~12 search calls plus one detail call per new vacancy; the first run on a
+  # new server faces a backlog, so the cap leaves room. A run that hits it says so and
+  # continues the next day.
+  max_calls_per_run: 600
+  # The search filters on the moment a vacancy last changed, so one day of overlap is enough.
+  default_days: 1

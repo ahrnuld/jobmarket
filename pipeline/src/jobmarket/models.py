@@ -28,4 +28,7 @@ class VacancyRecord:
     salary_is_predicted: bool | None = None
     contract_time: str | None = None
     url: str | None = None
+    # The region code the source itself gives (EURES: a NUTS 3 code, which in the
+    # Netherlands is a COROP area). Used when the place name resolves to no municipality.
+    region_code: str | None = None
     is_sample: bool = False

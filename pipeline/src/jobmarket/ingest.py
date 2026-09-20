@@ -56,9 +56,9 @@ def _insert(
         """
         INSERT OR IGNORE INTO vacancies (
             source_id, external_id, run_id, retrieved_at, licence, is_sample, title, employer,
-            location_raw, area_json, description, source_category, posted_at, salary_min,
-            salary_max, salary_is_predicted, contract_time, url)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            location_raw, area_json, source_region_code, description, source_category,
+            posted_at, salary_min, salary_max, salary_is_predicted, contract_time, url)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             rec.source_id,
@@ -71,6 +71,7 @@ def _insert(
             rec.employer,
             rec.location_raw,
             json.dumps(rec.area, ensure_ascii=False),
+            rec.region_code,
             scrub(rec.description),
             rec.source_category,
             rec.posted_at,

@@ -49,6 +49,14 @@ database no longer covers are taken from the history in the image where that one
 detail (`jobmarket history repair`), then `process` and `aggregate` recompute everything the
 database does cover. None of that contacts a source, so it costs no API calls.
 
+## Sources
+
+Two vacancy sources run in the daily job. **Adzuna** needs the key in `ADZUNA_APP_ID` /
+`ADZUNA_APP_KEY` and has plan limits (see below). **EURES** needs no key and no account: it is
+the European Commission's public portal, filled for the Netherlands by UWV. Its daily run costs
+about a dozen search calls plus one call per new vacancy (roughly 200), paced a second apart, so
+it takes a few minutes. Both are capped per run in `data/reference/ingestion.yaml`.
+
 ## Call budget
 
 Adzuna's plan allows 25 calls a minute, 250 a day, 1,000 a week and 2,500 a month. The worker

@@ -18,6 +18,16 @@ sources:
     terms_checked_on: null
     release: mvp
 
+  - id: eures
+    name: EURES (European Job Mobility Portal)
+    url: https://europa.eu/eures/portal/jv-se/search
+    licence: European Commission reuse policy (Decision 2011/833/EU); vacancy texts belong to the employers
+    licence_url: https://europa.eu/eures/portal/jv-se/legal-notice
+    attribution: "Vacancies via EURES (European Commission), supplied for the Netherlands by UWV"
+    raw_retention_days: 90          # VERIFY against the EURES legal notice before launch
+    terms_checked_on: null
+    release: mvp
+
   - id: cbs
     name: CBS StatLine
     url: https://opendata.cbs.nl/

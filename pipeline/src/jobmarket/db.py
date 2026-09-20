@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
 
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 
 # Upgrades from version N to N+1. schema.sql always describes the latest version, and a fresh
 # database is created from it directly; these only run on older databases.
@@ -21,6 +21,7 @@ MIGRATIONS: dict[int, tuple[str, str, str]] = {
     3: ("vacancies", "multi_location", "INTEGER NOT NULL DEFAULT 0"),
     4: ("vacancies", "corop", "TEXT"),
     5: ("ingestion_runs", "backfill", "INTEGER NOT NULL DEFAULT 0"),
+    6: ("vacancies", "source_region_code", "TEXT"),
 }
 
 

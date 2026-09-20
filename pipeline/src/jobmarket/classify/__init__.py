@@ -118,12 +118,15 @@ def classify(
     families = matching_families(title_norm, ref)
     programmes = classify_programmes(title_norm, ref)
     skills = extract_skills(title, description, ref)
-    # ICT if the title matches a role family, or the source filed it under IT, the text mentions
-    # at least one technical skill, and the title is not an excluded non-ICT role (the IT
-    # category also holds e.g. electricians and sales jobs at software companies).
+    # ICT if the title matches a role family, or the source filed the vacancy under ICT *and*
+    # the text names a technical skill, and the title is not an excluded non-ICT role. Neither
+    # source label is enough on its own: Adzuna's IT category also holds electricians and sales
+    # jobs at software companies, and the ESCO occupation EURES carries is assigned at the
+    # source, where a sewer cleaner and a category manager also ended up under an ICT occupation.
     has_signal = any(ref.skills[s].ict_signal for s in skills)
     excluded = any(p.search(singularise(title_norm)) for p in ref.exclude_title_patterns)
-    is_ict = bool(families) or (source_category == "it-jobs" and has_signal and not excluded)
+    by_source = source_category in ("it-jobs", "ict-occupation") and has_signal
+    is_ict = bool(families) or (by_source and not excluded)
     return Classification(
         is_ict=is_ict,
         seniority=classify_seniority(title_norm, description, ref),

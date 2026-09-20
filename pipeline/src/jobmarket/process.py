@@ -31,11 +31,14 @@ class ProcessResult:
 
 def normalise_all(conn: sqlite3.Connection, ref: Reference) -> None:
     rows = conn.execute(
-        "SELECT id, title, employer, location_raw, area_json, description FROM vacancies"
+        "SELECT id, title, employer, location_raw, area_json, source_region_code, description "
+        "FROM vacancies"
     ).fetchall()
     updates = []
     for r in rows:
-        place = geo.resolve(json.loads(r["area_json"] or "[]"), r["location_raw"], ref)
+        place = geo.resolve(
+            json.loads(r["area_json"] or "[]"), r["location_raw"], ref, r["source_region_code"]
+        )
         lang = language.detect(r["description"]) if r["description"] is not None else None
         updates.append(
             (

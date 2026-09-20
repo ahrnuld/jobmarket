@@ -34,7 +34,7 @@ from jobmarket.validate import Report, validate
 
 MIN_SAMPLE_SIZE = 30  # TR-02
 MIN_TITLE_COUNT = 3  # typical titles must occur at least this often in a geography
-VACANCY_SOURCES = {"real": "adzuna", "sample": "fixture"}
+VACANCY_SOURCES = {"real": ["adzuna", "eures"], "sample": ["fixture"]}
 
 
 @dataclass
@@ -222,7 +222,18 @@ def build(
     accuracy_file = settings.labels_dir / "accuracy.json"
     accuracy = json.loads(accuracy_file.read_text("utf-8")) if accuracy_file.is_file() else None
 
-    used = {VACANCY_SOURCES[dataset], "esco"} | {o["source"] for o in observations}
+    # Only name a vacancy source on the site when it actually delivered something.
+    delivered = {
+        r[0]
+        for r in conn.execute(
+            "SELECT DISTINCT source_id FROM vacancies WHERE is_sample = ?",
+            (int(dataset == "sample"),),
+        )
+    }
+    sources_used = [s for s in VACANCY_SOURCES[dataset] if s in delivered] or [
+        VACANCY_SOURCES[dataset][0]
+    ]
+    used = {*sources_used, "esco"} | {o["source"] for o in observations}
     posted = [r["first_posted"] for r in month_rows] + [r["last_posted"] for r in month_rows]
     meta = {
         "snapshot_id": snapshot_id,
@@ -231,7 +242,7 @@ def build(
         "dataset": dataset,
         "classifier_version": CLASSIFIER_VERSION,
         "min_sample_size": MIN_SAMPLE_SIZE,
-        "vacancy_source": VACANCY_SOURCES[dataset],
+        "vacancy_sources": sources_used,
         "vacancies": {
             "months": months,
             "first_posted": min(posted) if posted else None,

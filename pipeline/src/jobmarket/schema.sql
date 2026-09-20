@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS vacancies (
     employer             TEXT,
     location_raw         TEXT,
     area_json            TEXT,               -- source-provided location hierarchy
+    source_region_code   TEXT,               -- region code from the source (EURES: NUTS 3)
     description          TEXT,               -- scrubbed text; purged after retention window
     description_purged_at TEXT,
     source_category      TEXT,

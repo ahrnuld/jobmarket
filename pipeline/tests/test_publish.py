@@ -221,15 +221,25 @@ def _national(history) -> dict[str, str]:
 def test_a_month_keeps_growing_while_it_is_collected(conn, ref, tmp_path):
     """The database gains days as the month runs; the history must follow it."""
     history = tmp_path / "agg"
-    ingest(conn, "adzuna", [_ad(i, f"2026-10-{i:02d}") for i in range(1, 6)], ref,
-           covers_from="2026-10-01")
+    ingest(
+        conn,
+        "adzuna",
+        [_ad(i, f"2026-10-{i:02d}") for i in range(1, 6)],
+        ref,
+        covers_from="2026-10-01",
+    )
     process(conn, ref, [])
     merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 6)))
     assert _national(history) == {"2026-10": "5"}
 
     # A week later the same database holds more of the same month.
-    ingest(conn, "adzuna", [_ad(i, f"2026-10-{i:02d}") for i in range(6, 13)], ref,
-           covers_from="2026-10-05")
+    ingest(
+        conn,
+        "adzuna",
+        [_ad(i, f"2026-10-{i:02d}") for i in range(6, 13)],
+        ref,
+        covers_from="2026-10-05",
+    )
     process(conn, ref, [])
     result = merge_into_history(history, compute(conn, sample=False, today=date(2026, 10, 13)))
     assert result.protected == []
@@ -246,12 +256,16 @@ def test_months_the_daily_collection_missed_stay_marked_incomplete(conn, ref, tm
         "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from, backfill) "
         "VALUES ('adzuna', '2026-10-06T05:00:00+00:00', 'success', '2026-10-04', 0)"
     )  # a two-day window: from here on we see the flow
-    assert flow_start(conn) == "2026-10-04"
 
-    ingest(conn, "adzuna", [_ad(i, d) for i, d in enumerate(["2026-09-10", "2026-10-02",
-                                                             "2026-11-03"])], ref,
-           covers_from="2026-09-05")
+    ingest(
+        conn,
+        "adzuna",
+        [_ad(i, d) for i, d in enumerate(["2026-09-10", "2026-10-02", "2026-11-03"])],
+        ref,
+        covers_from="2026-09-05",
+    )
     process(conn, ref, [])
+    assert flow_start(conn) == "2026-10-04"
     agg = compute(conn, sample=False, today=date(2026, 11, 20))
     partial = {r["month"]: r["partial"] for r in agg.rows["months"]}
     assert partial["2026-09"] == 1  # only a fraction of that month was still listed
@@ -422,10 +436,14 @@ def _write(path, rows: str) -> None:
 def test_repair_takes_the_richer_month_from_the_shipped_history(tmp_path):
     """A release that adds a breakdown: the history in the volume predates it."""
     seed, history = tmp_path / "seed", tmp_path / "history"
-    _write(seed / "vacancies.csv",
-           "2026-08,nl,all,all,10\n2026-08,c:groot-amsterdam,all,all,4\n2026-09,nl,all,all,1\n")
-    _write(history / "vacancies.csv",
-           "2026-08,nl,all,all,10\n2026-09,nl,all,all,20\n2026-09,p:utrecht,all,all,5\n")
+    _write(
+        seed / "vacancies.csv",
+        "2026-08,nl,all,all,10\n2026-08,c:groot-amsterdam,all,all,4\n2026-09,nl,all,all,1\n",
+    )
+    _write(
+        history / "vacancies.csv",
+        "2026-08,nl,all,all,10\n2026-09,nl,all,all,20\n2026-09,p:utrecht,all,all,5\n",
+    )
 
     replaced = repair_from_seed(seed, history)
 

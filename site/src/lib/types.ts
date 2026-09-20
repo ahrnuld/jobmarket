@@ -72,7 +72,7 @@ export interface Meta {
   dataset: "real" | "sample";
   classifier_version: string;
   min_sample_size: number;
-  vacancy_source: string;
+  vacancy_sources: string[]; // the vacancy sources that delivered this snapshot
   vacancies: { months: MonthInfo[]; first_posted: string | null; last_posted: string | null };
   sources: SourceInfo[];
   programmes: Programme[];

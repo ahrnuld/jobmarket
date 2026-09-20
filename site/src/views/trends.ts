@@ -43,7 +43,7 @@ function moversCard(ctx: Ctx, title: string, res: ReturnType<typeof movers>, lab
     return card(ctx, { headingLevel: 2,
       title,
       body: `<p class="empty">${minMonthsText}</p>`,
-      provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx) }),
+      provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx) }),
     });
   }
   const items = (list: Mover[], colorVar: string) => list.map((m) => ({
@@ -64,7 +64,7 @@ function moversCard(ctx: Ctx, title: string, res: ReturnType<typeof movers>, lab
       ? `Verschil in aandeel vacatures tussen ${period(res.recent)} en ${period(res.earlier)}, in procentpunten.`
       : `Difference in share of vacancies between ${period(res.recent)} and ${period(res.earlier)}, in percentage points.`,
     body,
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n }),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx), n }),
     table: table(title, ["", lang === "nl" ? "Eerder" : "Earlier", lang === "nl" ? "Recent" : "Recent", tr.chart.change],
       [...res.rising, ...res.falling].map((m) => [label(m.id), fmtPct(lang, m.earlierShare, 1), fmtPct(lang, m.recentShare, 1), fmtPp(lang, m.change)])),
   });
@@ -97,7 +97,7 @@ export function renderTrends(ctx: Ctx, state: FilterState, data: Record<string, 
     body: columns(idx.map((i, k) => ({ label: labels[k], value: total.get(i) ?? 0, partial: months[i].partial,
                                       tip: `${labels[k]}: ${fmtInt(lang, total.get(i) ?? 0)} ${tr.chart.vacancies}` })),
                   lang === "nl" ? "Vacatures per maand" : "Vacancies per month", tr.chart.noData, (v) => fmtInt(lang, v)),
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n }),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx), n }),
     table: table(tr.chart.month, [tr.chart.month, tr.chart.count], idx.map((i, k) => [labels[k], fmtInt(lang, total.get(i) ?? 0)])),
   }));
 
@@ -117,7 +117,7 @@ export function renderTrends(ctx: Ctx, state: FilterState, data: Record<string, 
       ? lineChart(fullLabels, progSeries, lang === "nl" ? "Vacatures per opleiding per maand" : "Vacancies per programme per month",
                   (v) => fmtInt(lang, v), (v) => fmtInt(lang, v), fullMarkers)
       : `<p class="empty">${notEnoughMonths(ctx, full.length)}</p>`,
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n }),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx), n }),
     table: table(tr.chart.month, [tr.chart.month, ...meta.programmes.map((p) => p.name[lang])],
                  idx.map((i, k) => [`${labels[k]}${months[i].partial ? ` (${tr.chart.partial})` : ""}`,
                    ...meta.programmes.map((p) => fmtInt(lang, monthly(d.vacancies, [i], p.id).get(i) ?? 0))])),
@@ -148,7 +148,7 @@ export function renderTrends(ctx: Ctx, state: FilterState, data: Record<string, 
       ? lineChart(qLabels, salarySeries, lang === "nl" ? "Mediaan salaris per kwartaal" : "Median salary per quarter",
                   (v) => fmtEuro(lang, v), (v) => fmtEuro(lang, v))
       : `<p class="empty">${lang === "nl" ? "Nog te weinig kwartalen voor een lijn; zie de tabel." : "Not enough quarters for a line yet; see the table."}</p>`,
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx),
                                   n: salarySeries[0].n.reduce((a, b) => a + b, 0), unit: lang === "nl" ? "vacatures met salaris" : "vacancies with a salary" }),
     table: table(lang === "nl" ? "Kwartaal" : "Quarter", [lang === "nl" ? "Kwartaal" : "Quarter", ...salarySeries.flatMap((s) => [s.label, "n"])],
       qLabels.map((l, k) => [l, ...salarySeries.flatMap((s) => [s.values[k] === null ? "–" : fmtEuro(lang, s.values[k]!), fmtInt(lang, s.n[k])])])),

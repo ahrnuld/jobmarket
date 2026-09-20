@@ -124,58 +124,78 @@ class Aggregates:
     coverage_start: str | None = None
 
 
-def coverage_start(conn: sqlite3.Connection, sample: bool) -> str | None:
-    """Earliest date the database covers without gaps at the start.
+def vacancy_sources(conn: sqlite3.Connection) -> list[str]:
+    """The sources that have actually delivered vacancies (fixtures excluded)."""
+    return [
+        r[0]
+        for r in conn.execute(
+            "SELECT DISTINCT source_id FROM vacancies WHERE is_sample = 0 ORDER BY source_id"
+        )
+    ]
 
-    Per successful, complete Adzuna run that is the date it asked the source for; a run from
-    before `covers_from` was recorded falls back to its own earliest posting. The earliest of
-    those is where our coverage begins. Backfill runs are left out on purpose: they only see
-    the ads still listed today, so the months they reach into are incomplete by design and
-    their vacancies must not enter the counts.
+
+def _run_starts(conn: sqlite3.Connection, source_id: str, window: int | None = None) -> list[str]:
+    """First day each successful, complete run of a source covers.
+
+    A run that did not record `covers_from` falls back to its own earliest posting. With
+    `window`, only runs that asked for at most that many days count. Backfill runs never count:
+    they only see the ads still listed today, so the months they reach into are incomplete by
+    design and must not enter the counts.
     """
+    rows = conn.execute(
+        """
+        SELECT COALESCE(
+                   r.covers_from,
+                   (SELECT MIN(v.posted_at) FROM vacancies v WHERE v.run_id = r.id)) AS start,
+               substr(r.started_at, 1, 10) AS ran_on
+        FROM ingestion_runs r
+        WHERE r.source_id = ? AND r.status = 'success' AND r.backfill = 0
+        """,
+        (source_id,),
+    ).fetchall()
+    starts = [(r["start"], r["ran_on"]) for r in rows if r["start"]]
+    if window is None:
+        return [s for s, _ in starts]
+    return [
+        s
+        for s, ran_on in starts
+        if (date.fromisoformat(ran_on) - date.fromisoformat(s)).days <= window
+    ]
+
+
+def coverage_start(conn: sqlite3.Connection, sample: bool) -> str | None:
+    """Earliest date the database covers, over all vacancy sources."""
     if not sample:
-        row = conn.execute(
-            """
-            SELECT MIN(COALESCE(
-                       r.covers_from,
-                       (SELECT MIN(v.posted_at) FROM vacancies v WHERE v.run_id = r.id)))
-            FROM ingestion_runs r
-            WHERE r.source_id = 'adzuna' AND r.status = 'success' AND r.backfill = 0
-            """
-        ).fetchone()
-        if row and row[0]:
-            return row[0]
+        starts = [s for src in vacancy_sources(conn) for s in _run_starts(conn, src)]
+        if starts:
+            return min(starts)
     row = conn.execute(
         "SELECT MIN(posted_at) FROM vacancies WHERE is_sample = ?", (int(sample),)
     ).fetchone()
     return row[0] if row else None
 
 
-# A run that asks for more days than this reaches into the past, where the source only still
+# A run that asks for more days than this reaches into the past, where a source only still
 # lists a fraction of what was posted; the months it touches are not a measurement of the flow.
 FLOW_WINDOW_DAYS = 8
 
 
 def flow_start(conn: sqlite3.Connection) -> str | None:
-    """First day covered by a run with a short window, i.e. from when counting is meaningful.
+    """From when every source has been collected day by day, i.e. when counting is meaningful.
 
-    The source only serves vacancies that are still listed, so a run that reaches back 30 days
-    sees a fraction of what was posted in the first of those days. Only the runs that ask for a
-    few days at a time measure the flow of new vacancies; months that began before the first of
-    those runs are marked incomplete, so no trend uses them.
+    Sources only serve vacancies that are still listed, so a run reaching back 30 days sees a
+    fraction of what was posted in the first of those days. Only runs asking for a few days at
+    a time measure the flow. A month is complete only when *every* source we now use covered
+    it from its first day: adding a source raises the count, and the months before it would
+    otherwise look like a dip. Months that began earlier are marked incomplete.
     """
-    rows = conn.execute(
-        """SELECT covers_from, substr(started_at, 1, 10) AS ran_on FROM ingestion_runs
-           WHERE source_id = 'adzuna' AND status = 'success' AND backfill = 0
-                 AND covers_from IS NOT NULL"""
-    ).fetchall()
-    windows = [
-        r["covers_from"]
-        for r in rows
-        if (date.fromisoformat(r["ran_on"]) - date.fromisoformat(r["covers_from"])).days
-        <= FLOW_WINDOW_DAYS
-    ]
-    return min(windows) if windows else None
+    per_source = []
+    for source in vacancy_sources(conn):
+        starts = _run_starts(conn, source, window=FLOW_WINDOW_DAYS)
+        if not starts:
+            return None  # this source has never had a short run: nothing is fully measured
+        per_source.append(min(starts))
+    return max(per_source) if per_source else None
 
 
 def _geos(province: str | None, region: str | None) -> list[str]:

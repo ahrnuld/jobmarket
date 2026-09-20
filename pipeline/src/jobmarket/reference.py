@@ -121,6 +121,8 @@ class Reference:
     municipalities: dict[str, Municipality]  # normalised name -> municipality
     # lookup tables built after loading
     province_index: dict[str, str] = field(default_factory=dict)  # lower name/alias -> province id
+    # NUTS 3 code (lowercase) -> COROP area id; sources such as EURES locate a vacancy by it
+    nuts3: dict[str, str] = field(default_factory=dict)
 
 
 def _read_yaml(path: Path) -> dict:
@@ -206,6 +208,23 @@ def _load_municipalities(
     if unknown:
         raise ReferenceError(f"{path.name}: no municipalities for province(s) {sorted(unknown)}")
     return regions, corops, municipalities
+
+
+def _load_nuts3(path: Path, corops: dict[str, Corop]) -> dict[str, str]:
+    """NUTS 3 code -> COROP area id (see reference_geo.write_nuts3_csv)."""
+    if not path.is_file():
+        return {}
+    by_code = {c.code: c.id for c in corops.values()}
+    out = {}
+    with path.open(encoding="utf-8", newline="") as fh:
+        for line, row in enumerate(csv.DictReader(fh), start=2):
+            corop = by_code.get(row["corop_code"])
+            if not corop:
+                raise ReferenceError(
+                    f"{path.name} line {line}: unknown COROP {row['corop_code']!r}"
+                )
+            out[row["nuts3_code"].lower()] = corop
+    return out
 
 
 def load_reference(reference_dir: Path) -> Reference:
@@ -317,6 +336,7 @@ def load_reference(reference_dir: Path) -> Reference:
         municipalities=municipalities,
     )
     ref.province_index.update(province_index)
+    ref.nuts3.update(_load_nuts3(reference_dir / "nuts3.csv", corops))
     return ref
 
 

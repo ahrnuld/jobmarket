@@ -27,7 +27,9 @@ class Place:
     corop: str | None = None
 
 
-def resolve(area: list[str], location_raw: str | None, ref: Reference) -> Place:
+def resolve(
+    area: list[str], location_raw: str | None, ref: Reference, region_code: str | None = None
+) -> Place:
     """`area` is the source's hierarchy, e.g. ["Nederland", "Noord-Holland", "Haarlem"].
 
     Level 1 is the province, level 2 the municipality, deeper levels are districts or villages.
@@ -53,4 +55,11 @@ def resolve(area: list[str], location_raw: str | None, ref: Reference) -> Place:
     if province is None and location_raw:
         for part in location_raw.split(","):
             province = ref.province_index.get(normalise_name(_clean_name(part))) or province
+    # A source can name its own region instead of a place we know (EURES gives a NUTS 3 code,
+    # which is a COROP area). That still puts the vacancy on the map and in a province, but not
+    # in a municipality or a labour market region: those are smaller than a COROP area.
+    corop_id = ref.nuts3.get((region_code or "").lower())
+    corop = ref.corops.get(corop_id) if corop_id else None
+    if corop:
+        return Place(None, None, province or corop.province, corop.id)
     return Place(_clean_name(area[2]) if len(area) > 2 else None, None, province, None)

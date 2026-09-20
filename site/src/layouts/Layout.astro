@@ -29,7 +29,10 @@ const nav = [
   ["methodology", "methodology"],
   ["about", "about"],
 ] as const;
-const adzuna = meta.sources.find((s) => s.id === "adzuna");
+// Attribution for the sources that actually delivered this snapshot (LR-01).
+const vacancySources = meta.vacancy_sources
+  .map((id) => meta.sources.find((s) => s.id === id))
+  .filter((s) => s !== undefined);
 const fullTitle = page === "dashboard" ? tr.siteName : `${title} · ${tr.siteShort}`;
 const seriesStart = meta.vacancies.first_posted;
 ---
@@ -71,8 +74,10 @@ const seriesStart = meta.vacancies.first_posted;
     </main>
     <footer class="site-footer">
       <div class="wrap">
-        {adzuna && meta.vacancy_source === "adzuna" && (
-          <p>{tr.footer.dataBy}: <a href={adzuna.url}>{adzuna.attribution}</a> · CBS (CC BY 4.0) · Landelijk Centrum Studiekeuze (Studiekeuze123) · ESCO — <a href={path(lang, "methodology")}>{tr.nav.methodology}</a></p>
+        {vacancySources.length > 0 && (
+          <p>{tr.footer.dataBy}: {vacancySources.map((s, i) => (
+            <>{i > 0 && " · "}<a href={s!.url}>{s!.attribution ?? s!.name}</a></>
+          ))} · CBS (CC BY 4.0) · Landelijk Centrum Studiekeuze (Studiekeuze123) · ESCO — <a href={path(lang, "methodology")}>{tr.nav.methodology}</a></p>
         )}
         <p>{tr.footer.snapshot} {fmtDate(lang, meta.generated_at)}{seriesStart && ` · ${fill(tr.banner.seriesStart, { date: fmtDate(lang, seriesStart) })}`}</p>
         <p>{tr.independent} {tr.footer.noTracking}</p>

@@ -62,7 +62,7 @@ function panel(ctx: Ctx, state: FilterState, geoId: string, data: GeoData): stri
     subtitle: win.partial ? tr.chart.partialExplain : undefined,
     body: columns(points, `${geoName(ctx, geoId)}: ${lang === "nl" ? "vacatures per maand" : "vacancies per month"}`,
                   tr.chart.noData, (n) => fmtInt(lang, n)),
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n: total }),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx), n: total }),
     table: table(tr.chart.month, [tr.chart.month, tr.chart.count],
                  points.map((p) => [`${p.label}${p.partial ? ` (${tr.chart.partial})` : ""}`, fmtInt(lang, p.value)])),
     badges: indicative,
@@ -85,7 +85,7 @@ function panel(ctx: Ctx, state: FilterState, geoId: string, data: GeoData): stri
     title: lang === "nl" ? "Per opleiding" : "By programme",
     subtitle: noProgramme,
     body: barList(items, lang === "nl" ? "Vacatures per opleiding" : "Vacancies by programme", tr.chart.noData),
-    provenance: provenance(ctx, { sourceIds: [meta.vacancy_source], updated: vacancyUpdated(ctx), n: total }),
+    provenance: provenance(ctx, { sourceIds: meta.vacancy_sources, updated: vacancyUpdated(ctx), n: total }),
     table: table(tr.filters.programme, [tr.filters.programme, tr.chart.count, tr.chart.share],
                  items.map((i, k) => [i.label, fmtInt(lang, perProg[progIds[k]]), fmtPct(lang, share(perProg[progIds[k]], total))])),
   });

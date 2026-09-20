@@ -120,14 +120,14 @@ export function details(ctx: Ctx, state: FilterState, view: MapView, win: Window
     : `${fmtInt(lang, view.placed)} of the ${fmtInt(lang, view.total)} vacancies in this selection (${fmtPct(lang, share(view.placed, view.total))}) name a place that falls within a COROP area.`;
   const one = view.unknown === 1;
   const rest = view.unknown === 0 ? "" : (nl
-    ? ` De ${one ? "andere vacature noemt" : `overige ${fmtInt(lang, view.unknown)} noemen`} alleen "Nederland" of een provincie, of zoveel plaatsen tegelijk dat er geen werkplek uit op te maken is; die staat${one ? "" : "n"} niet op de kaart.`
+    ? ` De ${one ? "andere vacature noemt" : `overige ${fmtInt(lang, view.unknown)} noemen`} alleen "Nederland" of een provincie, of zoveel plaatsen tegelijk dat er geen werkplek uit op te maken is; die ${one ? "staat" : "staan"} niet op de kaart.`
     : ` The other ${one ? "vacancy names" : `${fmtInt(lang, view.unknown)} name`} only "Netherlands" or a province, or so many places at once that no workplace can be derived; ${one ? "it is" : "they are"} not on the map.`);
   const lead = top && top.n > 0
     ? (nl ? ` De meeste staan in ${top.name} (${fmtInt(lang, top.n)}).` : ` Most are in ${top.name} (${fmtInt(lang, top.n)}).`)
     : "";
   return `<p class="map-summary">${esc(counted + rest + lead)}</p>`
     + provenance(ctx, {
-      sourceIds: [meta.vacancy_source],
+      sourceIds: meta.vacancy_sources,
       updated: vacancyUpdated(ctx),
       n: view.placed,
       extra: `${programmeName(ctx, state.programme)} · ${seniorityName(ctx, state.seniority)} · ${windowLabel(ctx, win)}`

@@ -80,6 +80,15 @@ only recompute the months it still covers. So the worker first takes months from
 shipped in the image where that one has more rows (a release that adds a breakdown, such as
 COROP areas), then runs process and aggregate, then publishes. Nothing there contacts a source.
 
+**Two vacancy sources, one record type.** Everything after ingestion sees `VacancyRecord`,
+so a source is one adapter. Adzuna gives many ads with a 500-character cap and an employer;
+EURES (the European Commission's portal, filled for the Netherlands by UWV) gives the full text,
+a place, a NUTS 3 region and the ESCO occupation the source itself assigned, but no employer.
+Deduplication therefore also matches a posting without an employer against one with the same
+title and place that has one. Neither source's own ICT label is trusted on its own: a vacancy
+counts as ICT when its title matches a role family, or when the source says ICT *and* the text
+names a technical skill.
+
 **Collect often, never backfill counts.** The source only serves vacancies that are still
 listed, so history cannot be bought back: about 30% of the ads from a month ago are still there,
 about 5% of those from six months ago (measured 2026-09-20, see ingestion.yaml). The series
