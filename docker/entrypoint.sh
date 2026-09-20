@@ -18,7 +18,18 @@ mkdir -p /app/var /srv/www
 # Republish from the aggregate history first: a data volume written by an older release can
 # miss files this version expects. A rejected publish keeps the previous snapshot (NFR-07).
 jobmarket init-db || true
-jobmarket publish || echo "[entrypoint] publish failed; keeping the published snapshot"
+jobmarket publish || echo "[entrypoint] publish failed (see the error above)"
+
+# If the volume still lacks files this release needs, the snapshot in it is older than the code.
+# Replace it as a whole with the one shipped in the image, so the site never misses a page.
+missing=""
+for f in meta.json stats.json map.json; do
+  [ -f "/app/site/public/data/$f" ] || missing="$missing $f"
+done
+if [ -n "$missing" ]; then
+  echo "[entrypoint] published snapshot misses:$missing -> restoring the snapshot from the image"
+  cp -a /app/seed/published/. /app/site/public/data/
+fi
 
 # Every (re)deploy rebuilds the site from the latest published data with the new code.
 /app/docker/build-site.sh

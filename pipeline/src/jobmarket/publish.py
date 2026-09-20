@@ -373,9 +373,12 @@ def _swap_in(staging: Path, publish_dir: Path) -> None:
         if publish_dir.exists():
             publish_dir.rename(old)
         incoming.rename(publish_dir)
-    except PermissionError:
-        # Windows refuses to rename a directory that another process watches (e.g. the site's
-        # dev server). Fall back to replacing files one by one, each atomically.
+    except OSError:
+        # The directory itself cannot be replaced: on a server it is a mounted volume (EBUSY),
+        # on Windows another process may be watching it (e.g. the site's dev server). Fall back
+        # to replacing the files inside it one by one, each atomically.
+        if old.exists() and not publish_dir.exists():
+            old.rename(publish_dir)  # the rename to .old did succeed; undo it
         _sync_tree(incoming, publish_dir)
         shutil.rmtree(incoming)
     if old.exists():

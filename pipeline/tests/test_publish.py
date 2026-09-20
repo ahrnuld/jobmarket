@@ -233,6 +233,31 @@ def test_map_data_is_published_per_corop_area(loaded, ref, settings):
     assert 0 < on_map <= national
 
 
+def test_publishes_into_a_directory_that_cannot_be_replaced(loaded, ref, settings, monkeypatch):
+    """On a server the published directory is a mounted volume: renaming it raises EBUSY."""
+    import errno
+    from pathlib import Path
+
+    merge_into_history(settings.history_dir, compute(loaded, sample=True, today=TODAY))
+    settings.publish_dir.mkdir(parents=True, exist_ok=True)
+    (settings.publish_dir / "stale.json").write_text("{}", encoding="utf-8")
+    real_rename = Path.rename
+
+    def rename(self, target):
+        if self == settings.publish_dir:
+            raise OSError(errno.EBUSY, "Device or resource busy")
+        return real_rename(self, target)
+
+    monkeypatch.setattr(Path, "rename", rename)
+    result = publish(
+        loaded, ref, settings, dataset="sample", history_dir=settings.history_dir, today=TODAY
+    )
+    assert result.published, result.report.errors
+    assert (settings.publish_dir / "map.json").is_file()
+    assert (settings.publish_dir / "geo" / "nl" / "vacancies.json").is_file()
+    assert not (settings.publish_dir / "stale.json").exists()  # files of the old snapshot go
+
+
 def test_production_refuses_sample_data_and_keeps_old_snapshot(loaded, ref, settings, monkeypatch):
     merge_into_history(settings.history_dir, compute(loaded, sample=True, today=TODAY))
     first = publish(
