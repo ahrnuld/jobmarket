@@ -32,6 +32,9 @@ class AdzunaConfig:
     results_per_page: int = 50
     min_seconds_between_calls: float = 3.0
     max_calls_per_run: int = 250
+    max_calls_per_day: int | None = None
+    max_calls_per_week: int | None = None
+    max_calls_per_month: int | None = None
     default_days: int = 8
     queries: list[dict] = field(default_factory=list)
 
@@ -46,6 +49,7 @@ class FetchStats:
     calls: int = 0
     per_query: dict[str, int] = field(default_factory=dict)
     budget_exhausted: bool = False
+    budget_note: str | None = None  # which limit stopped the fetch
 
 
 def _http_get_json(url: str) -> dict:
@@ -61,6 +65,7 @@ class AdzunaClient:
         http_get: Callable[[str], dict] = _http_get_json,
         sleep: Callable[[float], None] = time.sleep,
         clock: Callable[[], float] = time.monotonic,
+        budget=None,
     ):
         if not (config.app_id and config.app_key):
             raise AdzunaError("Adzuna credentials missing: set ADZUNA_APP_ID and ADZUNA_APP_KEY")
@@ -69,6 +74,7 @@ class AdzunaClient:
         self._sleep = sleep
         self._clock = clock
         self._last_call: float | None = None
+        self.budget = budget  # jobmarket.budget.Budget, or None for no cross-run accounting
         self.stats = FetchStats()
 
     def _redact(self, text: str) -> str:
@@ -92,6 +98,8 @@ class AdzunaClient:
         for attempt in range(4):
             self._throttle()
             self.stats.calls += 1
+            if self.budget is not None:
+                self.budget.spend()
             try:
                 return self._http_get(url)
             except urllib.error.HTTPError as exc:
@@ -115,6 +123,11 @@ class AdzunaClient:
         while True:
             if self.stats.calls >= self.config.max_calls_per_run:
                 self.stats.budget_exhausted = True
+                self.stats.budget_note = f"max_calls_per_run ({self.config.max_calls_per_run})"
+                return
+            if self.budget is not None and not self.budget.allow():
+                self.stats.budget_exhausted = True
+                self.stats.budget_note = f"plan limit reached ({self.budget.describe()})"
                 return
             data = self._get(
                 f"search/{page}",

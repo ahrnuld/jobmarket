@@ -31,7 +31,19 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
     records_fetched INTEGER NOT NULL DEFAULT 0,
     records_new     INTEGER NOT NULL DEFAULT 0,
     error           TEXT,
-    covers_from     TEXT                 -- earliest posting date this run asked the source for
+    covers_from     TEXT,                -- earliest posting date this run asked the source for
+    -- 1 = a run that reached back beyond the normal window. Such a run only sees ads that
+    -- are still listed today, so its older months are far from complete: they are stored
+    -- (for labelling and quality checks) but never counted in the published aggregates.
+    backfill        INTEGER NOT NULL DEFAULT 0
+);
+
+-- Calls spent per source per day, so the plan limits (per day, week, month) hold across runs.
+CREATE TABLE IF NOT EXISTS api_calls (
+    source_id   TEXT NOT NULL,
+    day         TEXT NOT NULL,     -- UTC date
+    calls       INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (source_id, day)
 );
 
 -- One row per vacancy as received from a source, after PII scrubbing (LR-03).

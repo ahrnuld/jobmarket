@@ -1,4 +1,4 @@
-"""Minimal weekly scheduler for the container (no cron daemon needed).
+"""Minimal scheduler for the container (no cron daemon needed).
 
 Runs JOB_COMMAND at the time given by SCHEDULE (e.g. "mon 05:00") in SCHEDULE_TZ, forever.
 Output of the job goes to the container log. A failed job is logged and retried at the next

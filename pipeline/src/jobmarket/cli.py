@@ -67,7 +67,17 @@ def cmd_resolve_esco(args: argparse.Namespace) -> int:
     return 0
 
 
-def _records_for(source: str, args: argparse.Namespace, settings):
+def _adzuna_budget(conn, config):
+    from jobmarket.budget import Budget, Limits
+
+    return Budget(
+        conn,
+        "adzuna",
+        Limits(config.max_calls_per_day, config.max_calls_per_week, config.max_calls_per_month),
+    )
+
+
+def _records_for(source: str, args: argparse.Namespace, settings, conn):
     if source == "fixture":
         from jobmarket.sources import fixtures
 
@@ -78,7 +88,8 @@ def _records_for(source: str, args: argparse.Namespace, settings):
         from jobmarket.sources.adzuna import AdzunaClient, AdzunaConfig
 
         cfg = yaml.safe_load((settings.reference_dir / "ingestion.yaml").read_text("utf-8"))
-        client = AdzunaClient(AdzunaConfig.from_settings(settings, cfg))
+        config = AdzunaConfig.from_settings(settings, cfg)
+        client = AdzunaClient(config, budget=_adzuna_budget(conn, config))
         return client.fetch(days=args.days), client
     raise SystemExit(f"Unknown source {source!r}")
 
@@ -90,14 +101,20 @@ def cmd_ingest(args: argparse.Namespace) -> int:
     ref = load_reference(settings.reference_dir)
     with open_db(settings.db_path) as conn:
         sync_sources(conn, ref)
-        records, client = _records_for(args.source, args, settings)
+        records, client = _records_for(args.source, args, settings, conn)
         covers_from = None
         if client is not None:
             from datetime import date, timedelta
 
             days = args.days or client.config.default_days
             covers_from = (date.today() - timedelta(days=days)).isoformat()
-        result = ingest(conn, args.source, records, ref, covers_from=covers_from)
+        result = ingest(
+            conn, args.source, records, ref, covers_from=covers_from, backfill=args.backfill
+        )
+        budget_used = None
+        if client is not None and client.budget is not None:
+            client.budget.commit()  # also count the calls of a failed run
+            budget_used = client.budget.describe()  # while the database is still open
         if client is not None and client.stats.budget_exhausted:
             # Results come newest first: the oldest days are missing, so claim no coverage.
             conn.execute(
@@ -107,8 +124,13 @@ def cmd_ingest(args: argparse.Namespace) -> int:
     if client is not None:
         s = client.stats
         print(f"API calls: {s.calls}; per query: {s.per_query}")
+        if budget_used:
+            print(f"Call budget used — {budget_used}")
         if s.budget_exhausted:
-            print("Call budget (max_calls_per_run) reached: some results were not fetched.")
+            print(
+                f"Stopped on the call budget ({s.budget_note}): not everything was fetched. "
+                "Run again later to continue."
+            )
     if result.error:
         print(f"Error: {result.error}", file=sys.stderr)
         return 1
@@ -211,6 +233,24 @@ def cmd_publish(args: argparse.Namespace) -> int:
     return 1
 
 
+def cmd_budget(args: argparse.Namespace) -> int:
+    """What is left of the source's call limits."""
+    import yaml
+
+    from jobmarket.sources.adzuna import AdzunaConfig
+
+    settings = load_settings()
+    cfg = yaml.safe_load((settings.reference_dir / "ingestion.yaml").read_text("utf-8"))
+    config = AdzunaConfig.from_settings(settings, cfg)
+    with open_db(settings.db_path) as conn:
+        budget = _adzuna_budget(conn, config)
+        print(f"adzuna calls used — {budget.describe()}")
+        for window, left in budget.remaining().items():
+            if left is not None:
+                print(f"  {window:<6} {left:>6} calls left (about {left * 50:,} vacancies)")
+    return 0
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     """The scheduled job: ingest, statistics, process, aggregate, publish."""
     import os
@@ -249,7 +289,16 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--days", type=int, help="adzuna: days of history (default from ingestion.yaml)")
     p.add_argument("--count", type=int, default=6000, help="fixture: number of vacancies")
     p.add_argument("--months", type=int, default=24, help="fixture: months of history")
+    p.add_argument(
+        "--backfill",
+        action="store_true",
+        help="reach into the past (with --days): the source only still lists a fraction of what "
+        "was posted then, so these vacancies are stored but stay out of the published figures",
+    )
     p.set_defaults(func=cmd_ingest)
+
+    p = sub.add_parser("budget", help="show how many API calls the plan limits still allow")
+    p.set_defaults(func=cmd_budget)
 
     p = sub.add_parser("process", help="normalise, deduplicate and classify stored vacancies")
     p.set_defaults(func=cmd_process)

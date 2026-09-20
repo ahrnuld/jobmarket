@@ -28,11 +28,28 @@ Set these in the resource's **Environment Variables** screen (mark the Adzuna ke
 | `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Your Adzuna credentials |
 | `SITE_URL` | The public URL, same as the `web` domain (for canonical/hreflang links) |
 | `JOBMARKET_ENV` | Leave **empty** for now. Set to `production` once licences are checked (`terms_checked_on` in `data/reference/sources.yaml`) and the example rows in `data/manual/*.csv` are replaced; production refuses to publish otherwise |
-| `SCHEDULE` | Default `mon 05:00` (weekday + time, or `daily 05:00`) |
+| `SCHEDULE` | Default `daily 05:00`. Daily is what the collection assumes: a vacancy is sometimes online for only a few days. A weekday + time (`mon 05:00`) also works, but then set `JOBMARKET_INGEST_DAYS=8` |
 | `SCHEDULE_TZ` | Default `Europe/Amsterdam` |
-| `RUN_ON_START` | `yes` for the first deploy only (runs the weekly job right away), then back to `no` |
-| `JOBMARKET_INGEST_DAYS` | `30` for the first run (see below), then empty |
-| `SCHEDULER` | `on` (default). Use `off` if you prefer Coolify's **Scheduled Tasks**: add a task on the `worker` service with command `/app/docker/weekly.sh` |
+| `RUN_ON_START` | `yes` for the first deploy only (runs the pipeline job right away), then back to `no` |
+| `JOBMARKET_INGEST_DAYS` | `30` for the first run (see below), then empty. Empty means the default window of 2 days |
+| `SCHEDULER` | `on` (default). Use `off` if you prefer Coolify's **Scheduled Tasks**: add a daily task on the `worker` service with command `/app/docker/weekly.sh` |
+
+## Call budget
+
+Adzuna's plan allows 25 calls a minute, 250 a day, 1,000 a week and 2,500 a month. The worker
+keeps its own ledger (`api_calls` in the database) and stops cleanly before a limit is reached,
+so several runs on one day cannot together overshoot. The daily job costs about 27 calls
+(~800 a month).
+
+```bash
+docker exec -it <worker> jobmarket budget
+```
+
+Reaching back in time is possible but of limited use: the source only serves vacancies that are
+still listed, so about 30% of the ads from a month ago and about 5% of those from six months ago
+remain. `jobmarket ingest --source adzuna --days 365 --backfill` stores what it finds without
+letting it into the published figures (useful as extra material for the labelled sample), and
+costs roughly 450 calls, so it stops on the daily limit and continues the next day.
 
 ## 3. First deploy: continuity with your local data
 

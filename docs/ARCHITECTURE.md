@@ -27,7 +27,7 @@ data/manual/*.csv ─────┘        │
 | `data/labels/` | Manually labelled vacancy sample for accuracy measurement (TR-05) |
 | `pipeline/` | Python package `jobmarket` and its tests |
 | `site/` | Astro static site |
-| `var/` | Working database and snapshots. Git-ignored because it holds raw vacancy text |
+| `var/` | Working database (vacancies, runs, API call ledger) and snapshots. Git-ignored because it holds raw vacancy text |
 
 ## Decisions
 
@@ -73,6 +73,20 @@ whole country. Their counts ride along in the `vacancies` aggregate under geogra
 COROP detail to keep the history files small. The boundaries (CBS/Kadaster, CC BY 4.0) sit in
 `site/src/data/corop-2026.json` and are projected into SVG paths at build time, so the browser
 downloads counts only, never geometry.
+
+**Collect often, never backfill counts.** The source only serves vacancies that are still
+listed, so history cannot be bought back: about 30% of the ads from a month ago are still there,
+about 5% of those from six months ago (measured 2026-09-20, see ingestion.yaml). The series
+therefore only grows forward, and the job runs daily with a two-day window so an ad that is
+online for three days is not missed. `jobmarket ingest --backfill` does reach into the past, but
+marks the run: `coverage_start` ignores backfill runs and the aggregation drops everything posted
+before it, so those vacancies serve the labelled sample and rule checks without ever entering a
+published figure.
+
+**The API budget is a ledger, not a per-run cap.** Adzuna's plan limits are per day, week and
+month, so a per-run cap cannot honour them. `api_calls` counts calls per source per day; before
+every call the client asks the rolling windows for room, and a run that runs out stops cleanly
+and says which limit it hit. `jobmarket budget` shows what is left.
 
 **ESCO links are resolved, then reviewed.** `jobmarket reference resolve-esco` queries the ESCO
 API and writes `data/reference/esco_links.yaml` with `checked: false`. ESCO has no concepts for

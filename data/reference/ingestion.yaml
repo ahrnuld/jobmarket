@@ -6,6 +6,8 @@
 #   decides afterwards what counts as ICT.
 # - Descriptions are truncated to ~500 characters by the API.
 # - Per 8 days: ~630 ads in it-jobs, ~1,900 via the keyword search (about 55 API calls a week).
+#   Daily with a 3-day window: ~90 ads in it-jobs and ~750 via keywords, about 18 calls a day
+#   (~550 a month), well inside the plan.
 #
 # Coverage probe of 2026-09-20: the national queries already find what the API has per
 # region. Of the 17 IT ads within 20 km of Alkmaar over 30 days, 15 were already in the
@@ -13,6 +15,15 @@
 # per region would therefore spend call budget without adding vacancies; the thin regional
 # numbers are the API's coverage, not ours. Adzuna's own count per 30 days and 20 km:
 #   Amsterdam 276 | Haarlem 264 | Eindhoven 67 | Alkmaar 17 | Hoorn 12 | Leeuwarden 8.
+#
+# Depth probe of 2026-09-20: the index does hold older ads, but only those still listed.
+# it-jobs by max_days_old: 8 d 722 | 30 d 1,651 | 60 d 2,135 | 90 d 2,496 | 365 d 3,226.
+# Per month that is ~1,651 for the last month, ~484 for the month before, ~361, then ~126
+# and ~57: after a month roughly 30% of the ads are still listed, after half a year ~5%.
+# A backfill is therefore only good for extra text to check the rules against, never for
+# counts over time — hence `jobmarket ingest --backfill`, which keeps those vacancies out
+# of the published figures. Reaching back a full year costs about 450 calls
+# ((3,226 + 19,073) / 50), so two days of budget.
 
 adzuna:
   country: nl
@@ -23,8 +34,16 @@ adzuna:
   # check on the same day still fits.
   min_seconds_between_calls: 3
   max_calls_per_run: 200
-  # Days of history fetched in a normal (weekly) run. A first run can pass --days to backfill.
-  default_days: 8
+  # Kept across runs in the api_calls table, so several runs on one day cannot together pass the
+  # plan limits. Set a little below the real limits, leaving room for a manual check.
+  max_calls_per_day: 220
+  max_calls_per_week: 900
+  max_calls_per_month: 2300
+  # Days of history a normal run asks for. The job runs daily, so two days gives a day of
+  # overlap: a missed or failed run heals itself the next day. Measured on 2026-09-20: a 3-day
+  # window costs 40 calls and a day holds ~640 ads, so a daily 2-day window costs ~27 calls
+  # (~800 a month) and leaves the rest of the plan for checks and a one-off backfill.
+  default_days: 2
   queries:
     - id: it-category
       params: { category: it-jobs }

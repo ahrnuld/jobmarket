@@ -26,11 +26,13 @@ class IngestResult:
     error: str | None = None
 
 
-def start_run(conn: sqlite3.Connection, source_id: str, covers_from: str | None = None) -> int:
+def start_run(
+    conn: sqlite3.Connection, source_id: str, covers_from: str | None = None, backfill: bool = False
+) -> int:
     cur = conn.execute(
-        "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from) "
-        "VALUES (?, ?, 'running', ?)",
-        (source_id, utc_now(), covers_from),
+        "INSERT INTO ingestion_runs (source_id, started_at, status, covers_from, backfill) "
+        "VALUES (?, ?, 'running', ?, ?)",
+        (source_id, utc_now(), covers_from, int(backfill)),
     )
     conn.commit()
     return cur.lastrowid
@@ -88,14 +90,17 @@ def ingest(
     records: Iterable[VacancyRecord],
     ref: Reference,
     covers_from: str | None = None,
+    backfill: bool = False,
 ) -> IngestResult:
     """Consume `records` into the database. Exceptions from the source are caught and logged.
 
     covers_from: the earliest posting date this run requested (today minus max_days_old). The
     aggregation uses it to know which months the database holds completely.
+    backfill: this run reached into the past, where the source only still lists a fraction of
+    what was posted. Its vacancies are stored but stay out of the published aggregates.
     """
     source = ref.sources[source_id]
-    run_id = start_run(conn, source_id, covers_from)
+    run_id = start_run(conn, source_id, covers_from, backfill)
     fetched = new = 0
     try:
         retrieved_at = utc_now()

@@ -6,6 +6,28 @@
 
 entries:
   - date: "2026-09-20"
+    version: "0.4.0"
+    title:
+      nl: Elke dag vacatures ophalen in plaats van elke week
+      en: Collecting vacancies daily instead of weekly
+    body:
+      nl: >-
+        Een vacature staat soms maar een paar dagen online. Met een wekelijkse ophaalronde
+        misten we die; vanaf nu halen we elke dag de vacatures van de afgelopen twee dagen op.
+        Verder terugkijken dan de start van de reeks kan niet: de bron levert alleen vacatures
+        die nu nog online staan, en daarvan is na een maand nog ongeveer 30% over en na een half
+        jaar ongeveer 5%. Tellingen over die maanden zouden dus een daling laten zien die er
+        nooit was. Wat we alsnog uit het verleden ophalen, gebruiken we daarom alleen om de
+        indeelregels te controleren.
+      en: >-
+        A vacancy is sometimes online for only a few days. A weekly collection round missed
+        those; from now on we collect the vacancies of the past two days every day. Looking
+        further back than the start of the series is not possible: the source only serves
+        vacancies still online, of which about 30% remain after a month and about 5% after six
+        months. Counts for those months would show a decline that never happened. Anything we
+        do collect from the past is therefore used only to check the classification rules.
+    series_break: []
+  - date: "2026-09-20"
     version: "0.3.0"
     title:
       nl: Meervoudige functietitels tellen mee; officiele verdeling per provincie erbij

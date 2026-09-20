@@ -1,6 +1,6 @@
 #!/bin/sh
 # Worker start-up: seed empty volumes, build the site from the current data, then run the
-# weekly scheduler (or exit if SCHEDULER=off, e.g. when Coolify's Scheduled Tasks are used).
+# scheduler (daily by default; or exit if SCHEDULER=off, e.g. with Coolify's Scheduled Tasks).
 set -eu
 
 seed() {  # seed <volume dir> <seed dir>
@@ -24,8 +24,8 @@ jobmarket publish || echo "[entrypoint] publish failed; keeping the published sn
 /app/docker/build-site.sh
 
 if [ "${RUN_ON_START:-no}" = "yes" ]; then
-  echo "[entrypoint] RUN_ON_START=yes: running the weekly job now"
-  /app/docker/weekly.sh || echo "[entrypoint] weekly job failed; the site keeps its last snapshot"
+  echo "[entrypoint] RUN_ON_START=yes: running the pipeline job now"
+  /app/docker/weekly.sh || echo "[entrypoint] job failed; the site keeps its last snapshot"
 fi
 
 if [ "${SCHEDULER:-on}" = "off" ]; then

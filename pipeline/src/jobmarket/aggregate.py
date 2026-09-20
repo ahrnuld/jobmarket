@@ -127,13 +127,21 @@ class Aggregates:
 def coverage_start(conn: sqlite3.Connection, sample: bool) -> str | None:
     """Earliest date the database covers without gaps at the start.
 
-    For real data: the earliest `covers_from` of a successful Adzuna run. Runs from before this
-    was recorded, and fixture data, fall back to the earliest posting date in the database.
+    Per successful, complete Adzuna run that is the date it asked the source for; a run from
+    before `covers_from` was recorded falls back to its own earliest posting. The earliest of
+    those is where our coverage begins. Backfill runs are left out on purpose: they only see
+    the ads still listed today, so the months they reach into are incomplete by design and
+    their vacancies must not enter the counts.
     """
     if not sample:
         row = conn.execute(
-            "SELECT MIN(covers_from) FROM ingestion_runs "
-            "WHERE source_id = 'adzuna' AND status = 'success' AND covers_from IS NOT NULL"
+            """
+            SELECT MIN(COALESCE(
+                       r.covers_from,
+                       (SELECT MIN(v.posted_at) FROM vacancies v WHERE v.run_id = r.id)))
+            FROM ingestion_runs r
+            WHERE r.source_id = 'adzuna' AND r.status = 'success' AND r.backfill = 0
+            """
         ).fetchone()
         if row and row[0]:
             return row[0]
@@ -154,6 +162,10 @@ def _geos(province: str | None, region: str | None) -> list[str]:
 
 def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -> Aggregates:
     today = today or date.today()
+    start = coverage_start(conn, sample)
+    # Vacancies posted before the database covers the source completely (a backfill reaches
+    # into months where only a fraction of the ads is still listed) would show up as a collapse
+    # in the counts, so they stay out of the aggregates.
     vacancies = conn.execute(
         """
         SELECT id, substr(posted_at, 1, 7) AS month, posted_at, province, labour_market_region,
@@ -161,8 +173,9 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                multi_location
         FROM vacancies
         WHERE is_ict = 1 AND duplicate_of IS NULL AND is_sample = ?
+              AND (? IS NULL OR posted_at >= ?)
         """,
-        (int(sample),),
+        (int(sample), start, start),
     ).fetchall()
     programmes: dict[int, list[tuple[str, str]]] = {}
     for r in conn.execute("SELECT vacancy_id, programme_id, role_family FROM vacancy_programmes"):
@@ -237,7 +250,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                 "classifier_version": CLASSIFIER_VERSION,
             }
         )
-    return Aggregates(rows=rows, months=sorted(posted), coverage_start=coverage_start(conn, sample))
+    return Aggregates(rows=rows, months=sorted(posted), coverage_start=start)
 
 
 def read_history(history_dir: Path, name: str) -> list[dict]:

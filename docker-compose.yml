@@ -1,6 +1,6 @@
 # Production stack, e.g. for Coolify ("Docker Compose" build pack). See docs/DEPLOY-COOLIFY.md.
 #
-#   worker  weekly pipeline run + static site build into the shared `www` volume
+#   worker  scheduled pipeline run (daily) + static site build into the shared `www` volume
 #   web     nginx serving that site (put your domain on this service)
 #
 # Variables in ${...} are set in Coolify's Environment Variables screen (or a local .env file).
@@ -22,14 +22,14 @@ services:
       JOBMARKET_ENV: ${JOBMARKET_ENV:-}
       # Public URL of the site, for canonical and hreflang links (e.g. https://ict-arbeidsmarkt.nl)
       SITE_URL: ${SITE_URL:-}
-      SCHEDULE: ${SCHEDULE:-mon 05:00}
+      SCHEDULE: ${SCHEDULE:-daily 05:00}
       SCHEDULE_TZ: ${SCHEDULE_TZ:-Europe/Amsterdam}
       # 'off' when using Coolify's Scheduled Tasks instead (command: /app/docker/weekly.sh)
       SCHEDULER: ${SCHEDULER:-on}
-      # 'yes' runs the weekly job once at start-up (useful for the very first deploy)
+      # 'yes' runs the pipeline job once at start-up (useful for the very first deploy)
       RUN_ON_START: ${RUN_ON_START:-no}
       # Days of vacancies to fetch per run; set e.g. 30 for the first run(s) on a new server
-      # to close the gap since the last run elsewhere. Empty = the weekly default (8).
+      # to close the gap since the last run elsewhere. Empty = the default (3 days).
       JOBMARKET_INGEST_DAYS: ${JOBMARKET_INGEST_DAYS:-}
       TZ: Europe/Amsterdam
     volumes:

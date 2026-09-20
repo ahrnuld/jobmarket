@@ -28,9 +28,24 @@ LEVEL_ORDER = ["junior", "medior", "senior"]
 # ("systeembeheerders", "accountmanagers"), so a word that merely ends in -s or -en ("devops",
 # "business", "data", "binnen") is left alone.
 ROLE_NOUNS = [
-    "developer", "engineer", "consultant", "designer", "manager", "tester", "administrator",
-    "scientist", "analyst", "architect", "specialist", "ontwikkelaar", "programmeur",
-    "beheerder", "adviseur", "analist", "monteur", "medewerker",
+    "developer",
+    "engineer",
+    "consultant",
+    "designer",
+    "manager",
+    "tester",
+    "administrator",
+    "scientist",
+    "analyst",
+    "architect",
+    "specialist",
+    "ontwikkelaar",
+    "programmeur",
+    "beheerder",
+    "adviseur",
+    "analist",
+    "monteur",
+    "medewerker",
 ]
 _PLURAL_RE = re.compile(rf"\b(\w*?(?:{'|'.join(ROLE_NOUNS)}))(?:s|en)\b")
 
