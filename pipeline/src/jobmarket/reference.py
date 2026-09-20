@@ -6,12 +6,16 @@ reviewable diffs rather than code changes.
 
 from __future__ import annotations
 
+import csv
 import re
 import sqlite3
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+
+from jobmarket.reference_geo import normalise_name, slug
 
 SENIORITY_LEVELS = ("internship", "junior", "medior", "senior", "unknown")
 
@@ -73,7 +77,25 @@ class LabourMarketRegion:
     id: str
     name: str
     province: str
-    municipalities: list[str]
+
+
+@dataclass(frozen=True)
+class Corop:
+    """COROP area: the 40 regions CBS uses for regional statistics; used for the map."""
+
+    id: str
+    code: str
+    name: str
+    province: str
+
+
+@dataclass(frozen=True)
+class Municipality:
+    name: str
+    code: str
+    corop: str  # corop id
+    region: str | None  # labour market region id
+    province: str | None
 
 
 @dataclass(frozen=True)
@@ -95,8 +117,9 @@ class Reference:
     medior_max_years: int
     provinces: dict[str, Province]
     regions: dict[str, LabourMarketRegion]
+    corops: dict[str, Corop]
+    municipalities: dict[str, Municipality]  # normalised name -> municipality
     # lookup tables built after loading
-    municipality_index: dict[str, str] = field(default_factory=dict)  # lower name -> region id
     province_index: dict[str, str] = field(default_factory=dict)  # lower name/alias -> province id
 
 
@@ -124,6 +147,65 @@ def _compile(patterns: list[str] | None, where: str) -> list[re.Pattern[str]]:
         except re.error as exc:
             raise ReferenceError(f"{where}: invalid pattern {p!r}: {exc}") from exc
     return compiled
+
+
+def _load_municipalities(
+    path: Path,
+    provinces: dict[str, Province],
+    province_index: dict[str, str],
+    overrides: dict[str, str],
+    aliases: dict[str, str],
+) -> tuple[dict[str, LabourMarketRegion], dict[str, Corop], dict[str, Municipality]]:
+    """Read the generated municipality table (see reference_geo.py)."""
+    if not path.is_file():
+        raise ReferenceError(
+            f"Missing {path.name}; run `jobmarket reference update-regions` to generate it."
+        )
+    # A COROP area or labour market region can span two provinces (Groningen also covers
+    # Noordenveld); it is filed under the province holding most of its municipalities.
+    region_names: dict[str, str] = {}
+    corop_names: dict[str, tuple[str, str]] = {}
+    provinces_seen: dict[str, Counter[str]] = defaultdict(Counter)
+    municipalities: dict[str, Municipality] = {}
+    with path.open(encoding="utf-8", newline="") as fh:
+        for line, row in enumerate(csv.DictReader(fh), start=2):
+            where = f"{path.name} line {line}"
+            province = province_index.get(normalise_name(row["province"]))
+            if not province:
+                raise ReferenceError(f"{where}: unknown province {row['province']!r}")
+            corop_id = slug(row["corop"])
+            if not corop_id:
+                raise ReferenceError(f"{where}: missing COROP")
+            corop_names[corop_id] = (row["corop_code"], row["corop"])
+            provinces_seen[corop_id][province] += 1
+            region_id = None
+            if row["region"]:  # municipalities abolished before 2014 have no region
+                region_id = overrides.get(row["region"], slug(row["region"]))
+                region_names[region_id] = row["region"]
+                provinces_seen[region_id][province] += 1
+            municipalities[normalise_name(row["name"])] = Municipality(
+                name=row["name"],
+                code=row["code"],
+                corop=corop_id,
+                region=region_id,
+                province=province,
+            )
+    regions = {
+        rid: LabourMarketRegion(rid, name, provinces_seen[rid].most_common(1)[0][0])
+        for rid, name in region_names.items()
+    }
+    corops = {
+        cid: Corop(cid, code, name, provinces_seen[cid].most_common(1)[0][0])
+        for cid, (code, name) in corop_names.items()
+    }
+    for alias, target in aliases.items():
+        if target not in municipalities:
+            raise ReferenceError(f"regions.yaml: alias target {target!r} is not a municipality")
+        municipalities[alias] = municipalities[target]
+    unknown = {p for p in provinces} - {m.province for m in municipalities.values()}
+    if unknown:
+        raise ReferenceError(f"{path.name}: no municipalities for province(s) {sorted(unknown)}")
+    return regions, corops, municipalities
 
 
 def load_reference(reference_dir: Path) -> Reference:
@@ -206,15 +288,17 @@ def load_reference(reference_dir: Path) -> Reference:
     provinces = {
         p["id"]: Province(p["id"], p["name"], p.get("aliases", [])) for p in reg["provinces"]
     }
-    regions = {}
-    for r in reg["labour_market_regions"]:
-        where = f"regions.yaml:{r.get('id')}"
-        _require(r, ["id", "name", "province", "municipalities"], where)
-        if r["province"] not in provinces:
-            raise ReferenceError(f"{where}: unknown province {r['province']!r}")
-        regions[r["id"]] = LabourMarketRegion(
-            r["id"], r["name"], r["province"], r["municipalities"]
-        )
+    province_index = {
+        normalise_name(name): p.id for p in provinces.values() for name in [p.name, *p.aliases]
+    }
+    overrides = reg.get("region_id_overrides") or {}
+    aliases = {
+        normalise_name(k): normalise_name(v)
+        for k, v in (reg.get("municipality_aliases") or {}).items()
+    }
+    regions, corops, municipalities = _load_municipalities(
+        reference_dir / "municipalities.csv", provinces, province_index, overrides, aliases
+    )
 
     ref = Reference(
         sources=sources,
@@ -229,16 +313,10 @@ def load_reference(reference_dir: Path) -> Reference:
         medior_max_years=int(years.get("medior_max", 5)),
         provinces=provinces,
         regions=regions,
+        corops=corops,
+        municipalities=municipalities,
     )
-    for region in regions.values():
-        for m in region.municipalities:
-            key = m.lower()
-            if key in ref.municipality_index and ref.municipality_index[key] != region.id:
-                raise ReferenceError(f"regions.yaml: municipality {m!r} is in two regions")
-            ref.municipality_index[key] = region.id
-    for p in provinces.values():
-        for name in [p.name, *p.aliases]:
-            ref.province_index[name.lower()] = p.id
+    ref.province_index.update(province_index)
     return ref
 
 

@@ -40,6 +40,19 @@ def cmd_reference_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_update_regions(args: argparse.Namespace) -> int:
+    """Rebuild data/reference/municipalities.csv from the CBS area classifications."""
+    from jobmarket.reference_geo import build, write_csv
+
+    settings = load_settings()
+    rows = build()
+    path = settings.reference_dir / "municipalities.csv"
+    write_csv(path, rows)
+    corops = {r.corop for r in rows}
+    print(f"Wrote {len(rows)} municipality names and {len(corops)} COROP areas to {path}")
+    return 0
+
+
 def cmd_resolve_esco(args: argparse.Namespace) -> int:
     from jobmarket.esco import resolve_links
 
@@ -264,6 +277,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p = ref.add_parser("check", help="validate data/reference/*.yaml")
     p.set_defaults(func=cmd_reference_check)
+    p = ref.add_parser(
+        "update-regions", help="rebuild municipalities.csv from the CBS area classifications"
+    )
+    p.set_defaults(func=cmd_update_regions)
     p = ref.add_parser("resolve-esco", help="look up ESCO links for skills")
     p.add_argument("--refresh", action="store_true", help="re-resolve unchecked links")
     p.set_defaults(func=cmd_resolve_esco)

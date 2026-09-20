@@ -87,7 +87,7 @@ month,geo,programme,title,n
 2026-09,nl,all,business analist,4
 2026-09,nl,all,business analyst,3
 2026-09,nl,all,business informatie analist,2
-2026-09,nl,all,business it traineeship regio groningen,4
+2026-09,nl,all,business it traineeship regio groningen,3
 2026-09,nl,all,cloud architect,1
 2026-09,nl,all,cloud engineer,6
 2026-09,nl,all,cybersecurity consultant,4
@@ -148,7 +148,7 @@ month,geo,programme,title,n
 2026-09,nl,business-it-management,business analist,4
 2026-09,nl,business-it-management,business analyst,3
 2026-09,nl,business-it-management,business informatie analist,2
-2026-09,nl,business-it-management,business it traineeship regio groningen,4
+2026-09,nl,business-it-management,business it traineeship regio groningen,3
 2026-09,nl,business-it-management,data analist,3
 2026-09,nl,business-it-management,functioneel beheerder,7
 2026-09,nl,business-it-management,microsoft 365 consultant,5
@@ -231,8 +231,6 @@ month,geo,programme,title,n
 2026-09,p:gelderland,informatica,developer,3
 2026-09,p:gelderland,informatica,frontend design systems developer,3
 2026-09,p:gelderland,informatica,software engineer,4
-2026-09,p:groningen,all,business it traineeship regio groningen,3
-2026-09,p:groningen,business-it-management,business it traineeship regio groningen,3
 2026-09,p:noord-brabant,all,software engineer,5
 2026-09,p:noord-brabant,informatica,software engineer,5
 2026-09,p:noord-holland,all,ai software engineer,3
@@ -286,6 +284,8 @@ month,geo,programme,title,n
 2026-09,r:midden-utrecht,informatica,data engineer,3
 2026-09,r:midden-utrecht,informatica,devops engineer,3
 2026-09,r:midden-utrecht,technische-informatica,devops engineer,3
+2026-09,r:noordoost-brabant,all,software engineer,3
+2026-09,r:noordoost-brabant,informatica,software engineer,3
 2026-09,r:stedendriehoek,all,software engineer,3
 2026-09,r:stedendriehoek,informatica,software engineer,3
 2026-09,r:zuidoost-brabant,all,software engineer,1

@@ -25,8 +25,24 @@ def test_every_programme_has_a_role_family(ref):
 
 def test_all_noord_holland_focus_cities_are_mapped(ref):
     for city in ["alkmaar", "haarlem", "amsterdam"]:
-        region = ref.regions[ref.municipality_index[city]]
-        assert region.province == "noord-holland"
+        municipality = ref.municipalities[city]
+        assert ref.regions[municipality.region].province == "noord-holland"
+        assert ref.corops[municipality.corop].province == "noord-holland"
+
+
+def test_every_municipality_has_a_known_corop_region_and_province(ref):
+    assert len(ref.corops) == 40
+    for municipality in ref.municipalities.values():
+        assert municipality.corop in ref.corops
+        # Municipalities abolished before the 2014 labour market regions have no region.
+        assert municipality.region is None or municipality.region in ref.regions
+        assert municipality.province in ref.provinces
+
+
+def test_municipalities_that_no_longer_exist_are_still_found(ref):
+    # Sources keep using names of merged municipalities; the table covers 2010 onwards.
+    assert ref.municipalities["naarden"].corop == "het-gooi-en-vechtstreek"
+    assert ref.municipalities["sneek"].province == "friesland"
 
 
 def test_province_aliases(ref):

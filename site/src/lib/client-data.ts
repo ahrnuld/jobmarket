@@ -1,6 +1,6 @@
 // Browser-side access to public/data, with an in-memory cache per file.
 
-import type { GeoData, Meta, Stats } from "./types";
+import type { GeoData, MapData, Meta, Stats } from "./types";
 
 const cache = new Map<string, Promise<unknown>>();
 
@@ -19,6 +19,7 @@ function getJson<T>(url: string): Promise<T> {
 
 export const fetchMeta = () => getJson<Meta>("/data/meta.json");
 export const fetchStats = () => getJson<Stats>("/data/stats.json");
+export const fetchMap = () => getJson<MapData>("/data/map.json");
 
 export async function fetchGeo(geoId: string, kinds: (keyof GeoData)[]): Promise<GeoData> {
   const file = geoId.replace(":", "-");

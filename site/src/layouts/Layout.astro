@@ -9,7 +9,7 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
-  page: "dashboard" | "programmes" | "skills" | "salaries" | "trends" | "internships" | "methodology" | "about" | "data";
+  page: "dashboard" | "programmes" | "map" | "skills" | "salaries" | "trends" | "internships" | "methodology" | "about" | "data";
   /** Path of this page without the language prefix, e.g. "skills" or "programmes/informatica". */
   route: string;
 }
@@ -21,6 +21,7 @@ const other = otherLang(lang);
 const nav = [
   ["dashboard", ""],
   ["programmes", "programmes"],
+  ["map", "map"],
   ["skills", "skills"],
   ["salaries", "salaries"],
   ["trends", "trends"],

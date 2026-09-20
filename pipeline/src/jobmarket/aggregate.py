@@ -5,7 +5,9 @@ Counts are computed per month x geography x programme x seniority from unique IC
 directory: months that still have vacancies in the database are recomputed, older months are
 kept as they are. The CSVs contain no vacancy text, so they can be committed and published.
 
-Geography ids: 'nl', 'p:<province>', 'r:<labour market region>'.
+Geography ids: 'nl', 'p:<province>', 'r:<labour market region>'. The vacancies table also
+holds 'c:<COROP area>' rows, which only feed the map; the other tables stay out of COROP detail
+to keep the history files small.
 Seniority ids: the five DR-03 levels, plus 'all' and 'entry' (= internship or junior).
 Programme ids: the three programmes plus 'all' (every ICT vacancy, also those without programme).
 """
@@ -155,7 +157,8 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
     vacancies = conn.execute(
         """
         SELECT id, substr(posted_at, 1, 7) AS month, posted_at, province, labour_market_region,
-               seniority, title_norm, salary_min, salary_max, salary_is_predicted, multi_location
+               corop, seniority, title_norm, salary_min, salary_max, salary_is_predicted,
+               multi_location
         FROM vacancies
         WHERE is_ict = 1 AND duplicate_of IS NULL AND is_sample = ?
         """,
@@ -175,6 +178,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
         posted.setdefault(month, []).append(v["posted_at"])
         # A posting spread over many places at once has no known workplace: national only.
         geos = ["nl"] if v["multi_location"] else _geos(v["province"], v["labour_market_region"])
+        map_geo = None if v["multi_location"] or not v["corop"] else f"c:{v['corop']}"
         progs = programmes.get(v["id"], [])
         prog_ids = ["all"] + [p for p, _ in progs]
         level = v["seniority"] or "unknown"
@@ -202,6 +206,10 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                 counts["families"][(month, g, p, family)] += 1
             for family in {f for _, f in progs}:  # a family can serve two programmes
                 counts["families"][(month, g, "all", family)] += 1
+        if map_geo:
+            for p in prog_ids:
+                for s in levels:
+                    counts["vacancies"][(month, map_geo, p, s)] += 1
 
     rows = {}
     for name, counter in counts.items():

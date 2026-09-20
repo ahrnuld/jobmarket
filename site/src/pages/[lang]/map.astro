@@ -1,0 +1,111 @@
+---
+import FilterBar from "../../components/FilterBar.astro";
+import Layout from "../../layouts/Layout.astro";
+import { LANGS, path, t } from "../../i18n";
+import { loadGeo, loadMap, loadMeta } from "../../lib/data";
+import { buildGeometry } from "../../lib/map";
+import { window as timeWindow } from "../../lib/model";
+import type { Lang } from "../../lib/types";
+import { DEFAULT_STATE, makeCtx } from "../../views/common";
+import { areaTitle, buildMapView, details, legend } from "../../views/map";
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const meta = loadMeta();
+const ctx = makeCtx(lang, meta);
+// The map covers the whole country, so it has no region filter of its own.
+const state = { ...DEFAULT_STATE, geo: "nl" };
+const win = timeWindow(meta.vacancies.months, state.period);
+const view = buildMapView(state, loadMap(), loadGeo("nl").vacancies, win);
+const geometry = buildGeometry();
+const nl = lang === "nl";
+const mapLabel = nl
+  ? "Kaart van Nederland met het aantal vacatures per COROP-gebied; de cijfers staan in de tabel onder de kaart."
+  : "Map of the Netherlands with the number of vacancies per COROP area; the figures are in the table below the map.";
+---
+<Layout lang={lang} page="map" route="map"
+  title={t(lang).nav.map}
+  description={nl ? "Waar in Nederland staan de ICT-vacatures? Per COROP-gebied, per opleiding." : "Where in the Netherlands are the ICT vacancies? Per COROP area, per programme."}>
+  <h1>{nl ? "Waar staan de vacatures?" : "Where are the vacancies?"}</h1>
+  <p class="lead">
+    {nl
+      ? "Het aantal vacatures per COROP-gebied: de gebiedsindeling die het CBS voor arbeidsmarktcijfers gebruikt. Kies een opleiding om te zien waar het werk zit."
+      : "The number of vacancies per COROP area: the regional division CBS uses for labour market figures. Pick a programme to see where the work is."}
+  </p>
+  <FilterBar lang={lang} id="map-filters" fields={["programme", "seniority", "period"]} />
+  <figure class="mapfig">
+    <svg class="map" viewBox={geometry.viewBox} role="img" aria-label={mapLabel} xmlns="http://www.w3.org/2000/svg">
+      {geometry.shapes.map((s) => {
+        const area = view.byCode.get(s.code);
+        return (
+          <path d={s.d} data-code={s.code} class={`map-area map-c${area ? area.klass : 0}`}>
+            <title>{area ? areaTitle(ctx, area) : s.name}</title>
+          </path>
+        );
+      })}
+    </svg>
+    <figcaption id="map-legend" set:html={legend(ctx, view)} />
+  </figure>
+  <div id="map-details" data-lang={lang} set:html={details(ctx, state, view, win)} />
+  <p class="muted">
+    {nl
+      ? "Een COROP-gebied bundelt gemeenten rond een centrale kern. Voor cijfers per arbeidsmarktregio of provincie: gebruik het regiofilter op de "
+      : "A COROP area groups municipalities around a central hub. For figures per labour market region or province, use the region filter on the "}
+    <a href={path(lang, "")}>{nl ? "overzichtspagina" : "overview page"}</a>.
+  </p>
+</Layout>
+
+<script>
+  import { fetchGeo, fetchMap, fetchMeta } from "../../lib/client-data";
+  import { window as timeWindow } from "../../lib/model";
+  import { formState, readState, writeQuery } from "../../scripts/controller";
+  import type { Lang } from "../../lib/types";
+  import { DEFAULT_STATE, makeCtx } from "../../views/common";
+  import { buildMapView, details, legend, paint } from "../../views/map";
+
+  const details_ = document.getElementById("map-details")!;
+  const legendEl = document.getElementById("map-legend")!;
+  const svg = document.querySelector<SVGSVGElement>("svg.map")!;
+  const form = document.getElementById("map-filters") as HTMLFormElement;
+  const status = form.querySelector<HTMLElement>("[data-filter-status]");
+  const lang = details_.dataset.lang as Lang;
+  const defaults = { ...DEFAULT_STATE, geo: "nl" };
+  let state = readState(form, defaults);
+  let request = 0;
+
+  async function update(pushUrl: boolean) {
+    const mine = ++request;
+    details_.setAttribute("aria-busy", "true");
+    if (status) status.textContent = "";
+    try {
+      const [meta, map, nl] = await Promise.all([fetchMeta(), fetchMap(), fetchGeo("nl", ["vacancies"])]);
+      if (mine !== request) return; // a newer selection won
+      const ctx = makeCtx(lang, meta);
+      const win = timeWindow(meta.vacancies.months, state.period);
+      const view = buildMapView(state, map, nl.vacancies, win);
+      paint(ctx, svg, view);
+      legendEl.innerHTML = legend(ctx, view);
+      details_.innerHTML = details(ctx, state, view, win);
+      if (pushUrl) writeQuery(state, defaults);
+    } catch {
+      if (status && mine === request) status.textContent = status.dataset.errorText ?? "Error";
+    } finally {
+      if (mine === request) details_.removeAttribute("aria-busy");
+    }
+  }
+
+  form.addEventListener("change", () => {
+    state = formState(form, state);
+    void update(true);
+  });
+  form.addEventListener("submit", (e) => e.preventDefault());
+
+  for (const [k, v] of Object.entries(state)) {
+    const field = form.elements.namedItem(k) as HTMLSelectElement | null;
+    if (field) field.value = v;
+  }
+  // The static HTML already shows the defaults.
+  if (JSON.stringify(state) !== JSON.stringify(defaults)) void update(false);
+</script>

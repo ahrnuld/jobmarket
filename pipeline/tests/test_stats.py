@@ -212,4 +212,4 @@ def test_schema_migration_from_version_1(tmp_path):
     init_schema(conn)
     cols = {r[1] for r in conn.execute("PRAGMA table_info(stat_observations)")}
     assert "value_label" in cols
-    assert conn.execute("SELECT version FROM schema_version").fetchone()[0] == 4
+    assert conn.execute("SELECT version FROM schema_version").fetchone()[0] == 5

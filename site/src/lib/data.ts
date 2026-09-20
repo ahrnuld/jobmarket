@@ -2,7 +2,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { GeoData, Meta, Stats } from "./types";
+import type { GeoData, MapData, Meta, Stats } from "./types";
 
 const DATA_DIR = join(process.cwd(), "public", "data");
 const cache = new Map<string, unknown>();
@@ -22,6 +22,10 @@ export function loadMeta(): Meta {
 
 export function loadStats(): Stats {
   return readJson<Stats>("stats.json");
+}
+
+export function loadMap(): MapData {
+  return readJson<MapData>("map.json");
 }
 
 const KINDS = ["vacancies", "skills", "families", "titles", "salaries"] as const;

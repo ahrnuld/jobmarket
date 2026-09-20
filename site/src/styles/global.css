@@ -17,6 +17,12 @@
   --series-2: #eb6834;
   --series-3: #1baf7a;
   --series-4: #eda100;
+  --map-c0: #eceae4;
+  --map-c1: #dbe8f8;
+  --map-c2: #b5d0ef;
+  --map-c3: #7fabe0;
+  --map-c4: #4180c9;
+  --map-c5: #1c5394;
   --rise: #2a78d6;  /* diverging pair: blue <-> red */
   --fall: #e34948;
   --warn-bg: #fff4d6;
@@ -45,6 +51,12 @@
     --series-2: #d95926;
     --series-3: #199e70;
     --series-4: #c98500;
+  --map-c0: #232321;
+  --map-c1: #16304d;
+  --map-c2: #1e4878;
+  --map-c3: #2a63a2;
+  --map-c4: #4085cc;
+  --map-c5: #78b0ea;
     --rise: #3987e5;
     --fall: #e66767;
     --warn-bg: #3a2e0a;
@@ -70,6 +82,12 @@
   --series-2: #d95926;
   --series-3: #199e70;
   --series-4: #c98500;
+  --map-c0: #232321;
+  --map-c1: #16304d;
+  --map-c2: #1e4878;
+  --map-c3: #2a63a2;
+  --map-c4: #4085cc;
+  --map-c5: #78b0ea;
   --rise: #3987e5;
   --fall: #e66767;
   --warn-bg: #3a2e0a;
@@ -271,9 +289,32 @@ figure { margin: 0; }
 .site-footer p { margin: 0 0 6px; }
 .site-footer a { color: inherit; }
 
+/* Map of the Netherlands (COROP areas). Shapes are rendered at build time; the browser only
+   changes their class when a filter changes. */
+.mapfig { margin: 0 0 8px; display: grid; gap: 12px; align-items: start; }
+@media (min-width: 760px) { .mapfig { grid-template-columns: minmax(0, 1fr) max-content; align-items: center; } }
+.map { width: 100%; height: auto; max-height: 70vh; display: block; }
+.map-area { stroke: var(--surface); stroke-width: 0.8; fill: var(--map-c0); }
+.map-c0 { fill: var(--map-c0); }
+.map-c1 { fill: var(--map-c1); }
+.map-c2 { fill: var(--map-c2); }
+.map-c3 { fill: var(--map-c3); }
+.map-c4 { fill: var(--map-c4); }
+.map-c5 { fill: var(--map-c5); }
+.map-legend { font-size: 0.85rem; color: var(--ink-2); }
+.map-legend-title { margin: 0 0 6px; font-weight: 600; color: var(--ink); }
+.map-legend ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+@media (min-width: 760px) { .map-legend ul { display: block; } }
+.map-legend li { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+.map-key { width: 18px; height: 12px; border-radius: 3px; border: 1px solid var(--border); flex: none; }
+.map-summary { margin: 4px 0 0; max-width: 70ch; }
+#map-details[aria-busy="true"] { opacity: 0.6; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (forced-colors: active) {
   .bar-fill, .col-fill, .range-fill, .range-median, .key-line { background: CanvasText; forced-color-adjust: none; }
+  /* Forced colors flatten the fills; the table under the map carries the figures. */
+  .map-area { fill: Canvas; stroke: CanvasText; }
 }
 @media print {
   .filters, .site-header nav, .table-view summary { display: none; }

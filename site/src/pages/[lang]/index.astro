@@ -49,6 +49,10 @@ const cbs = statLines(ctx, stats, "cbs_open_vacancies_ict_sector_region", "regio
   <h2>{nl ? "Vacatures" : "Vacancies"}</h2>
   <FilterBar lang={lang} id="dashboard-filters" fields={["geo", "seniority", "period"]} />
   <div id="dashboard-root" data-lang={lang} set:html={initial} />
+  <p class="prose">
+    {nl ? "Wil je zien waar in het land die vacatures staan? " : "Want to see where in the country those vacancies are? "}
+    <a href={path(lang, "map")}>{nl ? "Bekijk de kaart per COROP-gebied" : "See the map per COROP area"}</a>.
+  </p>
 
   <h2>{nl ? "Ter vergelijking: de officiële statistiek" : "For comparison: official statistics"}</h2>
   <p class="prose">

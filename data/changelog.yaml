@@ -5,6 +5,28 @@
 #   [vacancies, skills, seniority, salaries]. The trends page draws a marker at `date`.
 
 entries:
+  - date: "2026-09-20"
+    version: "0.2.0"
+    title:
+      nl: Regio-indeling van het CBS en een kaart per COROP-gebied
+      en: CBS area classification and a map per COROP area
+    body:
+      nl: >-
+        De koppeling van een vacature aan een regio liep eerst via een met de hand gemaakte
+        gemeentelijst die alleen voor Noord-Holland compleet was. Nu gebruiken we de
+        gebiedsindelingen van het CBS (2010 tot nu): elke gemeentenaam, ook die van opgeheven
+        gemeenten zoals Naarden en Sneek, hoort bij een COROP-gebied, een arbeidsmarktregio en
+        een provincie. Daardoor krijgen vacatures buiten Noord-Holland alsnog een regio, en
+        liggen de regiocijfers van eerdere maanden hoger dan eerder getoond. Nieuw is de kaart
+        met het aantal vacatures per COROP-gebied.
+      en: >-
+        Linking a vacancy to a region used to run through a hand-made municipality list that was
+        complete for Noord-Holland only. We now use the CBS area classifications (2010 to now):
+        every municipality name, including those of abolished municipalities such as Naarden and
+        Sneek, belongs to a COROP area, a labour market region and a province. Vacancies outside
+        Noord-Holland therefore now get a region, and the regional figures for earlier months are
+        higher than shown before. New is the map with the number of vacancies per COROP area.
+    series_break: [regions]
   - date: "2026-09-19"
     version: "0.1.0"
     title:

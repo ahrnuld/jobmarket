@@ -14,8 +14,8 @@ const lang = Astro.params.lang as Lang;
 const meta = loadMeta();
 const nl = lang === "nl";
 const common = nl
-  ? "month = maand (JJJJ-MM) · geo = nl, p:<provincie> of r:<arbeidsmarktregio> · programme = opleiding of all · seniority = niveau (all, entry = stage+junior, internship, junior, medior, senior, unknown) · n = aantal unieke ICT-vacatures"
-  : "month = month (YYYY-MM) · geo = nl, p:<province> or r:<labour market region> · programme = programme or all · seniority = level (all, entry = internship+junior, internship, junior, medior, senior, unknown) · n = number of unique ICT vacancies";
+  ? "month = maand (JJJJ-MM) · geo = nl, p:<provincie>, r:<arbeidsmarktregio> of c:<COROP-gebied> · programme = opleiding of all · seniority = niveau (all, entry = stage+junior, internship, junior, medior, senior, unknown) · n = aantal unieke ICT-vacatures"
+  : "month = month (YYYY-MM) · geo = nl, p:<province>, r:<labour market region> or c:<COROP area> · programme = programme or all · seniority = level (all, entry = internship+junior, internship, junior, medior, senior, unknown) · n = number of unique ICT vacancies";
 const files = [
   { file: "vacancies.csv", title: nl ? "Vacatures per maand" : "Vacancies per month",
     cols: "month, geo, programme, seniority, n", note: "" },

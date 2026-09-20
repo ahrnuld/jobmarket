@@ -11,6 +11,7 @@ const strings = {
   nav: {
     dashboard: { nl: "Overzicht", en: "Overview" },
     programmes: { nl: "Opleidingen", en: "Programmes" },
+    map: { nl: "Kaart", en: "Map" },
     skills: { nl: "Skills", en: "Skills" },
     salaries: { nl: "Salarissen", en: "Salaries" },
     trends: { nl: "Trends", en: "Trends" },
@@ -62,6 +63,7 @@ const strings = {
     updated: { nl: "bijgewerkt", en: "updated" },
     basedOn: { nl: "gebaseerd op", en: "based on" },
     vacancies: { nl: "vacatures", en: "vacancies" },
+    vacancy: { nl: "vacature", en: "vacancy" },
     records: { nl: "records", en: "records" },
     showTable: { nl: "Toon als tabel", en: "Show as table" },
     indicative: { nl: "Indicatief", en: "Indicative" },

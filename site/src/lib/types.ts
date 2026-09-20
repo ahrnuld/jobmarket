@@ -91,6 +91,21 @@ export type FamilyRow = [mi: number, programme: string, family: string, n: numbe
 export type TitleRow = [mi: number, programme: string, title: string, n: number];
 export type SalaryRow = [mi: number, programme: string, seniority: string, bucket: number, n: number];
 
+/** map.json: vacancy counts per COROP area (the map, FR-07). */
+export type MapRow = [mi: number, corop: string, programme: string, seniority: string, n: number];
+
+export interface CoropInfo {
+  id: string;
+  code: string; // CBS statcode, joins the row to its shape on the map
+  name: string;
+  province: string;
+}
+
+export interface MapData {
+  corops: CoropInfo[];
+  rows: MapRow[];
+}
+
 export interface GeoData {
   vacancies: VacancyRow[];
   skills: SkillRow[];

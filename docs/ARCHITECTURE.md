@@ -18,7 +18,8 @@ data/manual/*.csv ─────┘        │
 
 | Path | Contents |
 | --- | --- |
-| `data/reference/` | Hand-maintained methodology: sources and licences, programmes and role families, seniority rules, skills vocabulary, ESCO links, regions |
+| `data/reference/` | Hand-maintained methodology: sources and licences, programmes and role families, seniority rules, skills vocabulary, ESCO links, provinces |
+| `data/reference/municipalities.csv` | Generated from the CBS area classifications by `jobmarket reference update-regions`: every municipality name since 2010 with its COROP area, labour market region and province |
 | `data/manual/` | Figures from sources without an API (HBO-Monitor, ROA, UWV), typed over from the published tables |
 | `data/aggregates/` | Monthly aggregates, one CSV per metric. The durable trend history (DR-07, DR-09) |
 | `data/corrections.yaml` | Admin mapping corrections, append-only log (FR-21) |
@@ -57,6 +58,21 @@ guarded by the git host's account security, where the owner enables two-factor a
 **Fixture data until the Adzuna key exists.** A deterministic generator produces synthetic
 vacancies with source `fixture`. Every figure derived from them is marked as sample data on the
 site, and production mode refuses to publish them.
+
+**Regions come from CBS, not from a hand-written list.** `jobmarket reference update-regions`
+reads the CBS "Gebieden in Nederland" tables for 2010 up to the current year and writes one row
+per municipality name, with its COROP area, labour market region and province. Names of
+municipalities that have since been merged away are kept, because vacancies still use them
+(Naarden, Sneek, Veghel). Only the provinces, a few id spellings and a handful of aliases
+("Den Haag") stay by hand, in `regions.yaml`.
+
+**The map uses COROP areas.** The 40 COROP areas are the division CBS uses for labour market
+figures: large enough that a single vacancy does not make an area light up, and complete for the
+whole country. Their counts ride along in the `vacancies` aggregate under geography ids
+`c:<area>`, and are published separately as `map.json`; the other aggregate tables stay out of
+COROP detail to keep the history files small. The boundaries (CBS/Kadaster, CC BY 4.0) sit in
+`site/src/data/corop-2026.json` and are projected into SVG paths at build time, so the browser
+downloads counts only, never geometry.
 
 **ESCO links are resolved, then reviewed.** `jobmarket reference resolve-esco` queries the ESCO
 API and writes `data/reference/esco_links.yaml` with `checked: false`. ESCO has no concepts for

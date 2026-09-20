@@ -45,13 +45,14 @@ def normalise_all(conn: sqlite3.Connection, ref: Reference) -> None:
                 place.municipality,
                 place.labour_market_region,
                 place.province,
+                place.corop,
                 lang,
                 r["id"],
             )
         )
     conn.executemany(
         """UPDATE vacancies SET title_norm = ?, employer_norm = ?, location_norm = ?,
-           municipality = ?, labour_market_region = ?, province = ?,
+           municipality = ?, labour_market_region = ?, province = ?, corop = ?,
            language = COALESCE(?, language) WHERE id = ?""",
         updates,
     )

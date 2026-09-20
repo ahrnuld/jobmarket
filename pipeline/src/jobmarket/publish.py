@@ -5,6 +5,7 @@ Output layout (site/public/data/; read by the site build and fetched by the brow
     stats.json           CBS / HBO-Monitor / ROA / UWV observations with provenance
     geo/<geo>/<kind>.json  monthly aggregates for one geography (nl, p-<province>, r-<region>);
                          kind = vacancies, skills, families, titles, salaries
+    map.json             vacancy counts per COROP area, for the map (FR-07)
     csv/*.csv            the aggregate history as downloadable CSV (FR-11)
 
 Only aggregates are published, never vacancy texts or bulk vacancy records (LR-02).
@@ -120,7 +121,7 @@ def build(
     history_dir: Path,
     dataset: str,
     snapshot_id: str,
-) -> tuple[dict, dict[str, dict], dict]:
+) -> tuple[dict, dict[str, dict], dict, dict]:
     history = {name: read_history(history_dir, name) for name in TABLES}
     month_rows = sorted(history["months"], key=lambda r: r["month"])
     months = [{"month": r["month"], "partial": r["partial"] == "1"} for r in month_rows]
@@ -135,7 +136,22 @@ def build(
     geo_files: dict[str, dict] = defaultdict(
         lambda: {"vacancies": [], "skills": [], "families": [], "titles": [], "salaries": []}
     )
+    # COROP rows feed the map only; they are not a geography the user can filter on.
+    map_rows = [
+        [index[r["month"]], r["geo"][2:], r["programme"], r["seniority"], int(r["n"])]
+        for r in history["vacancies"]
+        if r["geo"].startswith("c:")
+    ]
+    map_data = {
+        "corops": [
+            {"id": c.id, "code": c.code, "name": c.name, "province": c.province}
+            for c in sorted(ref.corops.values(), key=lambda c: c.code)
+        ],
+        "rows": map_rows,
+    }
     for r in history["vacancies"]:
+        if r["geo"].startswith("c:"):
+            continue
         geo_files[r["geo"]]["vacancies"].append(
             [index[r["month"]], r["programme"], r["seniority"], int(r["n"])]
         )
@@ -244,7 +260,7 @@ def build(
         "changelog": changelog,
         "accuracy": accuracy,
     }
-    return meta, dict(geo_files), stats
+    return meta, dict(geo_files), stats, map_data
 
 
 def _write_json(path: Path, data) -> None:
@@ -267,7 +283,7 @@ def publish(
         suffix += 1
         snapshot_id = f"{base_id}-{suffix}"
     production = os.environ.get("JOBMARKET_ENV") == "production"
-    meta, geo_files, stats = build(conn, ref, settings, history_dir, dataset, snapshot_id)
+    meta, geo_files, stats, map_data = build(conn, ref, settings, history_dir, dataset, snapshot_id)
     report = validate(meta, geo_files, stats, production=production, today=today)
     meta["validation"] = report.as_dict()
 
@@ -276,6 +292,7 @@ def publish(
         shutil.rmtree(staging)
     _write_json(staging / "meta.json", meta)
     _write_json(staging / "stats.json", stats)
+    _write_json(staging / "map.json", map_data)
     # One file per geography and kind, so a page downloads only what it shows (NFR-02).
     for geo_id, data in geo_files.items():
         for kind, rows in data.items():

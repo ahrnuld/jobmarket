@@ -1,0 +1,470 @@
+name,code,year,corop_code,corop,region_code,region,province_code,province
+Aa en Hunze,GM1680,2026,CR07,Noord-Drenthe,AM01,Groningen,PV22,Drenthe
+Aalburg,GM0738,2018,CR34,Midden-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Aalsmeer,GM0358,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Aalten,GM0197,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Abcoude,GM0305,2010,CR17,Utrecht,,,PV26,Utrecht
+Achtkarspelen,GM0059,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Alblasserdam,GM0482,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Albrandswaard,GM0613,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Alkmaar,GM0361,2026,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Almelo,GM0141,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Almere,GM0034,2026,CR40,Flevoland,AM11,Flevoland,PV24,Flevoland
+Alphen aan den Rijn,GM0484,2026,CR28,Oost-Zuid-Holland,AM19,Holland Rijnland,PV28,Zuid-Holland
+Alphen-Chaam,GM1723,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Altena,GM1959,2026,CR34,Midden-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Ameland,GM0060,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Amersfoort,GM0307,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Amstelveen,GM0362,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Amsterdam,GM0363,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Andijk,GM0364,2010,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Anna Paulowna,GM0366,2011,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Apeldoorn,GM0200,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Appingedam,GM0003,2020,CR02,Delfzijl en omgeving,AM01,Groningen,PV20,Groningen
+Arnhem,GM0202,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Assen,GM0106,2026,CR07,Noord-Drenthe,AM01,Groningen,PV22,Drenthe
+Asten,GM0743,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Baarle-Nassau,GM0744,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Baarn,GM0308,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Barendrecht,GM0489,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Barneveld,GM0203,2026,CR13,Veluwe,AM38,FoodValley,PV25,Gelderland
+Bedum,GM0005,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Beek,GM0888,2023,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Beek (L.),GM0888,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Beekdaelen,GM1954,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Beemster,GM0370,2021,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Beesel,GM0889,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Bellingwedde,GM0007,2017,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Berg en Dal,GM1945,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Bergambacht,GM0491,2014,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Bergeijk,GM1724,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Bergen (L.),GM0893,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Bergen (NH.),GM0373,2026,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Bergen op Zoom,GM0748,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Berkelland,GM1859,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Bernheze,GM1721,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Bernisse,GM0568,2014,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Best,GM0753,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Beuningen,GM0209,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Beverwijk,GM0375,2026,CR20,IJmond,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Binnenmaas,GM0585,2018,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Bladel,GM1728,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Blaricum,GM0376,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Bloemendaal,GM0377,2026,CR21,Agglomeratie Haarlem,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Boarnsterhim,GM0055,2013,CR04,Noord-Friesland,,,PV21,Fryslân
+Bodegraven,GM0497,2010,CR28,Oost-Zuid-Holland,,,PV28,Zuid-Holland
+Bodegraven-Reeuwijk,GM1901,2026,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Boekel,GM0755,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Bolsward,GM0064,2010,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Borger-Odoorn,GM1681,2026,CR08,Zuidoost-Drenthe,AM03,Drenthe,PV22,Drenthe
+Borne,GM0147,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Borsele,GM0654,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Boskoop,GM0499,2013,CR28,Oost-Zuid-Holland,,,PV28,Zuid-Holland
+Boxmeer,GM0756,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Boxtel,GM0757,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Breda,GM0758,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Breukelen,GM0311,2010,CR17,Utrecht,,,PV26,Utrecht
+Brielle,GM0501,2022,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Bronckhorst,GM1876,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Brummen,GM0213,2026,CR14,Achterhoek,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Brunssum,GM0899,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Bunnik,GM0312,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Bunschoten,GM0313,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Buren,GM0214,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Bussum,GM0381,2015,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Capelle aan den IJssel,GM0502,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Castricum,GM0383,2026,CR20,IJmond,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Coevorden,GM0109,2026,CR08,Zuidoost-Drenthe,AM03,Drenthe,PV22,Drenthe
+Cranendonck,GM1706,2026,CR36,Zuidoost-Noord-Brabant,AM33,Midden-Limburg,PV30,Noord-Brabant
+Cromstrijen,GM0611,2018,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Cuijk,GM1684,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Culemborg,GM0216,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Dalfsen,GM0148,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Dantumadiel,GM1891,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+De Bilt,GM0310,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+De Friese Meren,GM1921,2015,CR05,Zuidwest-Friesland,AM02,Friesland,PV21,Fryslân
+De Fryske Marren,GM1940,2026,CR05,Zuidwest-Friesland,AM02,Friesland,PV21,Fryslân
+De Marne,GM1663,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+De Ronde Venen,GM0736,2026,CR17,Utrecht,AM18,Groot Amsterdam,PV26,Utrecht
+De Wolden,GM1690,2026,CR09,Zuidwest-Drenthe,AM03,Drenthe,PV22,Drenthe
+Delft,GM0503,2026,CR27,Delft en Westland,AM21,Haaglanden,PV28,Zuid-Holland
+Delfzijl,GM0010,2020,CR02,Delfzijl en omgeving,AM01,Groningen,PV20,Groningen
+Den Helder,GM0400,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Deurne,GM0762,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Deventer,GM0150,2026,CR11,Zuidwest-Overijssel,AM06,Veluwe Stedendriehoek,PV23,Overijssel
+Diemen,GM0384,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Dijk en Waard,GM1980,2026,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Dinkelland,GM1774,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Dirksland,GM0504,2012,CR29,Groot-Rijnmond,,,PV28,Zuid-Holland
+Doesburg,GM0221,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Doetinchem,GM0222,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Dongen,GM0766,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Dongeradeel,GM0058,2018,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Dordrecht,GM0505,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Drechterland,GM0498,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Drimmelen,GM1719,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Dronten,GM0303,2026,CR40,Flevoland,AM11,Flevoland,PV24,Flevoland
+Druten,GM0225,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Duiven,GM0226,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Echt-Susteren,GM1711,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Edam-Volendam,GM0385,2026,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Ede,GM0228,2026,CR13,Veluwe,AM38,FoodValley,PV25,Gelderland
+Eemnes,GM0317,2026,CR17,Utrecht,AM12,Gooi en Vechtstreek,PV26,Utrecht
+Eemsdelta,GM1979,2026,CR02,Delfzijl en omgeving,AM01,Groningen,PV20,Groningen
+Eemsmond,GM1651,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Eersel,GM0770,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Eijsden,GM0905,2010,CR39,Zuid-Limburg,,,PV31,Limburg
+Eijsden-Margraten,GM1903,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Eindhoven,GM0772,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Elburg,GM0230,2026,CR13,Veluwe,AM36,Regio Zwolle,PV25,Gelderland
+Emmen,GM0114,2026,CR08,Zuidoost-Drenthe,AM03,Drenthe,PV22,Drenthe
+Enkhuizen,GM0388,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Enschede,GM0153,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Epe,GM0232,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Ermelo,GM0233,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Etten-Leur,GM0777,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Ferwerderadiel,GM1722,2018,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Franekeradeel,GM0070,2017,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Gaasterlân-Sleat,GM0653,2013,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Geertruidenberg,GM0779,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Geldermalsen,GM0236,2018,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Geldrop-Mierlo,GM1771,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Gemert-Bakel,GM1652,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Gennep,GM0907,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Giessenlanden,GM0689,2018,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Gilze en Rijen,GM0784,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Goedereede,GM0511,2012,CR29,Groot-Rijnmond,,,PV28,Zuid-Holland
+Goeree-Overflakkee,GM1924,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Goes,GM0664,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Goirle,GM0785,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Gooise Meren,GM1942,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Gorinchem,GM0512,2026,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Gouda,GM0513,2026,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Graafstroom,GM0693,2012,CR30,Zuidoost-Zuid-Holland,,,PV28,Zuid-Holland
+Graft-De Rijp,GM0365,2014,CR23,Groot-Amsterdam,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Grave,GM0786,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Groesbeek,GM0241,2015,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Groningen,GM0014,2026,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Grootegast,GM0015,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Gulpen-Wittem,GM1729,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Haaksbergen,GM0158,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Haaren,GM0788,2020,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Haarlem,GM0392,2026,CR21,Agglomeratie Haarlem,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Haarlemmerliede en Spaarnwoude,GM0393,2018,CR21,Agglomeratie Haarlem,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Haarlemmermeer,GM0394,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Halderberge,GM1655,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Hardenberg,GM0160,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Harderwijk,GM0243,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Hardinxveld-Giessendam,GM0523,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Haren,GM0017,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Harenkarspel,GM0395,2012,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Harlingen,GM0072,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Hattem,GM0244,2026,CR13,Veluwe,AM36,Regio Zwolle,PV25,Gelderland
+Heemskerk,GM0396,2026,CR20,IJmond,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Heemstede,GM0397,2026,CR21,Agglomeratie Haarlem,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Heerde,GM0246,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Heerenveen,GM0074,2026,CR06,Zuidoost-Friesland,AM02,Friesland,PV21,Fryslân
+Heerhugowaard,GM0398,2021,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Heerlen,GM0917,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Heeze-Leende,GM1658,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Heiloo,GM0399,2026,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Hellendoorn,GM0163,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Hellevoetsluis,GM0530,2022,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Helmond,GM0794,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Hendrik-Ido-Ambacht,GM0531,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Hengelo,GM0164,2023,CR12,Twente,AM05,Twente,PV23,Overijssel
+Hengelo (O.),GM0164,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+het Bildt,GM0063,2017,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Het Hogeland,GM1966,2026,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Heumen,GM0252,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Heusden,GM0797,2026,CR35,Noordoost-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Hillegom,GM0534,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Hilvarenbeek,GM0798,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Hilversum,GM0402,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Hoeksche Waard,GM1963,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Hof van Twente,GM1735,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Hollands Kroon,GM1911,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Hoogeveen,GM0118,2026,CR09,Zuidwest-Drenthe,AM03,Drenthe,PV22,Drenthe
+Hoogezand-Sappemeer,GM0018,2017,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Hoorn,GM0405,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Horst aan de Maas,GM1507,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Houten,GM0321,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Huizen,GM0406,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Hulst,GM0677,2026,CR31,Zeeuwsch-Vlaanderen,AM24,Zeeland,PV29,Zeeland
+IJsselstein,GM0353,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Kaag en Braassem,GM1884,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Kampen,GM0166,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Kapelle,GM0678,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Katwijk,GM0537,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Kerkrade,GM0928,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Koggenland,GM1598,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Kollumerland en Nieuwkruisland,GM0079,2018,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Korendijk,GM0588,2018,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Krimpen aan den IJssel,GM0542,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Krimpenerwaard,GM1931,2026,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Laarbeek,GM1659,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Land van Cuijk,GM1982,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Landerd,GM1685,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Landgraaf,GM0882,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Landsmeer,GM0415,2026,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Langedijk,GM0416,2021,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Lansingerland,GM1621,2026,CR29,Groot-Rijnmond,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Laren,GM0417,2023,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Laren (NH.),GM0417,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Leek,GM0022,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Leerdam,GM0545,2018,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Leeuwarden,GM0080,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Leeuwarderadeel,GM0081,2017,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Leiden,GM0546,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Leiderdorp,GM0547,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Leidschendam-Voorburg,GM1916,2026,CR26,Agglomeratie 's-Gravenhage,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Lelystad,GM0995,2026,CR40,Flevoland,AM11,Flevoland,PV24,Flevoland
+Lemsterland,GM0082,2013,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Leudal,GM1640,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Leusden,GM0327,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Liesveld,GM0694,2012,CR30,Zuidoost-Zuid-Holland,,,PV28,Zuid-Holland
+Lingewaal,GM0733,2018,CR16,Zuidwest-Gelderland,AM35,Gorinchem,PV25,Gelderland
+Lingewaard,GM1705,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Lisse,GM0553,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Lith,GM0808,2010,CR35,Noordoost-Noord-Brabant,,,PV30,Noord-Brabant
+Littenseradiel,GM0140,2017,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Lochem,GM0262,2026,CR14,Achterhoek,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Loenen,GM0329,2010,CR17,Utrecht,,,PV26,Utrecht
+Loon op Zand,GM0809,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Lopik,GM0331,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Loppersum,GM0024,2020,CR02,Delfzijl en omgeving,AM01,Groningen,PV20,Groningen
+Losser,GM0168,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Maarssen,GM0333,2010,CR17,Utrecht,,,PV26,Utrecht
+Maasdonk,GM1671,2014,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Maasdriel,GM0263,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Maasgouw,GM1641,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Maashorst,GM1991,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Maassluis,GM0556,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Maastricht,GM0935,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Margraten,GM0936,2010,CR39,Zuid-Limburg,,,PV31,Limburg
+Marum,GM0025,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Medemblik,GM0420,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Meerssen,GM0938,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Meierijstad,GM1948,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Menaldumadeel,GM0083,2010,CR04,Noord-Friesland,,,PV21,Fryslân
+Menameradiel,GM1908,2017,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Menterwolde,GM1987,2017,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Meppel,GM0119,2026,CR09,Zuidwest-Drenthe,AM36,Regio Zwolle,PV22,Drenthe
+Middelburg,GM0687,2023,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Middelburg (Z.),GM0687,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Middelharnis,GM0559,2012,CR29,Groot-Rijnmond,,,PV28,Zuid-Holland
+Midden-Delfland,GM1842,2026,CR27,Delft en Westland,AM21,Haaglanden,PV28,Zuid-Holland
+Midden-Drenthe,GM1731,2026,CR07,Noord-Drenthe,AM03,Drenthe,PV22,Drenthe
+Midden-Groningen,GM1952,2026,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Mill en Sint Hubert,GM0815,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Millingen aan de Rijn,GM0265,2014,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Moerdijk,GM1709,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Molenlanden,GM1978,2026,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Molenwaard,GM1927,2018,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Montferland,GM1955,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Montfoort,GM0335,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Mook en Middelaar,GM0944,2026,CR37,Noord-Limburg,AM08,Rijk van Nijmegen,PV31,Limburg
+Muiden,GM0424,2015,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Naarden,GM0425,2015,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Neder-Betuwe,GM1740,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Nederlek,GM0643,2014,CR29,Groot-Rijnmond,AM20,Midden-Holland,PV28,Zuid-Holland
+Nederweert,GM0946,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Neerijnen,GM0304,2018,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Niedorp,GM0412,2011,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Nieuw-Lekkerland,GM0571,2012,CR30,Zuidoost-Zuid-Holland,,,PV28,Zuid-Holland
+Nieuwegein,GM0356,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Nieuwkoop,GM0569,2026,CR28,Oost-Zuid-Holland,AM19,Holland Rijnland,PV28,Zuid-Holland
+Nijefurd,GM0104,2010,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Nijkerk,GM0267,2026,CR13,Veluwe,AM14,Amersfoort,PV25,Gelderland
+Nijmegen,GM0268,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Nissewaard,GM1930,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Noardeast-Fryslân,GM1970,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Noord-Beveland,GM1695,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Noordenveld,GM1699,2026,CR07,Noord-Drenthe,AM01,Groningen,PV22,Drenthe
+Noordoostpolder,GM0171,2026,CR40,Flevoland,AM11,Flevoland,PV24,Flevoland
+Noordwijk,GM0575,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Noordwijkerhout,GM0576,2018,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+"Nuenen, Gerwen en Nederwetten",GM0820,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Nunspeet,GM0302,2026,CR13,Veluwe,AM36,Regio Zwolle,PV25,Gelderland
+Nuth,GM0951,2018,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Oegstgeest,GM0579,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Oirschot,GM0823,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Oisterwijk,GM0824,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Oldambt,GM1895,2026,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Oldebroek,GM0269,2026,CR13,Veluwe,AM36,Regio Zwolle,PV25,Gelderland
+Oldenzaal,GM0173,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Olst-Wijhe,GM1773,2026,CR11,Zuidwest-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Ommen,GM0175,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Onderbanken,GM0881,2018,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Oost Gelre,GM1586,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Oosterhout,GM0826,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Oostflakkee,GM0580,2012,CR29,Groot-Rijnmond,,,PV28,Zuid-Holland
+Ooststellingwerf,GM0085,2026,CR06,Zuidoost-Friesland,AM02,Friesland,PV21,Fryslân
+Oostzaan,GM0431,2026,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Opmeer,GM0432,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Opsterland,GM0086,2026,CR06,Zuidoost-Friesland,AM02,Friesland,PV21,Fryslân
+Oss,GM0828,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Oud-Beijerland,GM0584,2018,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Oude IJsselstreek,GM1509,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Ouder-Amstel,GM0437,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Ouderkerk,GM0644,2014,CR29,Groot-Rijnmond,AM20,Midden-Holland,PV28,Zuid-Holland
+Oudewater,GM0589,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Overbetuwe,GM1734,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Papendrecht,GM0590,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Peel en Maas,GM1894,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Pekela,GM0765,2026,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Pijnacker-Nootdorp,GM1926,2026,CR26,Agglomeratie 's-Gravenhage,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Purmerend,GM0439,2026,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Putten,GM0273,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Raalte,GM0177,2026,CR11,Zuidwest-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Reeuwijk,GM0595,2010,CR28,Oost-Zuid-Holland,,,PV28,Zuid-Holland
+Reimerswaal,GM0703,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Renkum,GM0274,2026,CR15,Arnhem/Nijmegen,AM38,FoodValley,PV25,Gelderland
+Renswoude,GM0339,2026,CR17,Utrecht,AM38,FoodValley,PV26,Utrecht
+Reusel-De Mierden,GM1667,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Rheden,GM0275,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Rhenen,GM0340,2026,CR17,Utrecht,AM38,FoodValley,PV26,Utrecht
+Ridderkerk,GM0597,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Rijnwaarden,GM0196,2017,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Rijnwoude,GM1672,2013,CR28,Oost-Zuid-Holland,,,PV28,Zuid-Holland
+Rijssen-Holten,GM1742,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Rijswijk,GM0603,2023,CR26,Agglomeratie 's-Gravenhage,AM21,Haaglanden,PV28,Zuid-Holland
+Rijswijk (ZH.),GM0603,2026,CR26,Agglomeratie 's-Gravenhage,AM21,Haaglanden,PV28,Zuid-Holland
+Roerdalen,GM1669,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Roermond,GM0957,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Roosendaal,GM1674,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Rotterdam,GM0599,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Rozenburg,GM0600,2010,CR29,Groot-Rijnmond,,,PV28,Zuid-Holland
+Rozendaal,GM0277,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Rucphen,GM0840,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+'s-Gravenhage,GM0518,2026,CR26,Agglomeratie 's-Gravenhage,AM21,Haaglanden,PV28,Zuid-Holland
+'s-Hertogenbosch,GM0796,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Schagen,GM0441,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Schermer,GM0458,2014,CR19,Alkmaar en omgeving,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Scherpenzeel,GM0279,2026,CR13,Veluwe,AM38,FoodValley,PV25,Gelderland
+Schiedam,GM0606,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Schiermonnikoog,GM0088,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Schijndel,GM0844,2016,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Schinnen,GM0962,2018,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Schoonhoven,GM0608,2014,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Schouwen-Duiveland,GM1676,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Simpelveld,GM0965,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Sint Anthonis,GM1702,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Sint-Michielsgestel,GM0845,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Sint-Oedenrode,GM0846,2016,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Sittard-Geleen,GM1883,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Skarsterlân,GM0051,2013,CR06,Zuidoost-Friesland,,,PV21,Fryslân
+Sliedrecht,GM0610,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Slochteren,GM0040,2017,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Sluis,GM1714,2026,CR31,Zeeuwsch-Vlaanderen,AM24,Zeeland,PV29,Zeeland
+Smallingerland,GM0090,2026,CR06,Zuidoost-Friesland,AM02,Friesland,PV21,Fryslân
+Sneek,GM0091,2010,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Soest,GM0342,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Someren,GM0847,2026,CR36,Zuidoost-Noord-Brabant,AM32,Helmond-De Peel,PV30,Noord-Brabant
+Son en Breugel,GM0848,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Spijkenisse,GM0612,2014,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Stadskanaal,GM0037,2026,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Staphorst,GM0180,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Stede Broec,GM0532,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Steenbergen,GM0851,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Steenwijkerland,GM1708,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Stein,GM0971,2023,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Stein (L.),GM0971,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Stichtse Vecht,GM1904,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Strijen,GM0617,2018,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Súdwest-Fryslân,GM1900,2026,CR05,Zuidwest-Friesland,AM02,Friesland,PV21,Fryslân
+Ten Boer,GM0009,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Terneuzen,GM0715,2026,CR31,Zeeuwsch-Vlaanderen,AM24,Zeeland,PV29,Zeeland
+Terschelling,GM0093,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Texel,GM0448,2026,CR18,Kop van Noord-Holland,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Teylingen,GM1525,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Tholen,GM0716,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Tiel,GM0281,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Tilburg,GM0855,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Tubbergen,GM0183,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Twenterand,GM1700,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Tynaarlo,GM1730,2026,CR07,Noord-Drenthe,AM01,Groningen,PV22,Drenthe
+Tytsjerksteradiel,GM0737,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Ubbergen,GM0282,2014,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Uden,GM0856,2021,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Uitgeest,GM0450,2026,CR20,IJmond,AM15,Noord-Holland Noord,PV27,Noord-Holland
+Uithoorn,GM0451,2026,CR23,Groot-Amsterdam,AM18,Groot Amsterdam,PV27,Noord-Holland
+Urk,GM0184,2026,CR40,Flevoland,AM11,Flevoland,PV24,Flevoland
+Utrecht,GM0344,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Utrechtse Heuvelrug,GM1581,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Vaals,GM0981,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Valkenburg aan de Geul,GM0994,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Valkenswaard,GM0858,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Veendam,GM0047,2026,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Veenendaal,GM0345,2026,CR17,Utrecht,AM38,FoodValley,PV26,Utrecht
+Veere,GM0717,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Veghel,GM0860,2016,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Veldhoven,GM0861,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Velsen,GM0453,2026,CR20,IJmond,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Venlo,GM0983,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Venray,GM0984,2026,CR37,Noord-Limburg,AM29,Noord-Limburg,PV31,Limburg
+Vianen,GM0620,2018,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Vijfheerenlanden,GM1961,2026,CR17,Utrecht,AM35,Gorinchem,PV26,Utrecht
+Vlaardingen,GM0622,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Vlagtwedde,GM0048,2017,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Vlieland,GM0096,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Vlissingen,GM0718,2026,CR32,Overig Zeeland,AM24,Zeeland,PV29,Zeeland
+Vlist,GM0623,2014,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Voerendaal,GM0986,2026,CR39,Zuid-Limburg,AM30,Zuid-Limburg,PV31,Limburg
+Voorne aan Zee,GM1992,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Voorschoten,GM0626,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Voorst,GM0285,2026,CR13,Veluwe,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Vught,GM0865,2026,CR35,Noordoost-Noord-Brabant,AM27,Noordoost-Brabant,PV30,Noord-Brabant
+Waadhoeke,GM1949,2026,CR04,Noord-Friesland,AM02,Friesland,PV21,Fryslân
+Waalre,GM0866,2026,CR36,Zuidoost-Noord-Brabant,AM28,Zuidoost-Brabant,PV30,Noord-Brabant
+Waalwijk,GM0867,2026,CR34,Midden-Noord-Brabant,AM26,Midden-Brabant,PV30,Noord-Brabant
+Waddinxveen,GM0627,2026,CR28,Oost-Zuid-Holland,AM20,Midden-Holland,PV28,Zuid-Holland
+Wageningen,GM0289,2026,CR13,Veluwe,AM38,FoodValley,PV25,Gelderland
+Wassenaar,GM0629,2026,CR26,Agglomeratie 's-Gravenhage,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Waterland,GM0852,2026,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Weert,GM0988,2026,CR38,Midden-Limburg,AM33,Midden-Limburg,PV31,Limburg
+Weesp,GM0457,2022,CR24,Het Gooi en Vechtstreek,AM18,Groot Amsterdam,PV27,Noord-Holland
+Werkendam,GM0870,2018,CR34,Midden-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Wervershoof,GM0459,2010,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+West Betuwe,GM1960,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+West Maas en Waal,GM0668,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Westerkwartier,GM1969,2026,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Westerveld,GM1701,2026,CR09,Zuidwest-Drenthe,AM36,Regio Zwolle,PV22,Drenthe
+Westervoort,GM0293,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Westerwolde,GM1950,2026,CR01,Oost-Groningen,AM01,Groningen,PV20,Groningen
+Westland,GM1783,2026,CR27,Delft en Westland,AM21,Haaglanden,PV28,Zuid-Holland
+Weststellingwerf,GM0098,2026,CR06,Zuidoost-Friesland,AM02,Friesland,PV21,Fryslân
+Westvoorne,GM0614,2022,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Wierden,GM0189,2026,CR12,Twente,AM05,Twente,PV23,Overijssel
+Wieringen,GM0462,2011,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Wieringermeer,GM0463,2011,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Wijchen,GM0296,2026,CR15,Arnhem/Nijmegen,AM08,Rijk van Nijmegen,PV25,Gelderland
+Wijdemeren,GM1696,2026,CR24,Het Gooi en Vechtstreek,AM12,Gooi en Vechtstreek,PV27,Noord-Holland
+Wijk bij Duurstede,GM0352,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Winsum,GM0053,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Winterswijk,GM0294,2026,CR14,Achterhoek,AM09,Achterhoek,PV25,Gelderland
+Woensdrecht,GM0873,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Woerden,GM0632,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Wormerland,GM0880,2026,CR22,Zaanstreek,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Woudenberg,GM0351,2026,CR17,Utrecht,AM14,Amersfoort,PV26,Utrecht
+Woudrichem,GM0874,2018,CR34,Midden-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Wûnseradiel,GM0710,2010,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Wymbritseradiel,GM0683,2010,CR05,Zuidwest-Friesland,,,PV21,Fryslân
+Zaanstad,GM0479,2026,CR22,Zaanstreek,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Zaltbommel,GM0297,2026,CR16,Zuidwest-Gelderland,AM10,Rivierenland,PV25,Gelderland
+Zandvoort,GM0473,2026,CR21,Agglomeratie Haarlem,AM37,Zuid-Kennemerland en IJmond,PV27,Noord-Holland
+Zederik,GM0707,2018,CR30,Zuidoost-Zuid-Holland,AM35,Gorinchem,PV28,Zuid-Holland
+Zeevang,GM0478,2015,CR23,Groot-Amsterdam,AM17,Zaanstreek/Waterland,PV27,Noord-Holland
+Zeewolde,GM0050,2026,CR40,Flevoland,AM06,Veluwe Stedendriehoek,PV24,Flevoland
+Zeist,GM0355,2026,CR17,Utrecht,AM13,Midden-Utrecht,PV26,Utrecht
+Zevenaar,GM0299,2026,CR15,Arnhem/Nijmegen,AM07,Midden-Gelderland,PV25,Gelderland
+Zijpe,GM0476,2012,CR18,Kop van Noord-Holland,,,PV27,Noord-Holland
+Zoetermeer,GM0637,2026,CR26,Agglomeratie 's-Gravenhage,AM34,Zuid-Holland Centraal,PV28,Zuid-Holland
+Zoeterwoude,GM0638,2026,CR25,Agglomeratie Leiden en Bollenstreek,AM19,Holland Rijnland,PV28,Zuid-Holland
+Zuidhorn,GM0056,2018,CR03,Overig Groningen,AM01,Groningen,PV20,Groningen
+Zuidplas,GM1892,2026,CR29,Groot-Rijnmond,AM22,Rijnmond,PV28,Zuid-Holland
+Zundert,GM0879,2026,CR33,West-Noord-Brabant,AM25,West-Brabant,PV30,Noord-Brabant
+Zutphen,GM0301,2026,CR14,Achterhoek,AM06,Veluwe Stedendriehoek,PV25,Gelderland
+Zwartewaterland,GM1896,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel
+Zwijndrecht,GM0642,2026,CR30,Zuidoost-Zuid-Holland,AM23,Drechtsteden,PV28,Zuid-Holland
+Zwolle,GM0193,2026,CR10,Noord-Overijssel,AM36,Regio Zwolle,PV23,Overijssel

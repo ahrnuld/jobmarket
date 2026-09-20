@@ -20,7 +20,8 @@ interface Options {
   onRendered?: () => void;
 }
 
-function readState(form: HTMLFormElement, defaults: FilterState): FilterState {
+/** Filter state from the URL query, limited to values the form actually offers. */
+export function readState(form: HTMLFormElement, defaults: FilterState): FilterState {
   const params = new URLSearchParams(location.search);
   const state = { ...defaults };
   for (const key of Object.keys(defaults) as (keyof FilterState)[]) {
@@ -38,6 +39,27 @@ function writeForm(form: HTMLFormElement, state: FilterState) {
     const field = form.elements.namedItem(k) as HTMLSelectElement | null;
     if (field) field.value = v;
   }
+}
+
+/** Keep the filter state in the URL, so a filtered view can be shared. */
+export function writeQuery(state: FilterState, defaults: FilterState) {
+  const params = new URLSearchParams();
+  for (const [k, v] of Object.entries(state)) {
+    if (v !== (defaults as unknown as Record<string, string>)[k]) params.set(k, v);
+  }
+  const q = params.toString();
+  history.replaceState(null, "", q ? `?${q}` : location.pathname);
+}
+
+/** The filter values the form currently holds. */
+export function formState(form: HTMLFormElement, state: FilterState): FilterState {
+  const fd = new FormData(form);
+  const next = { ...state };
+  for (const k of Object.keys(next) as (keyof FilterState)[]) {
+    const v = fd.get(k);
+    if (typeof v === "string") (next[k] as string) = v;
+  }
+  return next;
 }
 
 export function initFilteredView(o: Options) {
@@ -62,14 +84,7 @@ export function initFilteredView(o: Options) {
       const data = Object.fromEntries(geos.map((g, i) => [g, loaded[i]]));
       o.root.innerHTML = o.render(makeCtx(o.lang, meta), state, data, stats);
       o.onRendered?.();
-      if (pushUrl) {
-        const params = new URLSearchParams();
-        for (const [k, v] of Object.entries(state)) {
-          if (v !== (defaults as unknown as Record<string, string>)[k]) params.set(k, v);
-        }
-        const q = params.toString();
-        history.replaceState(null, "", q ? `?${q}` : location.pathname);
-      }
+      if (pushUrl) writeQuery(state, defaults);
     } catch {
       if (status && mine === request) status.textContent = status.dataset.errorText ?? "Error";
     } finally {
@@ -81,12 +96,7 @@ export function initFilteredView(o: Options) {
   }
 
   o.form.addEventListener("change", () => {
-    const fd = new FormData(o.form);
-    state = { ...state };
-    for (const k of Object.keys(defaults) as (keyof FilterState)[]) {
-      const v = fd.get(k);
-      if (typeof v === "string") (state[k] as string) = v;
-    }
+    state = formState(o.form, state);
     void update(true);
   });
   o.form.addEventListener("submit", (e) => e.preventDefault());

@@ -210,6 +210,29 @@ def test_publish_writes_snapshot(loaded, ref, settings):
     assert stats_csv.read_text("utf-8").startswith("series,")
 
 
+def test_map_data_is_published_per_corop_area(loaded, ref, settings):
+    merge_into_history(settings.history_dir, compute(loaded, sample=True, today=TODAY))
+    result = publish(
+        loaded, ref, settings, dataset="sample", history_dir=settings.history_dir, today=TODAY
+    )
+    assert result.published, result.report.errors
+    data = json.loads((settings.publish_dir / "map.json").read_text("utf-8"))
+    assert len(data["corops"]) == len(ref.corops)
+    assert {c["code"] for c in data["corops"]} == {c.code for c in ref.corops.values()}
+    known = {c["id"] for c in data["corops"]}
+    assert data["rows"] and all(r[1] in known for r in data["rows"])
+    # A COROP area is map detail, not a geography the visitor can filter on, and it gets no
+    # files of its own.
+    meta = json.loads((settings.publish_dir / "meta.json").read_text("utf-8"))
+    assert not [g for g in meta["geos"] if g["id"].startswith("c:")]
+    assert not list((settings.publish_dir / "geo").glob("c-*"))
+    # The map never counts more vacancies than the country as a whole.
+    nl = json.loads((settings.publish_dir / "geo" / "nl" / "vacancies.json").read_text("utf-8"))
+    national = sum(n for _mi, p, s, n in nl if p == "all" and s == "all")
+    on_map = sum(r[4] for r in data["rows"] if r[2] == "all" and r[3] == "all")
+    assert 0 < on_map <= national
+
+
 def test_production_refuses_sample_data_and_keeps_old_snapshot(loaded, ref, settings, monkeypatch):
     merge_into_history(settings.history_dir, compute(loaded, sample=True, today=TODAY))
     first = publish(
