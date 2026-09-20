@@ -301,3 +301,43 @@ def merge_into_history(history_dir: Path, agg: Aggregates) -> MergeResult:
         tmp.replace(path)
         written[name] = len(merged)
     return MergeResult(written, protected)
+
+
+def repair_from_seed(seed_dir: Path, history_dir: Path) -> dict[str, int]:
+    """Replace months in the history whose version in `seed_dir` holds more rows.
+
+    A release can add a breakdown the older history does not have (COROP areas, for example).
+    The database can only recompute months it still covers, so on a server whose database was
+    started later those months would keep their old shape forever. The history committed in the
+    repository, shipped inside the image, does have them. Row count is the test: for the same
+    month more rows means more detail, and a server that has collected more than the repository
+    keeps its own version.
+
+    Returns the number of months replaced per table.
+    """
+    replaced: dict[str, int] = {}
+    for name, cols in TABLES.items():
+        seed = read_history(seed_dir, name)
+        current = read_history(history_dir, name)
+        if not seed:
+            continue
+        seed_months: dict[str, list[dict]] = {}
+        current_months: dict[str, list[dict]] = {}
+        for rows, target in ((seed, seed_months), (current, current_months)):
+            for r in rows:
+                target.setdefault(r["month"], []).append(r)
+        take = [m for m, rows in seed_months.items() if len(rows) > len(current_months.get(m, []))]
+        if not take:
+            continue
+        merged = [r for r in current if r["month"] not in take]
+        merged += [r for m in take for r in seed_months[m]]
+        merged.sort(key=lambda r: tuple(r[c] for c in cols[:-1]))
+        path = history_dir / f"{name}.csv"
+        tmp = path.with_suffix(".csv.tmp")
+        with tmp.open("w", encoding="utf-8", newline="") as fh:
+            writer = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(merged)
+        tmp.replace(path)
+        replaced[name] = len(take)
+    return replaced

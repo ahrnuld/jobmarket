@@ -12,6 +12,7 @@ from jobmarket.aggregate import (
     display_title,
     merge_into_history,
     read_history,
+    repair_from_seed,
     salary_bucket,
 )
 from jobmarket.config import load_settings
@@ -345,3 +346,38 @@ def test_example_statistics_are_never_published(loaded, ref, settings):
         ("business-it-management", 3312.0)
     ]
     assert stats["series"]["sk_starting_salary"]["origin"] == "CBS Microdata"
+
+
+HEADER_VACANCIES = "month,geo,programme,seniority,n\n"
+
+
+def _write(path, rows: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(HEADER_VACANCIES + rows, encoding="utf-8")
+
+
+def test_repair_takes_the_richer_month_from_the_shipped_history(tmp_path):
+    """A release that adds a breakdown: the history in the volume predates it."""
+    seed, history = tmp_path / "seed", tmp_path / "history"
+    _write(seed / "vacancies.csv",
+           "2026-08,nl,all,all,10\n2026-08,c:groot-amsterdam,all,all,4\n2026-09,nl,all,all,1\n")
+    _write(history / "vacancies.csv",
+           "2026-08,nl,all,all,10\n2026-09,nl,all,all,20\n2026-09,p:utrecht,all,all,5\n")
+
+    replaced = repair_from_seed(seed, history)
+
+    assert replaced == {"vacancies": 1}  # August only
+    rows = read_history(history, "vacancies")
+    august = [r for r in rows if r["month"] == "2026-08"]
+    assert any(r["geo"] == "c:groot-amsterdam" for r in august)
+    # September has more rows in the volume than in the image: the server's own version stays.
+    september = [r for r in rows if r["month"] == "2026-09"]
+    assert {r["geo"] for r in september} == {"nl", "p:utrecht"}
+
+
+def test_repair_leaves_a_complete_history_alone(tmp_path):
+    seed, history = tmp_path / "seed", tmp_path / "history"
+    _write(seed / "vacancies.csv", "2026-08,nl,all,all,10\n")
+    _write(history / "vacancies.csv", "2026-08,nl,all,all,10\n2026-08,c:utrecht,all,all,3\n")
+    assert repair_from_seed(seed, history) == {}
+    assert len(read_history(history, "vacancies")) == 2

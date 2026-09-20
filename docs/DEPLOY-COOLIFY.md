@@ -42,8 +42,12 @@ docker exec -it <worker> jobmarket status
 
 Shows what the database holds (vacancies, how many are in a COROP area, which runs happened),
 what the aggregate history holds (months, and whether it has rows per COROP area), and which
-files the published snapshot has. Every deploy re-derives those from the stored vacancies before
-republishing, so a volume written by an older release is brought up to date with the code.
+files the published snapshot has.
+
+Every deploy brings the volumes up to date with the code before it republishes: months the
+database no longer covers are taken from the history in the image where that one holds more
+detail (`jobmarket history repair`), then `process` and `aggregate` recompute everything the
+database does cover. None of that contacts a source, so it costs no API calls.
 
 ## Call budget
 

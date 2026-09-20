@@ -251,6 +251,26 @@ def cmd_budget(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_history_repair(args: argparse.Namespace) -> int:
+    """Take months from a shipped history where the working history holds less detail."""
+    from pathlib import Path
+
+    from jobmarket.aggregate import repair_from_seed
+
+    settings = load_settings()
+    seed = Path(args.source)
+    if not seed.is_dir():
+        print(f"No history to repair from: {seed} does not exist", file=sys.stderr)
+        return 1
+    replaced = repair_from_seed(seed, _history_dir(settings, args.dataset))
+    if replaced:
+        print("Replaced months from " + str(seed) + ": "
+              + ", ".join(f"{n} in {name}.csv" for name, n in sorted(replaced.items())))
+    else:
+        print(f"Nothing to repair: the history is at least as complete as {seed}")
+    return 0
+
+
 def cmd_status(args: argparse.Namespace) -> int:
     """What the working store and the aggregate history hold right now (FR-20)."""
     from jobmarket.aggregate import coverage_start, read_history
@@ -352,6 +372,16 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("status", help="what the database, the history and the snapshot hold")
     p.set_defaults(func=cmd_status)
+
+    history = sub.add_parser("history", help="aggregate history tools").add_subparsers(
+        dest="history_command", required=True
+    )
+    p = history.add_parser(
+        "repair", help="take months from a shipped history that hold more detail than ours"
+    )
+    p.add_argument("--source", required=True, help="directory with the history to compare against")
+    p.add_argument("--dataset", choices=["real", "sample"], default="real")
+    p.set_defaults(func=cmd_history_repair)
 
     p = sub.add_parser("process", help="normalise, deduplicate and classify stored vacancies")
     p.set_defaults(func=cmd_process)

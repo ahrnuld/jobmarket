@@ -74,6 +74,12 @@ COROP detail to keep the history files small. The boundaries (CBS/Kadaster, CC B
 `site/src/data/corop-2026.json` and are projected into SVG paths at build time, so the browser
 downloads counts only, never geometry.
 
+**A deploy re-derives before it republishes.** Classifications and aggregates are derived
+data: a volume written by an earlier release holds them in the old shape, and the database can
+only recompute the months it still covers. So the worker first takes months from the history
+shipped in the image where that one has more rows (a release that adds a breakdown, such as
+COROP areas), then runs process and aggregate, then publishes. Nothing there contacts a source.
+
 **Collect often, never backfill counts.** The source only serves vacancies that are still
 listed, so history cannot be bought back: about 30% of the ads from a month ago are still there,
 about 5% of those from six months ago (measured 2026-09-20, see ingestion.yaml). The series
