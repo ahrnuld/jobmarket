@@ -11,7 +11,7 @@ services:
       context: .
       dockerfile: docker/worker.Dockerfile
     restart: unless-stopped
-    # Idle: ~15 MB (a sleeping Python scheduler). Weekly peak: ~400 MB for the site build.
+    # Idle: ~15 MB (a sleeping Python scheduler). Peak: ~400 MB during the site build.
     # The limit keeps that peak from squeezing other apps on the VPS.
     mem_limit: 1g
     environment:
@@ -29,7 +29,8 @@ services:
       # 'yes' runs the pipeline job once at start-up (useful for the very first deploy)
       RUN_ON_START: ${RUN_ON_START:-no}
       # Days of vacancies to fetch per run; set e.g. 30 for the first run(s) on a new server
-      # to close the gap since the last run elsewhere. Empty = the default (3 days).
+      # to close the gap since the last run elsewhere. Empty = the default (2 days).
+      # A weekly SCHEDULE needs 8 here, or five days of vacancies are missed each week.
       JOBMARKET_INGEST_DAYS: ${JOBMARKET_INGEST_DAYS:-}
       TZ: Europe/Amsterdam
     volumes:
