@@ -48,8 +48,9 @@ def test_seniority(ref, title, description, expected):
         ("Data Engineer", {"informatica"}),
         ("PLC-programmeur", {"technische-informatica"}),
         ("Embedded Software Engineer", {"technische-informatica"}),
-        ("DevOps Engineer", {"informatica", "technische-informatica"}),
-        ("Netwerkbeheerder", {"technische-informatica"}),  # compound word, no space
+        ("DevOps Engineer", {"informatica"}),  # cloud work, not embedded hardware
+        # Infrastructure is ICT, but none of the three programmes trains for it.
+        ("Netwerkbeheerder", set()),
         ("Business Developer", set()),  # sales, not ICT
         ("Werkvoorbereider", set()),
         # Titles seen in the first real Adzuna ingestion (2026-09-19)
@@ -57,14 +58,14 @@ def test_seniority(ref, title, description, expected):
         ("Senior Full Stack AI-first Saas Engineer", {"informatica"}),
         ("DG | Business & IT Analist (Finance & Applicaties)", {"business-it-management"}),
         ("Projectleider ict", {"business-it-management"}),
-        ("Network and Integration Engineer", {"technische-informatica"}),
-        ("Oracle Database Administrator", {"technische-informatica"}),
+        ("Network and Integration Engineer", set()),
+        ("Oracle Database Administrator", set()),
         ("Software Architect", {"informatica"}),
         ("ServiceNow Technical Developer", {"informatica"}),
         ("Technisch beheerder", {"business-it-management", "informatica"}),
         ("Microsoft 365 Consultant", {"business-it-management"}),
         ("Critical Environment Industrial Controls Systems Engineer", {"technische-informatica"}),
-        ("Kubernetes Engineer", {"informatica", "technische-informatica"}),
+        ("Kubernetes Engineer", {"informatica"}),
         ("Mechanical Engineer", set()),
         ("Commissioning Engineer", set()),
         ("CNC Programmeur", set()),
@@ -76,6 +77,15 @@ def test_seniority(ref, title, description, expected):
         ("Java Developers", {"informatica"}),
         ("Business Analisten", {"business-it-management"}),
         ("Mechanical Engineers", set()),
+        # Technische Informatica is embedded, IoT, robotics and industrial automation;
+        # the technology can stand on either side of the role word.
+        ("PLC Software Engineer", {"informatica", "technische-informatica"}),
+        ("Software Engineer Robotica & PLC", {"informatica", "technische-informatica"}),
+        ("Senior Test Engineer - Embedded Software", {"informatica", "technische-informatica"}),
+        ("IoT Solution Architect", {"informatica", "technische-informatica"}),
+        ("Marketing Automation Specialist", set()),  # not industrial automation
+        ("QA Automation Engineer", {"informatica"}),  # test automation
+        ("Technicus Mechatronica", set()),  # assembly work at MBO level
     ],
 )
 def test_programmes(ref, title, expected):

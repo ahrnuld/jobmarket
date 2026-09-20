@@ -65,6 +65,10 @@ TABLES = {
         "month",
         "first_posted",
         "last_posted",
+        # Vacancies of that month in the database, whether they count as ICT or not. It is what
+        # the month was computed from, so a later run can tell a thinner database (protect the
+        # history) from a change in the rules (replace it).
+        "stored",
         "partial",
         "computed_at",
         "classifier_version",
@@ -231,6 +235,14 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
     for r in conn.execute("SELECT vacancy_id, skill_id FROM vacancy_skills"):
         skills.setdefault(r[0], []).append(r[1])
 
+    stored = dict(
+        conn.execute(
+            """SELECT substr(posted_at, 1, 7) AS month, COUNT(*) FROM vacancies
+               WHERE duplicate_of IS NULL AND is_sample = ? AND (? IS NULL OR posted_at >= ?)
+               GROUP BY 1""",
+            (int(sample), start, start),
+        )
+    )
     counts = {name: Counter() for name in TABLES if name != "months"}
     posted: dict[str, list[str]] = {}
     for v in vacancies:
@@ -297,6 +309,7 @@ def compute(conn: sqlite3.Connection, sample: bool, today: date | None = None) -
                 "month": month,
                 "first_posted": first,
                 "last_posted": last,
+                "stored": stored.get(month, 0),
                 "partial": int(partial),
                 "computed_at": now,
                 "classifier_version": CLASSIFIER_VERSION,
@@ -330,22 +343,43 @@ def _month_totals(rows: list[dict]) -> dict[str, int]:
     return totals
 
 
-def merge_into_history(history_dir: Path, agg: Aggregates) -> MergeResult:
+def _stored_per_month(rows: list[dict]) -> dict[str, int]:
+    """What each month in a `months` table was computed from; empty before this was recorded."""
+    return {r["month"]: int(r["stored"]) for r in rows if (r.get("stored") or "").isdigit()}
+
+
+def merge_into_history(history_dir: Path, agg: Aggregates, force: bool = False) -> MergeResult:
     """Replace recomputed months in the history CSVs; keep all other months.
 
-    A month is only replaced when the recomputation finds at least as many vacancies as the
-    history holds for it. A fresh or restored database (e.g. on a new server) therefore cannot
-    overwrite a complete month with the few days it has fetched so far, while a database that
-    keeps collecting does update the running month every day.
+    A month is only replaced when the database still holds at least as many vacancies of that
+    month as the history was computed from. A fresh or restored database (e.g. on a new server)
+    therefore cannot overwrite a complete month with the few days it has fetched so far, while
+    a database that keeps collecting updates the running month every day — and a change in the
+    rules, which can lower the counts without lowering what we hold, is published as it should
+    be. For a history written before this was recorded, the ICT counts decide instead, and
+    `force` overrules the protection for a deliberate recomputation of the whole history.
     """
     history_dir.mkdir(parents=True, exist_ok=True)
-    have = _month_totals(read_history(history_dir, "vacancies"))
-    fresh = _month_totals([{k: str(v) for k, v in r.items()} for r in agg.rows["vacancies"]])
-    protected = sorted(m for m in agg.months if fresh.get(m, 0) < have.get(m, 0))
+    had_stored = _stored_per_month(read_history(history_dir, "months"))
+    has_stored = {r["month"]: int(r["stored"]) for r in agg.rows["months"]}
+    have_ict = _month_totals(read_history(history_dir, "vacancies"))
+    fresh_ict = _month_totals([{k: str(v) for k, v in r.items()} for r in agg.rows["vacancies"]])
+
+    def thinner(month: str) -> bool:
+        if month in had_stored:
+            return has_stored.get(month, 0) < had_stored[month]
+        return fresh_ict.get(month, 0) < have_ict.get(month, 0)
+
+    protected = [] if force else sorted(m for m in agg.months if thinner(m))
     recomputed = set(agg.months) - set(protected)
     written = {}
     for name, cols in TABLES.items():
-        kept = [r for r in read_history(history_dir, name) if r["month"] not in recomputed]
+        # A column added in a later release is missing from the rows a previous one wrote.
+        kept = [
+            {c: r.get(c, "") for c in cols}
+            for r in read_history(history_dir, name)
+            if r["month"] not in recomputed
+        ]
         new = [r for r in agg.rows[name] if r["month"] in recomputed]
         merged = kept + [{k: str(v) for k, v in r.items()} for r in new]
         merged.sort(key=lambda r: tuple(r[c] for c in cols[:-1]))

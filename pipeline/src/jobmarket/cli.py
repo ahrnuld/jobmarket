@@ -232,7 +232,7 @@ def cmd_aggregate(args: argparse.Namespace) -> int:
     settings = load_settings()
     with open_db(settings.db_path) as conn:
         agg = compute(conn, sample=args.dataset == "sample")
-    result = merge_into_history(_history_dir(settings, args.dataset), agg)
+    result = merge_into_history(_history_dir(settings, args.dataset), agg, force=args.force)
     print(
         f"Aggregated months {agg.months[0] if agg.months else '-'} .. "
         f"{agg.months[-1] if agg.months else '-'}; rows: {result.written}"
@@ -456,8 +456,15 @@ def build_parser() -> argparse.ArgumentParser:
             "--dataset",
             choices=["real", "sample"],
             default="real",
-            help="real = Adzuna vacancies; sample = synthetic fixture vacancies",
+            help="real = collected vacancies; sample = synthetic fixture vacancies",
         )
+        if name == "aggregate":
+            p.add_argument(
+                "--force",
+                action="store_true",
+                help="recompute months the history protects; for a deliberate change of the "
+                "rules, after which the old figures are no longer the ones we stand behind",
+            )
         p.set_defaults(func=func)
 
     ref = sub.add_parser("reference", help="reference data tools").add_subparsers(

@@ -16,8 +16,11 @@
 # ("in the source's IT category and mentions a technical skill"). A role family match still wins.
 #
 # Revision 2 (2026-09-19) is based on the first 30 days of real Adzuna data.
-# OWNER REVIEW NEEDED (roadmap phase 0: "role families per programme defined"). Changes are
-# methodology changes: add a changelog entry (FR-22 / TR-06).
+# Revision 3 (2026-09-20), reviewed by the owner: cloud, DevOps, security and network or
+# infrastructure work is not what Technische Informatica trains for. That programme is about
+# embedded systems, IoT, domotics, robotics and industrial automation; by the earlier mapping a
+# software developer would have belonged to it just as much as a cloud engineer. Changes here
+# are methodology changes: add a changelog entry (FR-22 / TR-06).
 
 programmes:
   - id: informatica
@@ -36,8 +39,8 @@ programmes:
     name: { nl: Technische Informatica, en: Computer Engineering }
     locations: [Alkmaar]
     summary:
-      nl: Embedded systemen, IoT, netwerken en industriele automatisering.
-      en: Embedded systems, IoT, networks and industrial automation.
+      nl: Embedded systemen, IoT, domotica, robotica en industriele automatisering.
+      en: Embedded systems, IoT, home automation, robotics and industrial automation.
 
 exclude_title_patterns:
   - '\b(sales|verkoop|account\s*(manager|executive)|accountmanager|business developer|new business)\b'
@@ -82,13 +85,13 @@ role_families:
       - '\bdata science\b'
   - id: devops-cloud-engineer
     name: { nl: DevOps- en cloud-engineer, en: DevOps and cloud engineer }
-    programmes: [informatica, technische-informatica]
+    programmes: [informatica]
     title_patterns:
       - '\b(devops|dev ops|cloud|platform|site reliability|sre|azure|aws|gcp|kubernetes|monitoring|middleware)\b(?:\s+\S+){0,2}\s+(engineer|specialist|architect|consultant|developer|administrator)\b'
       - '\bengineer\s+(infra|cloud|devops|linux)\b'
   - id: security-specialist
     name: { nl: Security-specialist, en: Security specialist }
-    programmes: [informatica, technische-informatica]
+    programmes: [informatica]
     title_patterns:
       - '\b(cyber\s*security|cybersecurity|security|cyber|soc|siem|iam|identity)\b(?:\s+\S+){0,2}\s+(engineer|specialist|analist|analyst|officer|consultant|architect|expert)\b'
       - '\b(pentester|penetration tester|ethical hacker)\b'
@@ -98,6 +101,7 @@ role_families:
     programmes: [informatica]
     title_patterns:
       - '\b(software\s*)?(tester|test engineer|test automation engineer|test automation specialist|qa engineer|quality assurance engineer|testanalist|test analyst)\b'
+      - '\b(qa|test|quality assurance)\b(?:\s+\S+){0,2}\s+(engineer|specialist|analist|analyst)\b'
   - id: game-developer
     name: { nl: Game developer, en: Game developer }
     programmes: [informatica]
@@ -156,30 +160,44 @@ role_families:
     name: { nl: Embedded software-engineer, en: Embedded software engineer }
     programmes: [technische-informatica]
     title_patterns:
-      - '\b(embedded|firmware)\b(?:\s+\S+){0,2}\s+(developer|ontwikkelaar|engineer|programmeur)\b'
+      - '\b(embedded|firmware)\b(?:\s+\S+){0,2}\s+(developer|ontwikkelaar|engineer|programmeur|architect)\b'
+      # The technology often follows the role: "Test Engineer - Embedded Software".
+      - '\b(developer|ontwikkelaar|engineer|programmeur|architect|specialist)\b(?:\s+\S+){0,2}\s+(embedded|firmware)\b'
       - '\b(c\+\+|c)\s+(developer|ontwikkelaar|engineer)\b'
+      - '\b(microcontroller|rtos)\b'
   - id: iot-engineer
     name: { nl: IoT-engineer, en: IoT engineer }
     programmes: [technische-informatica]
     title_patterns:
-      - '\b(iot|internet of things)\b(?:\s+\S+){0,2}\s+(developer|ontwikkelaar|engineer|specialist)\b'
+      - '\b(iot|internet of things)\b(?:\s+\S+){0,2}\s+(developer|ontwikkelaar|engineer|specialist|architect)\b'
+      - '\b(developer|ontwikkelaar|engineer|specialist|architect|consultant)\b(?:\s+\S+){0,2}\s+(iot|internet of things)\b'
+      - '\b(domotica|home automation|smart building)\b'
   - id: industrial-automation
     name: { nl: Industriele automatisering, en: Industrial automation engineer }
     programmes: [technische-informatica]
     title_patterns:
-      - '\b(plc|scada|automation|automatisering|besturings\w*|robotics|robot|ot)\s*(programmeur|programmer|engineer|ontwikkelaar|developer|technicus|specialist)\b'
+      # "PLC Software Engineer", "Software Engineer Machinebesturing & PLC": the technology can
+      # stand on either side of the role word, with a word or two in between.
+      - '\b(plc|scada|dcs|hmi|robotica|robotics|mechatronica|mechatronics|machinebesturing|besturings\w*)\b(?:\s+\S+){0,2}\s+(programmeur|programmer|engineer|ingenieur|ontwikkelaar|developer|specialist|architect)\b'
+      - '\b(programmeur|engineer|ingenieur|ontwikkelaar|developer|specialist|architect)\b(?:\s+\S+){0,2}\s+(plc|scada|dcs|robotica|robotics|machinebesturing|mechatronica)\b'
       - '\b(industrial|industri[eë]le)\s+(controls?|automation|automatisering)\b'
-      - '\bcontrols?\s+(systems?\s+)?engineer\b'
-      - '\b(mechatronica|mechatronics)\s*(engineer|ontwikkelaar)\b'
+      # Plain "automation" is only industrial when nothing says it is marketing, test or
+      # process automation, which are other trades entirely.
+      - '(?<!marketing )(?<!test )(?<!java )(?<!bpmn )(?<!rpa )(?<!sales )(?<!proces )(?<!process )(?<!ai )(?<!qa )(?<!assurance )(?<!network )(?<!netwerk )(?<!operations )\b(automation|automatisering)\s+(engineer|ingenieur|specialist)\b'
+      - '(?<!document )\bcontrols?\s+(systems?\s+)?engineer\b'
+      - '\bbesturingstechnic\w+\b'
+      - '\b(ot|operational technology)\s+(security|engineer|specialist)\b'
+  # Infrastructure is hardware, but not the hardware Technische Informatica is about (embedded,
+  # IoT, domotics, robotics), and it is not software engineering either: no programme here.
+  # --- ICT, no programme ---------------------------------------------------------------------
   - id: network-infrastructure-engineer
     name: { nl: Netwerk- en infrastructuurspecialist, en: Network and infrastructure engineer }
-    programmes: [technische-informatica]
+    programmes: []
     title_patterns:
       - '\b(netwerk|network|infrastructuur|infrastructure|system|systeem|systems|windows|linux|storage|server|database|data base|dba|werkplek)\s*(engineer|beheerder|administrator|specialist|architect|beheer)\b'
       - '\b(netwerk|network|infrastructuur|infrastructure|storage|database)\b(?:\s+\S+){1,2}\s+(engineer|beheerder|administrator|specialist)\b'
       - '\bsysteembeheer\b'
 
-  # --- ICT, no programme -------------------------------------------------------------------------
   - id: it-support
     name: { nl: IT-support en servicedesk, en: IT support and service desk }
     programmes: []

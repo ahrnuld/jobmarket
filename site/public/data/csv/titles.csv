@@ -87,18 +87,7 @@ month,geo,programme,title,n
 2026-08,nl,informatica,technical information security officer,1
 2026-08,nl,informatica,technisch beheerder,1
 2026-08,nl,informatica,test engineer,1
-2026-08,nl,technische-informatica,azure cloud engineer,1
-2026-08,nl,technische-informatica,cloud architect,2
-2026-08,nl,technische-informatica,cloud engineer,2
-2026-08,nl,technische-informatica,devops engineer,6
-2026-08,nl,technische-informatica,golang platform engineer,2
-2026-08,nl,technische-informatica,information security officer,1
-2026-08,nl,technische-informatica,it platform engineer,1
-2026-08,nl,technische-informatica,netwerkbeheerder,1
-2026-08,nl,technische-informatica,security consultant,2
-2026-08,nl,technische-informatica,security officer,3
-2026-08,nl,technische-informatica,system engineer,1
-2026-08,nl,technische-informatica,technical information security officer,1
+2026-08,nl,technische-informatica,plc software engineer,1
 2026-08,p:noord-brabant,all,software engineer,5
 2026-08,p:noord-brabant,informatica,software engineer,5
 2026-08,p:noord-holland,all,cloud engineer,2
@@ -109,15 +98,12 @@ month,geo,programme,title,n
 2026-08,p:noord-holland,informatica,cloud engineer,2
 2026-08,p:noord-holland,informatica,data engineer,1
 2026-08,p:noord-holland,informatica,devops engineer,1
-2026-08,p:noord-holland,technische-informatica,cloud engineer,2
-2026-08,p:noord-holland,technische-informatica,devops engineer,1
 2026-08,p:utrecht,all,data engineer,1
 2026-08,p:utrecht,all,developer,2
 2026-08,p:utrecht,all,devops engineer,1
 2026-08,p:utrecht,informatica,data engineer,1
 2026-08,p:utrecht,informatica,developer,2
 2026-08,p:utrecht,informatica,devops engineer,1
-2026-08,p:utrecht,technische-informatica,devops engineer,1
 2026-08,p:zuid-holland,all,devops engineer,2
 2026-08,p:zuid-holland,all,information security officer,1
 2026-08,p:zuid-holland,all,security officer,3
@@ -128,20 +114,14 @@ month,geo,programme,title,n
 2026-08,p:zuid-holland,informatica,security officer,3
 2026-08,p:zuid-holland,informatica,software engineer,2
 2026-08,p:zuid-holland,informatica,technical information security officer,1
-2026-08,p:zuid-holland,technische-informatica,devops engineer,2
-2026-08,p:zuid-holland,technische-informatica,information security officer,1
-2026-08,p:zuid-holland,technische-informatica,security officer,3
-2026-08,p:zuid-holland,technische-informatica,technical information security officer,1
 2026-08,r:groot-amsterdam,all,data engineer,1
 2026-08,r:groot-amsterdam,all,devops engineer,1
 2026-08,r:groot-amsterdam,all,functioneel beheerder,1
 2026-08,r:groot-amsterdam,business-it-management,functioneel beheerder,1
 2026-08,r:groot-amsterdam,informatica,data engineer,1
 2026-08,r:groot-amsterdam,informatica,devops engineer,1
-2026-08,r:groot-amsterdam,technische-informatica,devops engineer,1
 2026-08,r:haaglanden,all,devops engineer,2
 2026-08,r:haaglanden,informatica,devops engineer,2
-2026-08,r:haaglanden,technische-informatica,devops engineer,2
 2026-08,r:midden-utrecht,all,data engineer,1
 2026-08,r:midden-utrecht,informatica,data engineer,1
 2026-08,r:zuidoost-brabant,all,software engineer,5
@@ -313,30 +293,10 @@ month,geo,programme,title,n
 2026-09,nl,informatica,test engineer,6
 2026-09,nl,informatica,test engineer publieke veiligheid,3
 2026-09,nl,informatica,web developer,4
-2026-09,nl,technische-informatica,ai platform engineer,4
 2026-09,nl,technische-informatica,automation engineer,5
-2026-09,nl,technische-informatica,azure cloud engineer,2
-2026-09,nl,technische-informatica,cloud architect,1
-2026-09,nl,technische-informatica,cloud consultant,3
-2026-09,nl,technische-informatica,cloud engineer,6
-2026-09,nl,technische-informatica,cybersecurity consultant,5
-2026-09,nl,technische-informatica,devops engineer,14
 2026-09,nl,technische-informatica,embedded software engineer,7
-2026-09,nl,technische-informatica,engineer infra,3
-2026-09,nl,technische-informatica,golang platform engineer,2
-2026-09,nl,technische-informatica,information security officer,6
-2026-09,nl,technische-informatica,it platform engineer,2
-2026-09,nl,technische-informatica,kubernetes engineer,3
-2026-09,nl,technische-informatica,netwerk engineer,4
-2026-09,nl,technische-informatica,netwerkbeheerder,4
-2026-09,nl,technische-informatica,platform engineer,9
-2026-09,nl,technische-informatica,security consultant,1
-2026-09,nl,technische-informatica,security engineer,4
-2026-09,nl,technische-informatica,site reliability engineer,4
+2026-09,nl,technische-informatica,plc software engineer,3
 2026-09,nl,technische-informatica,software engineer industriële automatisering,4
-2026-09,nl,technische-informatica,systeembeheerder,6
-2026-09,nl,technische-informatica,system engineer,5
-2026-09,nl,technische-informatica,technical information security officer,2
 2026-09,p:gelderland,all,data engineer,3
 2026-09,p:gelderland,all,developer,3
 2026-09,p:gelderland,all,frontend design systems developer,3
@@ -372,15 +332,11 @@ month,geo,programme,title,n
 2026-09,p:noord-holland,informatica,devops engineer,2
 2026-09,p:noord-holland,informatica,php developer,5
 2026-09,p:noord-holland,informatica,qa engineer,3
-2026-09,p:noord-holland,technische-informatica,ai platform engineer,3
-2026-09,p:noord-holland,technische-informatica,cloud engineer,1
-2026-09,p:noord-holland,technische-informatica,devops engineer,2
 2026-09,p:overijssel,all,.net developer,4
 2026-09,p:overijssel,all,embedded software engineer,3
 2026-09,p:overijssel,all,netwerk engineer,3
 2026-09,p:overijssel,informatica,.net developer,4
 2026-09,p:overijssel,technische-informatica,embedded software engineer,3
-2026-09,p:overijssel,technische-informatica,netwerk engineer,3
 2026-09,p:utrecht,all,data engineer,4
 2026-09,p:utrecht,all,developer,1
 2026-09,p:utrecht,all,devops engineer,4
@@ -391,8 +347,6 @@ month,geo,programme,title,n
 2026-09,p:utrecht,informatica,devops engineer,4
 2026-09,p:utrecht,informatica,mendix developer,3
 2026-09,p:utrecht,informatica,platform engineer,3
-2026-09,p:utrecht,technische-informatica,devops engineer,4
-2026-09,p:utrecht,technische-informatica,platform engineer,3
 2026-09,p:zuid-holland,all,devops engineer,2
 2026-09,p:zuid-holland,all,information security officer,2
 2026-09,p:zuid-holland,all,plc software engineer,3
@@ -409,11 +363,7 @@ month,geo,programme,title,n
 2026-09,p:zuid-holland,informatica,software engineer,3
 2026-09,p:zuid-holland,informatica,solution architect,4
 2026-09,p:zuid-holland,informatica,technical information security officer,2
-2026-09,p:zuid-holland,technische-informatica,devops engineer,2
-2026-09,p:zuid-holland,technische-informatica,information security officer,2
-2026-09,p:zuid-holland,technische-informatica,systeembeheerder,4
-2026-09,p:zuid-holland,technische-informatica,system engineer,3
-2026-09,p:zuid-holland,technische-informatica,technical information security officer,2
+2026-09,p:zuid-holland,technische-informatica,plc software engineer,3
 2026-09,r:gooi-vechtstreek,all,data engineer,3
 2026-09,r:gooi-vechtstreek,all,php developer,5
 2026-09,r:gooi-vechtstreek,informatica,data engineer,3
@@ -429,10 +379,8 @@ month,geo,programme,title,n
 2026-09,r:groot-amsterdam,informatica,data engineer,4
 2026-09,r:groot-amsterdam,informatica,devops engineer,2
 2026-09,r:groot-amsterdam,informatica,qa engineer,3
-2026-09,r:groot-amsterdam,technische-informatica,devops engineer,2
 2026-09,r:haaglanden,all,devops engineer,1
 2026-09,r:haaglanden,informatica,devops engineer,1
-2026-09,r:haaglanden,technische-informatica,devops engineer,1
 2026-09,r:midden-utrecht,all,data engineer,4
 2026-09,r:midden-utrecht,all,devops engineer,3
 2026-09,r:midden-utrecht,all,mendix developer,3
@@ -441,8 +389,6 @@ month,geo,programme,title,n
 2026-09,r:midden-utrecht,informatica,devops engineer,3
 2026-09,r:midden-utrecht,informatica,mendix developer,3
 2026-09,r:midden-utrecht,informatica,platform engineer,3
-2026-09,r:midden-utrecht,technische-informatica,devops engineer,3
-2026-09,r:midden-utrecht,technische-informatica,platform engineer,3
 2026-09,r:noordoost-brabant,all,software engineer,3
 2026-09,r:noordoost-brabant,informatica,software engineer,3
 2026-09,r:regio-zwolle,all,.net developer,3

@@ -6,6 +6,37 @@
 
 entries:
   - date: "2026-09-20"
+    version: "0.7.0"
+    title:
+      nl: Technische Informatica gekoppeld aan embedded werk, niet aan cloud en netwerkbeheer
+      en: Technische Informatica linked to embedded work, not to cloud and network administration
+    body:
+      nl: >-
+        Vacatures voor cloud- en DevOps-engineers, securityspecialisten en netwerk- en
+        infrastructuurbeheerders telden mee bij Technische Informatica. Dat klopt niet: die
+        opleiding gaat over embedded systemen, IoT, domotica, robotica en industriele
+        automatisering, en met dezelfde redenering had een softwareontwikkelaar er net zo goed
+        bij gekund. Cloud, DevOps en security horen nu alleen bij Informatica; netwerk- en
+        infrastructuurfuncties horen bij geen van de drie opleidingen en tellen alleen nog mee
+        in het totaal aantal ICT-vacatures. Tegelijk herkennen we nu wel functies die er echt
+        bij horen en die we misten, zoals "PLC Software Engineer" en "Software Engineer
+        Robotica". Het aantal vacatures bij Technische Informatica daalt hierdoor sterk; dat is
+        een correctie van onze indeling, niet van de arbeidsmarkt. Cijfers per opleiding van
+        voor deze wijziging zijn niet vergelijkbaar met die erna.
+      en: >-
+        Vacancies for cloud and DevOps engineers, security specialists and network or
+        infrastructure administrators counted towards Technische Informatica. That is wrong:
+        the programme is about embedded systems, IoT, home automation, robotics and industrial
+        automation, and by the same reasoning a software developer could have belonged to it
+        just as well. Cloud, DevOps and security now belong to Informatica only; network and
+        infrastructure roles belong to none of the three programmes and count only in the total
+        number of ICT vacancies. At the same time we now recognise roles that do belong and
+        that we were missing, such as "PLC Software Engineer" and "Software Engineer Robotica".
+        The vacancy count for Technische Informatica drops sharply as a result; that is a
+        correction of our classification, not of the job market. Figures per programme from
+        before this change cannot be compared with those after it.
+    series_break: [programmes]
+  - date: "2026-09-20"
     version: "0.6.0"
     title:
       nl: "Tweede vacaturebron: EURES (UWV) naast Adzuna"
